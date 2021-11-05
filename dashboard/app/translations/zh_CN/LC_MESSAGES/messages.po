@@ -1,0 +1,109 @@
+# Chinese (Simplified, China) translations for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-11-04 15:18+0800\n"
+"PO-Revision-Date: 2021-10-27 09:40+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_Hans_CN\n"
+"Language-Team: zh_Hans_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: app/admin/base/routes.py:49
+msgid "Wrong user or password"
+msgstr "用户名或者密码错误，请检查重试。"
+
+#: app/admin/base/routes.py:69
+msgid "Username already registered"
+msgstr "用户名已经被占用"
+
+#: app/admin/base/routes.py:77
+msgid "Email already registered"
+msgstr "邮箱已经被占用"
+
+#: app/admin/base/routes.py:87
+msgid "User created please <a href=\"/login\">login</a>"
+msgstr "用户创建成功，请 <a href=\"/login\">登录</a>"
+
+#: app/admin/base/templates/accounts/login.html:3
+#: app/admin/base/templates/accounts/login.html:15
+#: app/admin/base/templates/accounts/login.html:53
+#: app/admin/base/templates/accounts/register.html:64
+msgid "Login"
+msgstr "登录"
+
+#: app/admin/base/templates/accounts/login.html:24
+#: app/admin/base/templates/accounts/register.html:24
+msgid "Add your credentials"
+msgstr "请输入正确的用户信息"
+
+#: app/admin/base/templates/accounts/login.html:35
+#: app/admin/base/templates/accounts/register.html:38
+msgid "Username"
+msgstr "用户名"
+
+#: app/admin/base/templates/accounts/login.html:39
+#: app/admin/base/templates/accounts/register.html:46
+msgid "Password"
+msgstr "密码"
+
+#: app/admin/base/templates/accounts/login.html:46
+msgid "Save Details"
+msgstr "记住我"
+
+#: app/admin/base/templates/accounts/register.html:3
+#: app/admin/base/templates/accounts/register.html:60
+#: app/admin/base/templates/includes/sidebar.html:21
+#: app/admin/base/templates/includes/sidebar.html:22
+msgid "Register"
+msgstr "注册"
+
+#: app/admin/base/templates/accounts/register.html:15
+msgid "Create Account"
+msgstr "创建用户"
+
+#: app/admin/base/templates/accounts/register.html:42
+msgid "Email"
+msgstr "邮箱地址"
+
+#: app/admin/base/templates/accounts/register.html:53
+msgid "Agree with <a href=\"#\">terms</a>"
+msgstr "同意本站 <a href=\"#\">条款</a>"
+
+#: app/admin/base/templates/accounts/register.html:64
+msgid "Already have an account?"
+msgstr "已注册为用户？"
+
+#: app/admin/base/templates/includes/footer.html:9
+#: app/admin/base/templates/includes/footer.html:30
+msgid "Company"
+msgstr "成都华迈通信技术有限公司"
+
+#: app/admin/base/templates/includes/footer.html:19
+msgid "Tel"
+msgstr "总机：028-86030888 传真：028-86030888"
+
+#: app/admin/base/templates/includes/footer.html:24
+msgid "Address"
+msgstr "地址：成都高新区天华二路219号天府软件园C区10栋"
+
+#: app/admin/base/templates/includes/navigation.html:6
+msgid "Header Title"
+msgstr "华迈融慧DATS"
+
+#: app/admin/base/templates/includes/navigation.html:29
+msgid "dashboard"
+msgstr "看板"
+
+#~ msgid "Don’t have an account?"
+#~ msgstr "尚未注册？"
+
