@@ -98,7 +98,7 @@ msgstr "地址：成都高新区天华二路219号天府软件园C区10栋"
 
 #: app/admin/base/templates/includes/navigation.html:6
 msgid "Header Title"
-msgstr "华迈融慧DATS"
+msgstr "DATS-Data Access Transpoter Service"
 
 #: app/admin/base/templates/includes/navigation.html:29
 msgid "dashboard"

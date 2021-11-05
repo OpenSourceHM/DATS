@@ -1,25 +1,25 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Page 403 {% endblock %} 
+{% block title %} {{_('Error 403')}} {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-profile">
-                <div class="card-body">
-                    <h6 class="card-category text-gray">{{_('Error 403')}}</h6>
-                    <h4 class="card-title">
-                        {{_('Access Denied')}}
-                    </h4>
-                    <a href="/" class="btn btn-default btn-round">{{_('Home')}}</a>
-                </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-profile">
+            <div class="card-body">
+                <h6 class="card-category text-gray">{{_('Error 403')}}</h6>
+                <h4 class="card-title">
+                    {{_('Access Denied')}}
+                </h4>
+                <a href="/" class="btn btn-default btn-round">{{_('Home')}}</a>
             </div>
         </div>
     </div>
+</div>
 
 
 {% endblock content %}

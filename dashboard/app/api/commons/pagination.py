@@ -2,7 +2,7 @@
 """
 from flask import url_for, request
 
-DEFAULT_PAGE_SIZE = 50
+DEFAULT_PAGE_SIZE = 5
 DEFAULT_PAGE_NUMBER = 1
 
 
@@ -33,6 +33,7 @@ def paginate(query, schema):
     return {
         "total": page_obj.total,
         "pages": page_obj.pages,
+        "page": page,
         "next": next_,
         "prev": prev,
         "results": schema.dump(page_obj.items),
