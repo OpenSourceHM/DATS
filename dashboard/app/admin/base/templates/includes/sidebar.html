@@ -13,13 +13,7 @@
       <li class="nav-item {% if 'index' in segment %} active {% endif %}">
         <a class="nav-link" href="/">
           <i class="material-icons">dashboard</i>
-          <p>{{_('Dashboard')}}</p>
-        </a>
-      </li>
-      <li class="nav-item {% if 'register' in segment %} active {% endif %}">
-        <a class="nav-link" href="{{ url_for('base_blueprint.register') }}">
-          <i class="material-icons">manage_accounts</i>
-          <p>{{_('Register Account')}}</p>
+          <p>{{_('dashboard')}}</p>
         </a>
       </li>
       <li class="nav-item {% if 'ui-user-manage' in segment %} active {% endif %}">
@@ -34,28 +28,29 @@
           <p>{{_('User Profile')}}</p>
         </a>
       </li>
-      <li class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
-        <a class="nav-link" href="/admin/ui-tables">
-          <i class="material-icons">content_paste</i>
-          <p>Table List</p>
-        </a>
-      </li>
-      <li class="nav-item {% if 'ui-typography' in segment %} active {% endif %}">
-        <a class="nav-link" href="/admin/ui-typography">
-          <i class="material-icons">library_books</i>
-          <p>Typography</p>
-        </a>
-      </li>
+      <!-- Settings -->
       <li class="nav-item {% if 'ui-icons' in segment %} active {% endif %}">
         <a class="nav-link" href="/admin/ui-icons">
           <i class="material-icons">bubble_chart</i>
-          <p>Icons</p>
+          <p>{{_('System Settings')}}</p>
         </a>
       </li>
       <li class="nav-item {% if 'ui-maps' in segment %} active {% endif %}">
         <a class="nav-link" href="/admin/ui-maps">
           <i class="material-icons">location_ons</i>
-          <p>Maps</p>
+          <p>{{_('Network Settings')}}</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
+        <a class="nav-link" href="/admin/ui-tables">
+          <i class="material-icons">content_paste</i>
+          <p>{{_('TCP Proxy Management')}}</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
+        <a class="nav-link" href="/admin/ui-tables">
+          <i class="material-icons">content_paste</i>
+          <p>{{_('HTTP/S Proxy Management')}}</p>
         </a>
       </li>
       <li class="nav-item {% if 'ui-notifications' in segment %} active {% endif %}">
@@ -64,7 +59,13 @@
           <p>Notifications</p>
         </a>
       </li>
-
+      <!-- User Manual -->
+      <li class="nav-item {% if 'ui-typography' in segment %} active {% endif %}">
+        <a class="nav-link" href="/admin/ui-typography">
+          <i class="material-icons">library_books</i>
+          <p>{{_('User Manual')}}</p>
+        </a>
+      </li>
       <!--Logout-->
       <li class="nav-item ">
         <a class="nav-link" href="{{ url_for('base_blueprint.logout') }}">
@@ -73,13 +74,13 @@
         </a>
       </li>
 
-      <li class="nav-item  ">
+      <!-- <li class="nav-item  ">
         <a target="_blank" rel="noopener noreferrer" class="nav-link"
-          href="https://www.creative-tim.com/templates/flask">
-          <i class="material-icons">cloud_download</i>
-          <p>More Starters</p>
+          href="{{link}}">
+          <i class="material-icons">link</i>
+          <p>{{_('link')}}</p>
         </a>
-      </li>
+      </li> -->
       {% else %}
       <!--If account is not authenticated-->
       <li class="nav-item ">

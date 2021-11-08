@@ -6,7 +6,7 @@ Copyright (c) 2021 - present Connard.Lee
 from flask_login import UserMixin
 from sqlalchemy import Binary, Column, Integer, String
 
-from app import db, login_manager
+from app import login_manager
 
 from app.admin.base.util import hash_pass
 # --
@@ -82,3 +82,49 @@ def request_loader(request):
     username = request.form.get('username')
     user = User.query.filter_by(username=username).first()
     return user if user else None
+
+class Permissions:
+    """
+    """
+    ADMINISTRATOR = 0X01
+    USERGROUP = 0X02
+
+class Role(db.Model):
+    """
+    User Role
+    """
+    __tablename__ = "role"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, unique=True)
+    permissions = db.Column(db.Integer)
+
+    @staticmethod
+    def init_role():
+        role_name_list = ['user', 'admin']
+        roles_permission_map = {
+            'user': [Permissions.USERGROUP],
+            'admin': [Permissions.ADMINISTRATOR, Permissions.USERGROUP]
+        }
+        try:
+            for role_name in role_name_list:
+                role = Role.query.filter_by(name=role_name).first()
+                if role is None:
+                    role = Role(name=role_name)
+                role.reset_permissions()
+                for permission in roles_permission_map[role_name]:
+                    role.add_permission(permission)
+                db.session.add(role)
+            db.session.commit()
+        except:
+            db.session.rollback()
+        db.session.close()
+
+    def reset_permissions(self):
+        self.permissions = 0
+
+    def has_permission(self, permission):
+        return self.permissions & permission == permission
+
+    def add_permission(self, permission):
+        if not self.has_permission(permission):
+            self.permissions += permission

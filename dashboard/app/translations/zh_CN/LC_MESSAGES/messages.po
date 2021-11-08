@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-04 15:18+0800\n"
+"POT-Creation-Date: 2021-11-08 16:08+0800\n"
 "PO-Revision-Date: 2021-10-27 09:40+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -18,26 +18,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: app/admin/base/routes.py:49
+#: app/admin/base/routes.py:51
 msgid "Wrong user or password"
 msgstr "用户名或者密码错误，请检查重试。"
 
-#: app/admin/base/routes.py:69
+#: app/admin/base/routes.py:73
 msgid "Username already registered"
 msgstr "用户名已经被占用"
 
-#: app/admin/base/routes.py:77
+#: app/admin/base/routes.py:81
 msgid "Email already registered"
 msgstr "邮箱已经被占用"
 
-#: app/admin/base/routes.py:87
+#: app/admin/base/routes.py:91
 msgid "User created please <a href=\"/login\">login</a>"
 msgstr "用户创建成功，请 <a href=\"/login\">登录</a>"
 
 #: app/admin/base/templates/accounts/login.html:3
 #: app/admin/base/templates/accounts/login.html:15
 #: app/admin/base/templates/accounts/login.html:53
-#: app/admin/base/templates/accounts/register.html:64
 msgid "Login"
 msgstr "登录"
 
@@ -48,11 +47,14 @@ msgstr "请输入正确的用户信息"
 
 #: app/admin/base/templates/accounts/login.html:35
 #: app/admin/base/templates/accounts/register.html:38
+#: app/admin/home/templates/ui-user-manage.html:41
+#: app/admin/home/templates/ui-user-manage.html:69
 msgid "Username"
 msgstr "用户名"
 
 #: app/admin/base/templates/accounts/login.html:39
 #: app/admin/base/templates/accounts/register.html:46
+#: app/admin/home/templates/ui-user-manage.html:49
 msgid "Password"
 msgstr "密码"
 
@@ -61,9 +63,6 @@ msgid "Save Details"
 msgstr "记住我"
 
 #: app/admin/base/templates/accounts/register.html:3
-#: app/admin/base/templates/accounts/register.html:60
-#: app/admin/base/templates/includes/sidebar.html:21
-#: app/admin/base/templates/includes/sidebar.html:22
 msgid "Register"
 msgstr "注册"
 
@@ -72,38 +71,199 @@ msgid "Create Account"
 msgstr "创建用户"
 
 #: app/admin/base/templates/accounts/register.html:42
+#: app/admin/home/templates/ui-user-manage.html:45
+#: app/admin/home/templates/ui-user-manage.html:72
 msgid "Email"
 msgstr "邮箱地址"
 
-#: app/admin/base/templates/accounts/register.html:53
-msgid "Agree with <a href=\"#\">terms</a>"
-msgstr "同意本站 <a href=\"#\">条款</a>"
+#: app/admin/base/templates/accounts/register.html:49
+#: app/admin/home/templates/ui-user-manage.html:51
+msgid "Confirm"
+msgstr "确定"
 
-#: app/admin/base/templates/accounts/register.html:64
-msgid "Already have an account?"
-msgstr "已注册为用户？"
+#: app/admin/base/templates/includes/fixed-plugin.html:9
+msgid "Sidebar Filters"
+msgstr "工具箱"
+
+#: app/admin/base/templates/includes/fixed-plugin.html:23
+msgid "Product Images"
+msgstr "产品图片"
+
+#: app/admin/base/templates/includes/fixed-plugin.html:46
+msgid "Online Documentation URL"
+msgstr "https://huamaitel.com"
+
+#: app/admin/base/templates/includes/fixed-plugin.html:48
+msgid "Online Documentation"
+msgstr "产品文档"
 
 #: app/admin/base/templates/includes/footer.html:9
-#: app/admin/base/templates/includes/footer.html:30
 msgid "Company"
 msgstr "成都华迈通信技术有限公司"
 
-#: app/admin/base/templates/includes/footer.html:19
+#: app/admin/base/templates/includes/footer.html:21
+msgid "Department"
+msgstr "研发中心"
+
+#: app/admin/base/templates/includes/footer.html:26
 msgid "Tel"
 msgstr "总机：028-86030888 传真：028-86030888"
 
-#: app/admin/base/templates/includes/footer.html:24
+#: app/admin/base/templates/includes/footer.html:31
 msgid "Address"
 msgstr "地址：成都高新区天华二路219号天府软件园C区10栋"
 
 #: app/admin/base/templates/includes/navigation.html:6
 msgid "Header Title"
-msgstr "DATS-Data Access Transpoter Service"
+msgstr "优秀的视频物联网解决方案供应商"
 
-#: app/admin/base/templates/includes/navigation.html:29
+#: app/admin/base/templates/includes/navigation.html:22
+#: app/admin/base/templates/includes/sidebar.html:16
 msgid "dashboard"
 msgstr "看板"
 
-#~ msgid "Don’t have an account?"
-#~ msgstr "尚未注册？"
+#: app/admin/base/templates/includes/navigation.html:31
+msgid "Account"
+msgstr "账户"
+
+#: app/admin/base/templates/includes/navigation.html:35
+msgid "Profile"
+msgstr "详情"
+
+#: app/admin/base/templates/includes/navigation.html:37
+msgid "Log out"
+msgstr "退出"
+
+#: app/admin/base/templates/includes/sidebar.html:22
+#: app/admin/home/templates/ui-user-manage.html:3
+#: app/admin/home/templates/ui-user-manage.html:14
+msgid "User Management"
+msgstr "用户管理"
+
+#: app/admin/base/templates/includes/sidebar.html:28
+msgid "User Profile"
+msgstr "用户详情"
+
+#: app/admin/base/templates/includes/sidebar.html:80
+msgid "Manual Download URL"
+msgstr "/manual/download"
+
+#: app/admin/base/templates/includes/sidebar.html:82
+msgid "Manual Download"
+msgstr "使用手册下载"
+
+#: app/admin/base/templates/includes/sidebar.html:87
+msgid "Product Information URL"
+msgstr "/manual/products"
+
+#: app/admin/base/templates/includes/sidebar.html:89
+msgid "Product Information"
+msgstr "产品信息"
+
+#: app/admin/home/templates/page-403.html:3
+#: app/admin/home/templates/page-403.html:14
+msgid "Error 403"
+msgstr "403错误"
+
+#: app/admin/home/templates/page-403.html:16
+msgid "Access Denied"
+msgstr "操作未授权"
+
+#: app/admin/home/templates/page-403.html:18
+#: app/admin/home/templates/page-404.html:18
+#: app/admin/home/templates/page-500.html:18
+msgid "Home"
+msgstr "首页"
+
+#: app/admin/home/templates/page-404.html:3
+#: app/admin/home/templates/page-404.html:14
+msgid "Error 404"
+msgstr "404错误"
+
+#: app/admin/home/templates/page-404.html:16
+msgid "Page not found"
+msgstr "页面未找到"
+
+#: app/admin/home/templates/page-500.html:3
+#: app/admin/home/templates/page-500.html:14
+msgid "Error 500"
+msgstr "500错误"
+
+#: app/admin/home/templates/page-500.html:16
+msgid "Internal Server Error"
+msgstr "内部错误"
+
+#: app/admin/home/templates/page-blank.html:3
+#: app/admin/home/templates/page-blank.html:14
+msgid "Page Blank"
+msgstr ""
+
+#: app/admin/home/templates/ui-user-manage.html:15
+msgid "DATS user table"
+msgstr "DATS用户列表"
+
+#: app/admin/home/templates/ui-user-manage.html:20
+msgid "Total Pages"
+msgstr "总页数"
+
+#: app/admin/home/templates/ui-user-manage.html:21
+msgid "Total"
+msgstr "共计"
+
+#: app/admin/home/templates/ui-user-manage.html:23
+#: app/admin/home/templates/ui-user-manage.html:34
+msgid "Add"
+msgstr "新增"
+
+#: app/admin/home/templates/ui-user-manage.html:34
+msgid "User"
+msgstr "用户"
+
+#: app/admin/home/templates/ui-user-manage.html:35
+msgid "Enter your username, email and password to register"
+msgstr "请输入用户名，邮箱和密码进行注册"
+
+#: app/admin/home/templates/ui-user-manage.html:66
+msgid "ID"
+msgstr "编码"
+
+#: app/admin/home/templates/ui-user-manage.html:75
+msgid "ActiveStatus"
+msgstr "激活状态"
+
+#: app/admin/home/templates/ui-user-manage.html:78
+msgid "Operation"
+msgstr "操作"
+
+#: app/admin/home/templates/ui-user-manage.html:95
+msgid "Yes"
+msgstr "是"
+
+#: app/admin/home/templates/ui-user-manage.html:97
+msgid "No"
+msgstr "否"
+
+#: app/admin/home/templates/ui-user-manage.html:101
+msgid "modify"
+msgstr "修改"
+
+#: app/admin/home/templates/ui-user-manage.html:102
+msgid "delete"
+msgstr "删除"
+
+#: app/admin/home/templates/ui-user-manage.html:113
+msgid "First"
+msgstr "第一页"
+
+#: app/admin/home/templates/ui-user-manage.html:117
+msgid "Previous"
+msgstr "前一页"
+
+#: app/admin/home/templates/ui-user-manage.html:135
+msgid "Next"
+msgstr "后一页"
+
+#: app/admin/home/templates/ui-user-manage.html:139
+msgid "Last"
+msgstr "最后页"
 

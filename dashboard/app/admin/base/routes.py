@@ -15,7 +15,7 @@ from app.extensions import pwd_context, jwt, apispec
 from app import db, login_manager
 from app.admin.base import blueprint
 from app.admin.base.forms import LoginForm, CreateAccountForm
-from app.admin.base.models.user import User
+from app.admin.base.models.user import User, Role, Permissions
 
 from app.admin.base.util import verify_pass
 from flask_babel import _

@@ -11,10 +11,13 @@ from jinja2 import TemplateNotFound
 import traceback
 
 from app.api.schemas import UserSchema
-from app.admin.base.models.user import User
+from app.admin.base.models.user import User, Role, Permissions
 from app.extensions import db
 from app.api.commons.pagination import paginate
+from app.permission_required import permission_required
 
+from flask_babel import _
+from flask_babel import lazy_gettext as _l
 
 @blueprint.route('/index')
 @login_required
@@ -22,6 +25,7 @@ def index():
     return render_template('index.html', segment='index')
 
 @blueprint.route('/ui-user-manage')
+@permission_required(Permissions.ADMINISTRATOR)
 @login_required
 def ui_user_manage():
     try:
@@ -34,7 +38,7 @@ def ui_user_manage():
         # Detect the current page
         segment = get_segment(request)
 
-        print(result)
+        print(current_user)
 
         # Serve the file (if exists) from app/templates/FILE.html
         return render_template(template, segment=segment, data=result)
