@@ -2,7 +2,7 @@ from flask import request
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 from app.api.schemas import UserSchema
-from app.admin.base.models.user import User
+from app.admin.base.models.user import User, Permissions
 from app.extensions import db
 from app.api.commons.pagination import paginate
 

@@ -22,7 +22,7 @@ var transparent = true;
 var transparentDemo = true;
 var fixedTop = false;
 
-var mobile_menu_visible = 0,
+var mobile_menu_visible = 1,
   mobile_menu_initialized = false,
   toggle_initialized = false,
   bootstrap_nav_initialized = false;
@@ -149,18 +149,18 @@ md = {
     }
   },
 
-  showNotification: function(from, align) {
+  showNotification: function(from, align, t, msg) {
     type = ['', 'info', 'danger', 'success', 'warning', 'rose', 'primary'];
 
     color = Math.floor((Math.random() * 6) + 1);
 
     $.notify({
       icon: "add_alert",
-      message: "========"
+      message: msg
 
     }, {
-      type: type[color],
-      timer: 3000,
+      type: type[t],
+      timer: 2000,
       placement: {
         from: from,
         align: align

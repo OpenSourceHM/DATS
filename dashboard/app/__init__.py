@@ -3,6 +3,7 @@
 Copyright (c) 2021 - present Connard.Lee
 """
 
+
 from flask import Flask, url_for, request
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -19,6 +20,20 @@ from app.extensions import babel
 from app.plugin import cors_init_app
 
 login_manager = LoginManager()
+
+
+def user_init(app, database):
+    from app.admin.base.models.user import User, Permissions, Role
+
+    exist = User.query.filter_by(username='admin').all()
+    admin = User.query.filter_by(username='admin').first()
+
+    if len(exist) == 0 or admin == None:
+        user = User(username="admin", email="lovelacelee@gmail.com", password="admin", active=True, role_id=Permissions.ADMINISTRATOR)
+        database.session.add(user)
+        database.session.commit()
+        clslog.info("created user admin")
+    Role.init_role()
 
 
 def configure_apispec(app):
@@ -63,14 +78,10 @@ def configure_database(app):
     @app.before_first_request
     def initialize_database():
         db.create_all()
-        # try:
-        #     from app.base.models.user import User
-        #     user = User(username="admin", email="lovelacelee@gmail.com", password="admin", active=True)
-        #     db.session.add(user)
-        #     db.session.commit()
-        #     clslog.info("created user admin")
-        # except:
-        #     pass
+        try:
+            user_init(app, db)
+        except Exception as e:
+            clslog.critical(e)
 
     @app.teardown_request
     def shutdown_session(exception=None):

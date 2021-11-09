@@ -2,11 +2,10 @@
 
 from functools import wraps
 from flask import session, render_template
+from flask_login import current_user
 from app.extensions import db
 from app.admin.base.models.user import User, Role
-
-Permission_code = [0X01, 0X02]
-
+from clslq import clslog
 
 def permission_can(current_user, permission):
     """
@@ -32,11 +31,13 @@ def permission_required(permission):
         def decorated_function(*args, **kwargs):
             try:
                 flag = False
-                current_user = User.query.filter_by(
-                    id=session.get('user_id')).first()
+                clslog.info(current_user)
                 if current_user:
                     role_id = current_user.role_id
                     role = db.session.query(Role).filter_by(id=role_id).first()
+                    clslog.info(role_id)
+                    clslog.info(role.permissions)
+                    clslog.info(permission)
                     if role.permissions & permission == permission:
                         flag = True
                 if flag:

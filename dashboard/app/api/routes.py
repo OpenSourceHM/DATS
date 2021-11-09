@@ -19,11 +19,15 @@ api = Api(blueprint)
 def register_views():
     # USER API
     # --------
+    # UserSchema first:
+    # lib\site-packages\apispec\ext\marshmallow\__init__.py:208: 
+    # UserWarning: <class 'app.api.schemas.user.UserSchema'> has already been added to the spec. 
+    # Adding it twice may cause references to not resolve properly.
+    apispec.spec.components.schema("UserSchema", schema=UserSchema)
     api.add_resource(UserResource, "/users/<int:user_id>", endpoint="user_by_id")
     api.add_resource(UserList, "/users", endpoint="users")
     apispec.spec.path(view=UserResource, app=current_app)
     apispec.spec.path(view=UserList, app=current_app)
-    apispec.spec.components.schema("UserSchema", schema=UserSchema)
     # CNBING
     # --------
     api.add_resource(ImgProxy, "/background/<int:idx>/<int:n>", endpoint="background")

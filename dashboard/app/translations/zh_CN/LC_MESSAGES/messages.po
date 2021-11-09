@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-08 16:08+0800\n"
+"POT-Creation-Date: 2021-11-09 11:20+0800\n"
 "PO-Revision-Date: 2021-10-27 09:40+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -144,19 +144,43 @@ msgstr "用户管理"
 msgid "User Profile"
 msgstr "用户详情"
 
-#: app/admin/base/templates/includes/sidebar.html:80
+#: app/admin/base/templates/includes/sidebar.html:35
+msgid "System Settings"
+msgstr "系统设置"
+
+#: app/admin/base/templates/includes/sidebar.html:41
+msgid "Network Settings"
+msgstr "网络设置"
+
+#: app/admin/base/templates/includes/sidebar.html:47
+msgid "TCP Proxy Management"
+msgstr "TCP应用"
+
+#: app/admin/base/templates/includes/sidebar.html:53
+msgid "HTTP/S Proxy Management"
+msgstr "HTTP应用"
+
+#: app/admin/base/templates/includes/sidebar.html:66
+msgid "User Manual"
+msgstr "用户手册"
+
+#: app/admin/base/templates/includes/sidebar.html:81
+msgid "link"
+msgstr "链接"
+
+#: app/admin/base/templates/includes/sidebar.html:87
 msgid "Manual Download URL"
 msgstr "/manual/download"
 
-#: app/admin/base/templates/includes/sidebar.html:82
+#: app/admin/base/templates/includes/sidebar.html:89
 msgid "Manual Download"
 msgstr "使用手册下载"
 
-#: app/admin/base/templates/includes/sidebar.html:87
+#: app/admin/base/templates/includes/sidebar.html:94
 msgid "Product Information URL"
 msgstr "/manual/products"
 
-#: app/admin/base/templates/includes/sidebar.html:89
+#: app/admin/base/templates/includes/sidebar.html:96
 msgid "Product Information"
 msgstr "产品信息"
 

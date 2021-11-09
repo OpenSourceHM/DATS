@@ -35,6 +35,7 @@ from app.extensions import db, pwd_context
 #     def __repr__(self):
 #         return "<User %s>" % self.username
 
+
 class User(db.Model, UserMixin):
 
     __tablename__ = 'User'
@@ -42,10 +43,11 @@ class User(db.Model, UserMixin):
     id = Column(Integer, primary_key=True)
     username = Column(String, unique=True)
     email = Column(String, unique=True)
-    #Simple password use Binary
+    # Simple password use Binary
     #password = Column(Binary)
     _password = db.Column("bak_password", db.String(255), nullable=False)
     active = db.Column(db.Boolean, default=True)
+    role_id = db.Column(db.Integer)
 
     @hybrid_property
     def password(self):
@@ -66,7 +68,7 @@ class User(db.Model, UserMixin):
             # Simple password mode
             # if property == 'password':
             #     value = hash_pass( value ) # we need bytes here (not plain str)
-                
+
             setattr(self, property, value)
 
     def __repr__(self):
@@ -77,17 +79,20 @@ class User(db.Model, UserMixin):
 def user_loader(id):
     return User.query.filter_by(id=id).first()
 
+
 @login_manager.request_loader
 def request_loader(request):
     username = request.form.get('username')
     user = User.query.filter_by(username=username).first()
     return user if user else None
 
+
 class Permissions:
     """
     """
-    ADMINISTRATOR = 0X01
-    USERGROUP = 0X02
+    USERGROUP = 0X01
+    ADMINISTRATOR = 0X02
+
 
 class Role(db.Model):
     """
@@ -127,4 +132,4 @@ class Role(db.Model):
 
     def add_permission(self, permission):
         if not self.has_permission(permission):
-            self.permissions += permission
+            self.permissions |= permission
