@@ -19,44 +19,8 @@
           <div>
             <span class="tim-note">{{ _('Total Pages')}}: {{data.pages}}</span>&nbsp;
             <span class="tim-note">{{ _('Total')}}: {{data.total}}</span>
-            <btn class="btn btn-sm btn-info shadow-2 float-right" data-toggle="modal"
-              data-target="#addModal">{{_('Add')}}</btn>
-
-            <!-- Modal open by btn -->
-            <div class="modal fade" id="addModal" tabindex="-1" role="dialog"
-              aria-labelledby="exampleModalSignTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-                <div class="modal-content">
-                  <!-- padding 3rem -->
-                  <div class="modal-body p-5">
-                    <div class="card">
-                      <div class="card-header card-header-info" style="margin-top: -100px;">
-                        <h5 class="card-title">{{_('Add')}}{{_('User')}}</h5>
-                        <p class="card-category">{{_('Enter your username, email and password to register')}}</p>
-                      </div>
-                      <div class="card-body">
-                        <form role="form" method="post" action="/register" style="margin-top: 30px;">               
-          
-                            <div class="input-group mb-3">
-                              <input class="form-control" placeholder="{{_('Username')}}" id="username_login" name="username" required="" type="text" value="">
-                            </div>
-                  
-                            <div class="input-group mb-3">
-                              <input class="input form-control" placeholder="{{_('Email')}}" id="emial_login" name="email" p="" required="" type="email" value="">
-                            </div>
-          
-                            <div class="input-group mb-4">
-                              <input class="form-control" placeholder="{{_('Password')}}" id="pwd_login" name="password" p="" required="" type="password" value="">
-                            </div>
-                            <button type="submit" name="register" class="btn btn-info shadow-2 mb-4 float-right">{{_('Confirm')}}</button>
-          
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <btn class="btn btn-sm btn-info shadow-2 float-right" data-toggle="modal" data-target="#addModal">
+              {{_('Add')}}</btn>
 
 
           </div>
@@ -75,6 +39,9 @@
                 {{_('ActiveStatus')}}
               </th>
               <th>
+                {{_('UserRole')}}
+              </th>
+              <th>
                 {{_('Operation')}}
               </th>
             </thead>
@@ -90,16 +57,35 @@
                 <td>
                   {{user.email}}
                 </td>
-                <td>
+                <td class="align-middle text-sm">
                   {% if user.active %}
-                  {{_('Yes')}}
+                  <span class="badge badge-sm badge-success">{{_('Yes')}}</span>
                   {%else %}
-                  {{_('No')}}
+                  <span class="badge badge-sm badge-secondary">{{_('No')}}</span>
                   {%endif %}
                 </td>
                 <td>
-                  <btn class="btn btn-sm btn-info shadow-2">{{_('modify')}}</btn>
-                  <btn class="btn btn-sm btn-danger shadow-2">{{_('delete')}}</btn>
+                  {% if user.role_id == 1 %}
+                  {{_('User')}}
+                  {%elif user.role_id == 2 %}
+                  {{_('Administrator')}}
+                  {%else %}
+                  {{_('User')}}
+                  {%endif %}
+                </td>
+                <td>
+
+                  {% if user.username == 'admin' %}
+
+                  {%else %}
+                  <btn class="btn btn-sm btn-info shadow-2" data-toggle="modal" data-target="#modifyModal"
+                    data-userid="{{user.id}}" data-username="{{user.username}}">
+                    {{_('modify')}}</btn>
+                  <btn class="btn btn-sm btn-danger shadow-2" data-toggle="modal" data-target="#deleteModal"
+                    data-user="{{user}}">
+                    {{_('delete')}}</btn>
+                  {%endif %}
+
                 </td>
               </tr>
               {% endfor %}
@@ -145,16 +131,126 @@
   </div>
 </div>
 
+
+<!-- Modal open by btn -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addUserModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+      <!-- padding 3rem -->
+      <div class="modal-body p-5">
+        <div class="card">
+          <div class="card-header card-header-info" style="margin-top: -100px;">
+            <h5 class="card-title">{{_('Add')}}{{_('User')}}</h5>
+            <p class="card-category">{{_('Enter your username, email and password to register')}}</p>
+          </div>
+          <div class="card-body">
+            <form role="form" method="post" action="/register" style="margin-top: 30px;">
+
+              <div class="input-group mb-3">
+                <input class="form-control" placeholder="{{_('Username')}}" name="username" required="" type="text"
+                  value="">
+              </div>
+
+              <div class="input-group mb-3">
+                <input class="input form-control" placeholder="{{_('Email')}}" name="email" required="" type="email"
+                  value="">
+              </div>
+
+              <div class="input-group mb-4">
+                <input class="form-control" placeholder="{{_('Password')}}" name="password" required="" type="password"
+                  value="">
+              </div>
+              <button type="submit" class="btn btn-info shadow-2 mb-4 float-right">{{_('Confirm')}}</button>
+              <button type="button" class="btn btn-warning shadow-2 mb-4 float-right"
+                data-dismiss="modal">{{_('Cancel')}}</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modify Modal open by btn -->
+<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="modifyUserModal"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+
+      <div class="modal-body p-5">
+        <div class="card">
+          <div class="card-header card-header-info" style="margin-top: -100px;">
+            <h5 class="card-title">{{_('Modify')}}{{_('User')}}</h5>
+            <p class="card-category">{{_('Complete user profile')}}</p>
+          </div>
+
+
+          <div class="card-body">
+            <form role="form" id="formUserModify" method="post" style="margin-top: 30px;">
+              <div class="input-group mb-3">
+                <input class="form-control" placeholder="{{_('Username')}}" name="username" id="username" type="text"
+                  value="user.username">
+              </div>
+
+              <div class="input-group mb-4">
+                <label for="active">{{_('ActiveStatus')}}</label>&nbsp;&nbsp;
+                <input type="checkbox" id="active_status" name="active">
+              </div>
+              <div class="input-group mb-4">
+                <input class="input form-control" placeholder="{{_('Email')}}" name="email" id="email" required=""
+                  type="email" value="">
+              </div>
+
+              <div class="input-group mb-4">
+                <input class="form-control" placeholder="{{_('Password')}}" name="password" id="password" required=""
+                  type="password" value="">
+              </div>
+              <button type="button" id="submit_button" class="btn btn-info shadow-2 mb-4 float-right" data-dismiss="modal"
+                aria-hidden="true">{{_('Confirm')}}</button>
+              <button type="button" class="btn btn-warning shadow-2 mb-4 float-right"
+                data-dismiss="modal">{{_('Cancel')}}</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
-  <script>
-    $(document).ready(function() {
-      //init DateTimePickers
-      md.initFormExtendedDatetimepickers();
-    });
-  </script>
-  
+<script>
+  $(document).ready(function () {
+    //init DateTimePickers
+    md.initFormExtendedDatetimepickers();
+  });
+  // When modal is displayed
+  $('#modifyModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var userid = button.data('userid');
+    var username = button.data('username');
+    var modal = $(this);
+    modal.find('#username').val(username);
+    api_v1.get('/users/' + userid, function (result, status, xhr) {
+
+      modal.find('#email').val(result.user.email);
+      if (result.user.active) {
+        modal.find('#active_status').prop("checked", true);
+      } else {
+        modal.find('#active_status').prop("checked", false);
+      }
+    }, function (xhr, status, error) {
+
+    })
+    modal.find('#submit_button')[0].onclick = function () {
+      userModify(userid, 'formUserModify');
+    }
+  })
+</script>
+
 {% endblock javascripts %}

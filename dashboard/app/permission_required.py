@@ -31,20 +31,17 @@ def permission_required(permission):
         def decorated_function(*args, **kwargs):
             try:
                 flag = False
-                clslog.info(current_user)
                 if current_user:
                     role_id = current_user.role_id
                     role = db.session.query(Role).filter_by(id=role_id).first()
-                    clslog.info(role_id)
-                    clslog.info(role.permissions)
-                    clslog.info(permission)
                     if role.permissions & permission == permission:
                         flag = True
                 if flag:
                     return f(*args, **kwargs)
                 else:
                     return render_template('page-403.html'), 403
-            except:
+            except Exception as e:
+                clslog.error(e)
                 return render_template('page-403.html'), 403
         return decorated_function
     return decorator

@@ -19,24 +19,26 @@
 
         <h6 class="card-category">
           {% if msg %}
-            {{ msg | safe }}
+          {{ msg | safe }}
           {% else %}
-            {{_('Add your credentials')}}
+          {{_('Add your credentials')}}
           {% endif %}
         </h6>
 
         <br />
 
-        <form role="form" method="post" action="">
+        <form role="form" method="post" action="" id="form-login">
 
           {{ form.hidden_tag() }}
 
           <div class="input-group mb-3">
-            <input class="form-control" placeholder="{{_('Username')}}" id="username_login" name="username" required="" type="text" value="">
+            <input class="form-control" placeholder="{{_('Username')}}" id="username_login" name="username" required=""
+              type="text" value="">
           </div>
 
           <div class="input-group mb-4">
-            <input class="form-control" placeholder="{{_('Password')}}" id="pwd_login" name="password" p="" required="" type="password" value="">
+            <input class="form-control" placeholder="{{_('Password')}}" id="pwd_login" name="password" p="" required=""
+              type="password" value="">
           </div>
 
           <div class="form-group text-left">
@@ -50,7 +52,8 @@
               </label>
             </div>
 
-            <button type="submit" name="login" class="btn btn-info shadow-2 mb-4">{{_('Login')}}</button>
+            <button type="submit" name="login" class="btn btn-info shadow-2 mb-4"
+              onclick="authJWT()">{{_('Login')}}</button>
 
         </form>
 
@@ -63,4 +66,24 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+
+<script>
+  function authJWT() {
+    let fromData = {};
+    let value = $('#form-login').serializeArray();
+    $.each(value, function (index, item) {
+      if (item.name == 'password' || item.name == 'username') {
+        fromData[item.name] = item.value;
+      }
+    });
+    let json = JSON.stringify(fromData);
+    api_v1.jsonPost('/auth', json, function (result, status, xhr) {
+      sessionStorage.setItem("access_token", result.access_token);
+      sessionStorage.setItem("refresh_token", result.refresh_token);
+    }, function (xhr, status, error) {
+      console.log(error);
+    });
+  }
+</script>
+{% endblock javascripts %}
