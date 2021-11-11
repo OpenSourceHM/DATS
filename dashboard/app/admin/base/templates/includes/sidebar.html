@@ -16,52 +16,49 @@
           <p>{{_('dashboard')}}</p>
         </a>
       </li>
-      <li class="nav-item {% if 'ui-user-manage' in segment %} active {% endif %}">
-        <a class="nav-link" href="/admin/ui-user-manage">
+      <!-- See role table -->
+      {% if current_user.role_id == 2 %}
+      <li class="nav-item {% if 'users' in segment %} active {% endif %}">
+        <a class="nav-link" href="/admin/users">
           <i class="material-icons">manage_accounts</i>
           <p>{{_('User Management')}}</p>
         </a>
       </li>
-      <li class="nav-item {% if 'page-user' in segment %} active {% endif %}">
-        <a class="nav-link" href="/admin/page-user">
+      {% endif %}
+      <li class="nav-item {% if 'profile' in segment %} active {% endif %}">
+        <a class="nav-link" href="/admin/profile">
           <i class="material-icons">person</i>
           <p>{{_('User Profile')}}</p>
         </a>
       </li>
       <!-- Settings -->
-      <li class="nav-item {% if 'ui-icons' in segment %} active {% endif %}">
-        <a class="nav-link" href="/admin/ui-icons">
+      <li class="nav-item {% if 'system' in segment %} active {% endif %}">
+        <a class="nav-link" href="/admin/system">
           <i class="material-icons">bubble_chart</i>
           <p>{{_('System Settings')}}</p>
         </a>
       </li>
-      <li class="nav-item {% if 'ui-maps' in segment %} active {% endif %}">
-        <a class="nav-link" href="/admin/ui-maps">
+      <li class="nav-item {% if 'network' in segment %} active {% endif %}">
+        <a class="nav-link" href="/admin/network">
           <i class="material-icons">location_ons</i>
           <p>{{_('Network Settings')}}</p>
         </a>
       </li>
-      <li class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
-        <a class="nav-link" href="/admin/ui-tables">
-          <i class="material-icons">content_paste</i>
+      <li class="nav-item {% if 'app-tcp' in segment %} active {% endif %}">
+        <a class="nav-link" href="/admin/app-tcp">
+          <i class="material-icons">view_headline</i>
           <p>{{_('TCP Proxy Management')}}</p>
         </a>
       </li>
-      <li class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
-        <a class="nav-link" href="/admin/ui-tables">
-          <i class="material-icons">content_paste</i>
+      <li class="nav-item {% if 'app-httpx' in segment %} active {% endif %}">
+        <a class="nav-link" href="/admin/app-httpx">
+          <i class="material-icons">storage</i>
           <p>{{_('HTTP/S Proxy Management')}}</p>
         </a>
       </li>
-      <li class="nav-item {% if 'ui-notifications' in segment %} active {% endif %}">
-        <a class="nav-link" href="/admin/ui-notifications">
-          <i class="material-icons">notifications</i>
-          <p>Notifications</p>
-        </a>
-      </li>
       <!-- User Manual -->
-      <li class="nav-item {% if 'ui-typography' in segment %} active {% endif %}">
-        <a class="nav-link" href="/admin/ui-typography">
+      <li class="nav-item {% if 'manual' in segment %} active {% endif %}">
+        <a class="nav-link" href="/admin/manual">
           <i class="material-icons">library_books</i>
           <p>{{_('User Manual')}}</p>
         </a>
@@ -69,7 +66,7 @@
       <!--Logout-->
       <li class="nav-item ">
         <a class="nav-link" href="{{ url_for('base_blueprint.logout') }}">
-          <i class="material-icons">directions_run</i>
+          <i class="material-icons">exit_to_app</i>
           <p>{{_('Logout')}}</p>
         </a>
       </li>

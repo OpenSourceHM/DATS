@@ -10,7 +10,7 @@
 <div class="row">
   <div class="col-md-8">
     <div class="card">
-      <div class="card-header card-header-primary">
+      <div class="card-header card-header-info">
         <h4 class="card-title">{{_('Edit')}} {{_('User')}}</h4>
         <p class="card-category">{{_('Complete your profile')}}</p>
       </div>
@@ -28,7 +28,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">{{_('Username')}}</label>
-                <input type="text" class="form-control" name="username" value="{{ current_user.username }}">
+                <input type="text" class="form-control" name="username" value="{{ current_user.username }}" required>
               </div>
             </div>
             <div class="col-md-6">
@@ -43,29 +43,35 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">{{_('Password')}}</label>
-                <input type="password" class="form-control" name="pawssword">
+                <input type="password" class="form-control" name="password" id="edit_password" required>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">{{_('RepeatPassword')}}</label>
-                <input type="password" class="form-control" name="password">
+                <input type="password" class="form-control" name="repassword" id="edit_repassword" required>
               </div>
             </div>
           </div>
           <div class="clearfix"></div>
-          <br>
+
+          <div class="row">
+            <div class="col-md-12">
+              <p class="text-danger" id="validate_msg"> </p>
+            </div>
+          </div>
+
           <div class="row">
             <div class="col-md-12">
               <div class="input-group mb-4">
                 <label for="active">{{_('ActiveStatus')}}</label>&nbsp;&nbsp;
-                <input type="checkbox" id="u_active_status" name="active" {% if current_user.active %} checked {%
-                  endif %}>
+                <input type="checkbox" id="u_active_status" name="active" {% if current_user.active %} checked {% endif
+                  %}>
               </div>
             </div>
           </div>
           <div class="clearfix"></div>
-          <button type="button" onclick="userModify({{current_user.id}}, 'u_formUserModify')"
+          <button type="button" onclick="userModify({{current_user.id}}, 'u_formUserModify')" id="confirmButton"
             class="btn btn-primary pull-right">{{_('Confirm')}}</button>
         </form>
       </div>
@@ -75,7 +81,7 @@
     <div class="card card-profile">
       <div class="card-avatar">
         <a href="#">
-          <img class="img" src="/admin/static/assets/img/faces/marc.jpg" />
+          <img class="img" src="/admin/static/assets/img/faces/marc.png" />
         </a>
       </div>
       <div class="card-body">
@@ -100,6 +106,29 @@
 
 
 <script>
-
+  $(function () {
+    function validate_check() {
+      if ($('#edit_password').val() != $('#edit_repassword').val() || !$('#edit_repassword').val() || !$('#edit_password').val()) {
+        $('#confirmButton').prop('disabled', 'disabled');
+        $('#validate_msg').text($('#msg_pwd_twicecheck_failed').text());
+      }
+      else {
+        $('#confirmButton').prop('disabled', false);
+        $('#validate_msg').text("");
+      }
+    }
+    $('#edit_repassword').blur(function () {
+      validate_check();
+    })
+    $('#edit_password').blur(function () {
+      validate_check();
+    })
+    $('.card').mousemove(function () {
+      validate_check();
+    });
+    $('.card').keyup(function () {
+      validate_check();
+    });
+  })
 </script>
 {% endblock javascripts %}

@@ -18,7 +18,8 @@
     {% block title %}{% endblock %} | DATS
   </title>
 
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+    name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="/admin/static/assets/css/roboto-css.css" />
   <link rel="stylesheet" href="/admin/static/assets/css/font-awesome.min.css">
@@ -33,8 +34,11 @@
 </head>
 
 <body class="">
+  <!-- Message start -->
   <p id="msg_success" style="display: none;">{{_('Operaion successfully done')}}</p>
   <p id="msg_failed" style="display: none;">{{_('Operaion failed')}}</p>
+  <p id="msg_pwd_twicecheck_failed" style="display: none;">{{_('Twice input password not the same')}}</p>
+  <!-- Message end -->
   <div class="wrapper ">
 
     {% include 'includes/sidebar.html' %}
@@ -62,9 +66,10 @@
   {% include 'includes/scripts.html' %}
 
   {% include 'includes/scripts-sidebar.html' %}
-  
+
   <!-- Specific Page JS goes HERE  -->
   {% block javascripts %}{% endblock javascripts %}
-  
+
 </body>
+
 </html>

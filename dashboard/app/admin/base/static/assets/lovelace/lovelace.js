@@ -10,7 +10,7 @@ function removeSettings(key) {
   localStorage.removeItem(key);
 }
 
-
+// API implementations
 class API {
   constructor(domain) {
     this.domain = domain;
@@ -87,10 +87,10 @@ class API {
     });
   }
 }
-
+// Gloabal API instance
 let api_v1 = new API("/api/v1");
 
-// Refresh token
+// Refresh token interval
 window.onload = () => {
   setInterval(function () {
     api_v1.refresh_token()
@@ -98,14 +98,14 @@ window.onload = () => {
 }
 
 // User management
-
 function userModify(userid, formid) {
   let formData = {};
   $.each($('#' + formid).serializeArray(), function (index, item) {
     formData[item.name] = item.value;
   });
-  console.log(formData)
+  delete(formData['repassword']);
   formData['active'] = formData['active'] === "on" ? true : false;
+  console.log(formData)
 
   let json = JSON.stringify(formData);
   api_v1.request('/users/' + userid, 'PUT', api_v1.authHeader(), json, function (result, status, xhr) {
@@ -117,7 +117,7 @@ function userModify(userid, formid) {
 
 }
 // TODO: Clean bootstrap hidden modal form data
-
 $('.modal').on('hidden.bs.modal', function () {
   $('#formUserModify').find('input[type=text], input[type=password], input[type=number], input[type=email], textarea').val('');
 })
+

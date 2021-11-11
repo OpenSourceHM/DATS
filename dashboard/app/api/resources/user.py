@@ -162,7 +162,7 @@ class UserList(Resource):
         schema = UserSchema()
         user = schema.load(request.json)
 
-         # Check usename exists
+        # Check usename exists
         exist_user = User.query.filter_by(username=user.username).first()
         if exist_user:
             return {"msg": "username already exists", "user": schema.dump(user)}, 400

@@ -24,7 +24,7 @@ from flask_babel import lazy_gettext as _l
 def index():
     return render_template('index.html', segment='index')
 
-@blueprint.route('/ui-user-manage')
+@blueprint.route('/users')
 @permission_required(Permissions.ADMINISTRATOR)
 @login_required
 def ui_user_manage():
@@ -33,7 +33,7 @@ def ui_user_manage():
         schema = UserSchema(many=True)
         query = User.query
         result = paginate(query, schema)
-        template = 'ui-user-manage.html'
+        template = 'users.html'
 
         # Detect the current page
         segment = get_segment(request)
