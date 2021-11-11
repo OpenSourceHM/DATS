@@ -8,97 +8,91 @@
 {% block content %}
 
 <div class="container-fluid">
-  <div class="card card-plain">
-    <div class="card-header card-header-info">
-      <h4 class="card-title">{{_('System Settings')}}</h4>
-      <p class="card-category">{{_('Includes device SN, installation location, etc.')}}
-      </p>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-info">
+          <h4 class="card-title">{{_('System Settings')}}</h4>
+          <p class="card-category">{{_('Includes device SN, installation location, etc.')}}
+        </div>
         <div class="card-body">
+          <form id="formSystemInfo" method="post">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{_('Device')}}{{_('ID')}}</label>
+                  <input type="text" class="form-control" value="{{data.sn}}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{_('Device')}}{{_('Name')}}</label>
+                  <input type="text" class="form-control" name="device_name" value="{{data.name}}" required>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{_('Device')}}{{_('Address')}}</label>
+                  <input type="email" class="form-control" name="device_addr" value="{{data.address}}">
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{_('Latitude')}}</label>
+                  <input type="text" class="form-control" name="device_latitude" id="device_latitude"
+                    value="{{data.latitude}}">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{_('Longitude')}}</label>
+                  <input type="text" class="form-control" name="device_longitude" id="device_longitude"
+                    value="{{data.longitude}}">
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
 
-          <!-- TODO: forms here -->
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-danger" id="validate_msg"> </p>
+              </div>
+            </div>
 
-
+            <div class="clearfix"></div>
+            <button type="button" onclick="" id="confirmButton"
+              class="btn btn-primary pull-right">{{_('Confirm')}}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header card-header-warning">
+          <h4 class="card-title">{{_('System Upgrade')}}</h4>
+        </div>
+        <div class="card-body">
 
         </div>
       </div>
     </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header card-header-success">
+          <h4 class="card-title">{{_('Data Management')}}</h4>
+        </div>
+        <div class="card-body">
 
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-header card-header-info">
-        <h4 class="card-title">{{_('Device Information')}}</h4>
-      </div>
-      <div class="card-body">
-        <form id="formSystemInfo" method="post">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label class="bmd-label-floating">{{_('Device')}}{{_('ID')}}</label>
-                <input type="text" class="form-control" disabled value="">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label class="bmd-label-floating">{{_('Device')}}{{_('Name')}}</label>
-                <input type="text" class="form-control" name="device_name" value="" required>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <label class="bmd-label-floating">{{_('Device')}}{{_('Address')}}</label>
-                <input type="email" class="form-control" name="device_addr" value="">
-              </div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="bmd-label-floating">{{_('Latitude')}}</label>
-                <input type="password" class="form-control" name="device_latitude" id="device_latitude" required>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="bmd-label-floating">{{_('Longitude')}}</label>
-                <input type="password" class="form-control" name="device_longitude" id="device_longitude" required>
-              </div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
-
-          <div class="row">
-            <div class="col-md-12">
-              <p class="text-danger" id="validate_msg"> </p>
-            </div>
-          </div>
-
-          <div class="clearfix"></div>
-          <button type="button" onclick="userModify({{current_user.id}}, 'u_formUserModify')" id="confirmButton"
-            class="btn btn-primary pull-right">{{_('Confirm')}}</button>
-        </form>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-header card-header-info">
-        <h4 class="card-title"></h4>
-      </div>
-      <div class="card-body">
-        
-      </div>
-    </div>
-  </div>
+
 </div>
 {% endblock content %}
 

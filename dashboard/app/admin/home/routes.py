@@ -19,15 +19,17 @@ from app.permission_required import permission_required
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 
+
 @blueprint.route('/index')
 @login_required
 def index():
     return render_template('index.html', segment='index')
 
+
 @blueprint.route('/users')
 @permission_required(Permissions.ADMINISTRATOR)
 @login_required
-def ui_user_manage():
+def users_manage():
     try:
 
         schema = UserSchema(many=True)
@@ -47,7 +49,148 @@ def ui_user_manage():
         return render_template('page-404.html'), 404
 
     except Exception as e:
-        #traceback.print_exc(e)
+        # traceback.print_exc(e)
+        return render_template('page-500.html'), 500
+
+
+@blueprint.route('/system')
+@login_required
+def system_settings():
+    try:
+        # TODO: query system settings
+        result = {
+            'name': 'Test',
+            'address': 'Test adres',
+            'sn': '12346546464',
+
+            'latitude': '2323.232323',
+            'longitude': '2323423.234234234',
+        }
+        template = 'system.html'
+
+        # Detect the current page
+        segment = get_segment(request)
+
+        print(current_user)
+
+        # Serve the file (if exists) from app/templates/FILE.html
+        return render_template(template, segment=segment, data=result)
+
+    except TemplateNotFound:
+        return render_template('page-404.html'), 404
+
+    except Exception as e:
+        # traceback.print_exc(e)
+        return render_template('page-500.html'), 500
+
+
+@blueprint.route('/network')
+@login_required
+def network_settings():
+    try:
+        # TODO: query network settings
+        result = {
+            'port': {
+                'web': 80,
+                'filebrowser': 8080,
+                'nginx': 8081,
+                'haproxy': 8082
+            },
+            'mode': 2,
+            'bond': {
+
+                'ifname': "bond9",
+                'dhcp': 1,
+                'mtu': 1500,
+                'mac': "AA:AA:AA:AA:AA:AA",
+                'ip': "192.168.20.12",
+                'gw': "192.168.20.1",
+                'netmask': "255.255.255.0",
+            },
+            'device': [
+                {
+                    'ifname': "eth0",
+                    'dhcp': 1,
+                    'mtu': 1500,
+                    'ip': "192.168.20.12",
+                    'gw': "192.168.20.1",
+                    'netmask': "255.255.255.0",
+                    'mac': "AA:AA:AA:AA:AA:AA",
+                },
+                {
+
+                    'ifname': "eth1",
+                    'dhcp': 1,
+                    'mtu': 1500,
+                    'ip': "192.168.20.12",
+                    'gw': "192.168.20.1",
+                    'netmask': "255.255.255.0",
+                    'mac': "AA:AA:AA:AA:AA:AA",
+                }
+            ],
+            'dns': ['192.168.0.100', '61.139.2.69'],
+        }
+        template = 'network.html'
+
+        # Detect the current page
+        segment = get_segment(request)
+
+        print(current_user)
+
+        # Serve the file (if exists) from app/templates/FILE.html
+        return render_template(template, segment=segment, data=result)
+
+    except TemplateNotFound:
+        return render_template('page-404.html'), 404
+
+    except Exception as e:
+        traceback.print_exc(e)
+        return render_template('page-500.html'), 500
+
+
+@blueprint.route('/app-tcp')
+@login_required
+def app_tcp():
+    try:
+        result = []
+        template = 'app-tcp.html'
+
+        # Detect the current page
+        segment = get_segment(request)
+
+        print(current_user)
+
+        # Serve the file (if exists) from app/templates/FILE.html
+        return render_template(template, segment=segment, data=result)
+
+    except TemplateNotFound:
+        return render_template('page-404.html'), 404
+
+    except Exception as e:
+        # traceback.print_exc(e)
+        return render_template('page-500.html'), 500
+
+
+@blueprint.route('/app-http')
+@login_required
+def app_http():
+    try:
+        result = []
+        template = 'app-http.html'
+
+        # Detect the current page
+        segment = get_segment(request)
+
+        print(current_user)
+
+        # Serve the file (if exists) from app/templates/FILE.html
+        return render_template(template, segment=segment, data=result)
+
+    except TemplateNotFound:
+        return render_template('page-404.html'), 404
+
+    except Exception as e:
+        # traceback.print_exc(e)
         return render_template('page-500.html'), 500
 
 

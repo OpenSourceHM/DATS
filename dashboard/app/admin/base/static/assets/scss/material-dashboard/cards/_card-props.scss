@@ -1,0 +1,48 @@
+.card-props{
+  margin-top: 30px;
+
+  .card-avatar {
+      margin-top: -55px;
+      margin-left: 20px;
+      border-radius: 50%;
+      overflow: hidden;
+      padding: 0;
+      z-index: 50;
+
+      @include shadow-big();
+
+      & + .card-body {
+          margin-top: 15px;
+      }
+      img {
+          width: 100%;
+          height: auto;
+      }
+  }
+
+  .card-body + .card-footer {
+      margin-top: -15px;
+  }
+
+  .card-footer {
+      .btn.btn-just-icon {
+          font-size: 20px;
+          padding: 12px 12px;
+          line-height: 1em;
+      }
+  }
+
+  &.card-plain {
+      .card-avatar {
+          margin-top: 0;
+      }
+  }
+
+  .card-header:not([class*="card-header-"]){
+    background: transparent;
+  }
+  .card-avatar {
+    max-width: 50px;
+    max-height: 50px;
+  }
+}
