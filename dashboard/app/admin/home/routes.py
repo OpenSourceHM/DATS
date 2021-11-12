@@ -107,6 +107,11 @@ def network_settings():
                 'gw': "192.168.20.1",
                 'netmask': "255.255.255.0",
             },
+            'routes': [
+                {"target": "192.168.20.1", "mask": "244.255.255.0", "next": "192.168.3.1", "dev": 'et0'}, 
+                {"target": "192.168.20.1", "mask": "244.255.255.0", "next": "192.168.3.1", "dev": 'et0'}, 
+                {"target": "192.168.20.1", "mask": "244.255.255.0", "next": "192.168.3.1", "dev": 'et0'}, 
+            ],
             'device': [
                 {
                     'ifname': "eth0",
@@ -128,7 +133,8 @@ def network_settings():
                     'mac': "AA:AA:AA:AA:AA:AA",
                 }
             ],
-            'dns': ['192.168.0.100', '61.139.2.69'],
+            'mdns': '192.168.0.100', 
+            'sdns': '61.139.2.69',
         }
         template = 'network.html'
 

@@ -8,84 +8,89 @@
 {% block content %}
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header card-header-info">
-          <h4 class="card-title">{{_('Network Settings')}}</h4>
-          <p class="card-category">{{_('Multi-NIC configuration')}}
+  <form id="formSystemInfo" method="post">
+    <!-- Port -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-props">
+          <div class="card-header card-header-success">
+            <h4 class="card-title card-category float-right"> {{ _('Port')}}</h4>
+          </div>
+          <div class="card-avatar">
+            <a href="#">
+              <img class="img" src="/admin/static/assets/img/faces/listen_port.png" />
+            </a>
+          </div>
+
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{_('HTTP')}}</label>
+                  <input type="number" class="form-control" name="http_port" value="{{data.port.web}}" required>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{_('Filebrowser')}}</label>
+                  <input type="number" class="form-control" name="fb_port" value="{{data.port.filebrowser}}" required>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{_('NGINX')}}</label>
+                  <input type="number" class="form-control" name="nginx_port" value="{{data.port.nginx}}" required>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{_('HAPROXY')}}</label>
+                  <input type="number" class="form-control" name="haproxy_port" value="{{data.port.haproxy}}" required>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-danger" id="validate_msg_device"> </p>
+              </div>
+            </div>
+            <button type="button" onclick="" id="confirmButton"
+              class="btn btn-primary pull-right">{{_('Confirm')}}</button>
+          </div>
         </div>
-        <div class="card-body">
-          <form id="formSystemInfo" method="post">
-            <!-- Port -->
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card card-props">
-                  <div class="card-header card-header-success">
-                    <h4 class="card-title card-category float-right"> {{ _('Port')}}</h4>
-                  </div>
-                  <div class="card-avatar">
-                    <a href="#">
-                      <img class="img" src="/admin/static/assets/img/faces/listen_port.png" />
-                    </a>
-                  </div>
+      </div>
+    </div>
+    <!-- Mode -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-props">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title card-category float-right"> {{ _('Network Device')}}</h4>
+          </div>
+          <div class="card-avatar">
+            <a href="#">
+              <img class="img" src="/admin/static/assets/img/faces/network.png" />
+            </a>
+          </div>
 
-                  <div class="card-body">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">{{_('HTTP')}}</label>
-                      <input type="number" class="form-control" name="http_port" value="{{data.port.web}}" required>
-                    </div>
-                    <div class="form-group">
-                      <label class="bmd-label-floating">{{_('Filebrowser')}}</label>
-                      <input type="number" class="form-control" name="fb_port" value="{{data.port.filebrowser}}"
-                        required>
-                    </div>
-                    <div class="form-group">
-                      <label class="bmd-label-floating">{{_('NGINX')}}</label>
-                      <input type="number" class="form-control" name="nginx_port" value="{{data.port.nginx}}" required>
-                    </div>
-                    <div class="form-group">
-                      <label class="bmd-label-floating">{{_('HAPROXY')}}</label>
-                      <input type="number" class="form-control" name="haproxy_port" value="{{data.port.haproxy}}"
-                        required>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="card-body">
+            <div class="input-group mb-4">
+              <select class="form-select form-control" aria-label="{{_('Network Mode')}}" id="network-mode">
+                <option {% if data.mode %}selected {% endif%} value="0">{{_('Normal Network Mode')}}</option>
+                <option {% if data.mode %}selected {% endif%} value="1">{{_('Load Balancing Network Mode')}}
+                </option>
+                <option {% if data.mode %}selected {% endif%} value="2">{{_('Redundant Network Mode')}}</option>
+              </select>
             </div>
-            <!-- Mode -->
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card card-props">
-                  <div class="card-header card-header-warning">
-                    <h4 class="card-title card-category float-right"> {{ _('Network Device')}}</h4>
-                  </div>
-                  <div class="card-avatar">
-                    <a href="#">
-                      <img class="img" src="/admin/static/assets/img/faces/network.png" />
-                    </a>
-                  </div>
 
-                  <div class="card-body">
-                    <div class="input-group mb-4">
-                      <select class="form-select form-control" aria-label="{{_('Network Mode')}}" id="network-mode">
-                        <option {% if data.mode %}selected {% endif%} value="0">{{_('Normal Network Mode')}}</option>
-                        <option {% if data.mode %}selected {% endif%} value="1">{{_('Load Balancing Network Mode')}}
-                        </option>
-                        <option {% if data.mode %}selected {% endif%} value="2">{{_('Redundant Network Mode')}}</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+
             <div class="row">
               <!-- Network device -->
               {% for dev in data.device%}
-              <div class="col-md-4 normal-network-device">
+              <div class="col-md-12 normal-network-device">
                 <div class="card card-props">
-                  <div class="card-header card-header-success">
-                    <h4 class="card-title card-category float-right"> {{dev.ifname}}</h4>
+                  <div class="card-header card-header-default">
+                    <h4 class="card-title text-success float-right"> {{dev.ifname}}</h4>
                   </div>
                   <div class="card-avatar">
                     <a href="#">
@@ -126,10 +131,10 @@
               </div>
               {% endfor %}
 
-              <div class="col-md-4 bond-network-device">
+              <div class="col-md-12 bond-network-device">
                 <div class="card card-props">
-                  <div class="card-header card-header-success">
-                    <h4 class="card-title card-category float-right"> {{data.bond.ifname}}</h4>
+                  <div class="card-header card-header-default">
+                    <h4 class="card-title text-success float-right"> {{data.bond.ifname}}</h4>
                   </div>
                   <div class="card-avatar">
                     <a href="#">
@@ -168,12 +173,13 @@
                   </div>
                 </div>
               </div>
-
+            </div>
+            <div class="row">
               <!-- DNS -->
-              <div class="col-md-4" id="div-dns-container">
+              <div class="col-md-12" id="div-dns-container">
                 <div class="card card-props">
-                  <div class="card-header card-header-primary">
-                    <h4 class="card-title card-category float-right"> {{ _('DNS')}}</h4>
+                  <div class="card-header card-header-default">
+                    <h4 class="card-title text-primary float-right"> {{ _('DNS')}}</h4>
                   </div>
                   <div class="card-avatar">
                     <a href="#">
@@ -182,34 +188,62 @@
                   </div>
 
                   <div class="card-body">
-                    {% for _dns in data.dns%}
-                    <div class="form-group">
-                      <label class="bmd-label-floating">{{_('DNS')}}</label>
-                      <input type="text" class="form-control" name="dns" value="{{_dns}}" required>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">{{_('MDNS')}}</label>
+                          <input type="text" class="form-control" name="mdns" value="{{data.mdns}}" required>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">{{_('SDNS')}}</label>
+                          <input type="text" class="form-control" name="sdns" value="{{data.sdns}}" required>
+                        </div>
+                      </div>
                     </div>
-                    {% endfor %}
                   </div>
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-danger" id="validate_msg_device"> </p>
+              </div>
+            </div>
+            <button type="button" onclick="" id="confirmButton"
+              class="btn btn-primary pull-right">{{_('Confirm')}}</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-info">
+            <h4 class="card-title">{{_('Route Settings')}}</h4>
+            <p class="card-category">{{_('Route table of DATS')}}</p>
+          </div>
+          <div class="card-body">
             <div class="clearfix"></div>
 
             <div class="row">
               <div class="col-md-12">
-                <p class="text-danger" id="validate_msg"> </p>
+                <p class="text-danger" id="validate_msg_route"> </p>
               </div>
             </div>
-
-            <div class="clearfix"></div>
             <button type="button" onclick="" id="confirmButton"
               class="btn btn-primary pull-right">{{_('Confirm')}}</button>
-          </form>
+
+          </div>
         </div>
       </div>
+
     </div>
 
-  </div>
-
+  </form>
 </div>
 {% endblock content %}
 
@@ -219,12 +253,12 @@
 <script>
   function modeChange() {
     if ($('#network-mode').val() == 0) {
-      $('#div-dns-container').prop('class', 'col-md-4');
       $('.bond-network-device').hide();
       $('.normal-network-device').show();
+      $('.normal-network-device').prop('class', 'col-md-6 normal-network-device');
     } else {
-      $('#div-dns-container').prop('class', 'col-md-6');
       $('.bond-network-device').show();
+      $('.bond-network-device').prop('class', 'col-md-12 bond-network-device');
       $('.normal-network-device').hide();
     }
   }
