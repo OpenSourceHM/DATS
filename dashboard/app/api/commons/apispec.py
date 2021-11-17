@@ -3,7 +3,7 @@ from apispec import APISpec
 from apispec.exceptions import APISpecError
 from apispec.ext.marshmallow import MarshmallowPlugin
 from apispec_webframeworks.flask import FlaskPlugin
-
+from app.version import ver_api
 
 class FlaskRestfulPlugin(FlaskPlugin):
     """Small plugin override to handle flask-restful resources"""
@@ -38,8 +38,8 @@ class APISpecExt:
             self.init_app(app, **kwargs)
 
     def init_app(self, app, **kwargs):
-        app.config.setdefault("APISPEC_TITLE", "API of lovelacleee.com manager")
-        app.config.setdefault("APISPEC_VERSION", "1.1.2")
+        app.config.setdefault("APISPEC_TITLE", "API of DATS")
+        app.config.setdefault("APISPEC_VERSION", ver_api)
         app.config.setdefault("OPENAPI_VERSION", "3.0.2")
         app.config.setdefault("SWAGGER_JSON_URL", "/static/swagger.json")
         app.config.setdefault("SWAGGER_UI_URL", "")
@@ -73,11 +73,10 @@ class APISpecExt:
         if swagger:
             spec_dict['swagger'] = "2.0"
             spec_dict['openapi'] = ""
-        spec_dict['info']['decription'] = r'''Home api server is about VPN gateway server control,
-        and some other remote control functions, basically for Raspberry Pi4 and Thinkpad E420.'''
+        spec_dict['info']['decription'] = r'''DATS API'''
         spec_dict['info']['termsOfService'] = r'''http://swagger.io/terms/'''
         spec_dict['info']['contact'] = {
-            'email' : 'lovelacelee@gmail.com'
+            'email' : 'cong.li@huamaitel.com'
         }
         spec_dict['info']['license'] = {
             'name': "Apache 2.0",

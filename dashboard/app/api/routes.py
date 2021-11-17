@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 """
-Copyright (c) 2021 - present Connard.Lee
+Copyright (c) 2021 - present cong.li@huamaitel.com
 """
 
 from flask import Blueprint, current_app, jsonify
@@ -10,7 +10,9 @@ from app.extensions import apispec
 
 from app.api.resources import UserResource, UserList
 from app.api.schemas import UserSchema
-from app.api.resources import ImgProxy
+from app.api.resources import Check
+from app.api.resources import ConfigResource
+from app.api.resources import ConfigList
 
 from app.api import blueprint
 api = Api(blueprint)
@@ -28,10 +30,17 @@ def register_views():
     api.add_resource(UserList, "/users", endpoint="users")
     apispec.spec.path(view=UserResource, app=current_app)
     apispec.spec.path(view=UserList, app=current_app)
-    # CNBING
+    # Check
     # --------
-    api.add_resource(ImgProxy, "/background/<int:idx>/<int:n>", endpoint="background")
-    apispec.spec.path(view=ImgProxy, app=current_app)
+    api.add_resource(Check, "/check/<string:type>", endpoint="check")
+    apispec.spec.path(view=Check, app=current_app)
+
+    # Config API
+    # --------
+    api.add_resource(ConfigResource, '/config/<string:type>', endpoint="config")
+    api.add_resource(ConfigList, '/config', endpoint="configlist")
+    apispec.spec.path(view=ConfigResource, app=current_app)
+    apispec.spec.path(view=ConfigList, app=current_app)
 
 @blueprint.errorhandler(ValidationError)
 def handle_marshmallow_error(e):

@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 """
-Copyright (c) 2021 - present Connard.Lee
+Copyright (c) 2021 - present cong.li@huamaitel.com
 """
 
 
@@ -10,7 +10,6 @@ from flask_sqlalchemy import SQLAlchemy
 from importlib import import_module
 from logging import basicConfig, DEBUG, getLogger, StreamHandler
 from os import path
-from clslq import clslog
 from flask import Blueprint
 from app.extensions import apispec
 from app.extensions import db
@@ -18,7 +17,7 @@ from app.extensions import jwt
 from app.extensions import migrate
 from app.extensions import babel
 from app.plugin import cors_init_app
-
+from app.plugin import register_consul
 login_manager = LoginManager()
 
 
@@ -29,10 +28,11 @@ def user_init(app, database):
     admin = User.query.filter_by(username='admin').first()
 
     if len(exist) == 0 or admin == None:
-        user = User(username="admin", email="lovelacelee@gmail.com", password="admin", active=True, role_id=Permissions.ADMINISTRATOR)
+        user = User(username="admin", email="lovelacelee@gmail.com",
+                    password="admin", active=True, role_id=Permissions.ADMINISTRATOR)
         database.session.add(user)
         database.session.commit()
-        clslog.info("created user admin")
+        app.logger.info("created user admin")
     Role.init_role()
 
 
@@ -81,7 +81,7 @@ def configure_database(app):
         try:
             user_init(app, db)
         except Exception as e:
-            clslog.critical(e)
+            app.logger.critical(e)
 
     @app.teardown_request
     def shutdown_session(exception=None):
@@ -98,4 +98,6 @@ def create_app(config):
     register_blueprints(app)
     configure_database(app)
     configure_apispec(app)
+
+    register_consul(app)
     return app

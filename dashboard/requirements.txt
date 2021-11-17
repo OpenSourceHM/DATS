@@ -19,6 +19,5 @@ passlib
 apispec[yaml]
 apispec-webframeworks
 
-clslq
 flask_babel
 python-dotenv

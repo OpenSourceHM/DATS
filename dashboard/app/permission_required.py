@@ -5,7 +5,6 @@ from flask import session, render_template
 from flask_login import current_user
 from app.extensions import db
 from app.admin.base.models.user import User, Role
-from clslq import clslog
 
 def permission_can(current_user, permission):
     """
@@ -41,7 +40,7 @@ def permission_required(permission):
                 else:
                     return render_template('page-403.html'), 403
             except Exception as e:
-                clslog.error(e)
+                # print(e)
                 return render_template('page-403.html'), 403
         return decorated_function
     return decorator

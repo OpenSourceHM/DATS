@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 """
 This tool used for flask_babel update translate *.pot *.po *.mo files
-Copyright (c) 2021 - present Connard.Lee
+Copyright (c) 2021 - present cong.li@huamaitel.com
 """
 
 import click

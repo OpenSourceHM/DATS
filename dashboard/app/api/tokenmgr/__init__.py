@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 """
-Copyright (c) 2021 - present Connard.Lee
+Copyright (c) 2021 - present cong.li@huamaitel.com
 
 Token manager is only used for API authentication
 """
