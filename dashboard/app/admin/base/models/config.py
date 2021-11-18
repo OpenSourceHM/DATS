@@ -1,7 +1,7 @@
 """DATS configuration table
 """
 from app.extensions import db
-
+import json
 
 class ConfigTable(db.Model):
 
@@ -14,5 +14,6 @@ class ConfigTable(db.Model):
         return {
             "id": self.id,
             "key": self.key,
-            "value": self.value
+            "value": self.value,
+            "value_dict": json.loads(self.value)
         }

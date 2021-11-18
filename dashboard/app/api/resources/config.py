@@ -5,6 +5,7 @@ from flask_jwt_extended import jwt_required
 from flask import Response, request, current_app
 from app.plugin import async_api
 from app.api.schemas import ConfigSchema
+from app.api.schemas import ConfigPostSchema
 from app.admin.base.models.config import ConfigTable
 from app.extensions import db
 
@@ -15,7 +16,7 @@ class ConfigResource(Resource):
     get:
       description: Get all configure
       tags:
-        - api
+        - Config
       parameters:
         - name: type
           in: path
@@ -44,7 +45,7 @@ class ConfigResource(Resource):
 
     put:
       tags:
-        - api
+        - Config
       parameters:
         - in: path
           name: type
@@ -66,6 +67,8 @@ class ConfigResource(Resource):
                     type: string
                     example: config updated
                   cfg: ConfigSchema
+        400:
+          description: Exception
         404:
           description: config does not exists
     """
@@ -80,10 +83,16 @@ class ConfigResource(Resource):
     async def put(self, type):
         schema = ConfigSchema(partial=True)
         cfg = ConfigTable.query.filter_by(key=type).first_or_404()
-        cfg = schema.load(request.json, instance=cfg)
-        db.session.commit()
+        try:
+            dbdata = {
+                'value': json.dumps(request.json['value'])
+            }
+            cfg = schema.load(dbdata, instance=cfg)
+            db.session.commit()
 
-        return {"msg": "config updated", type: schema.dump(cfg)}
+            return {"msg": "config updated", type: schema.dump(cfg)}
+        except Exception as e:
+            return {"msg": "Exception", 'e': e}, 400
 
 
 class ConfigList(Resource):
@@ -92,7 +101,7 @@ class ConfigList(Resource):
     ---
     get:
       tags:
-        - api
+        - Config
       responses:
         200:
           content:
@@ -103,16 +112,16 @@ class ConfigList(Resource):
                     properties:
                       results:
                         type: array
-    
+
     post:
       description: Post new configure
       tags:
-        - api
+        - Config
       requestBody:
         content:
           application/json:
             schema:
-              ConfigSchema
+              ConfigPostSchema
       responses:
         201:
           content:
@@ -123,7 +132,7 @@ class ConfigList(Resource):
                   msg:
                     type: string
                     example: config created
-                  config: ConfigSchema
+                  config: ConfigPostSchema
         400:
           content:
             application/json:
@@ -133,31 +142,36 @@ class ConfigList(Resource):
                   msg:
                     type: string
                     example: config[key] already exists
-                  config: ConfigSchema
+                  config: ConfigPostSchema
     """
     method_decorators = [async_api]
     # method_decorators.append(jwt_required())
-    
 
-    def get(self):
+    async def get(self):
         schema = ConfigSchema(many=True)
         query = ConfigTable.query
         return schema.dump(query)
 
     async def post(self):
-        current_app.logger.info(request.json)
-        schema = ConfigSchema()
-        _config = schema.load(request.json)
-        current_app.logger.info(_config)
-        type = _config['key']
-        current_app.logger.info(_config)
 
-        # Check config key exists
-        exist_user = ConfigTable.query.filter_by(key=_config.key).first()
-        if exist_user:
-            return {"msg": "config[key] already exists", type: schema.dump(_config)}, 400
+        schema = ConfigPostSchema()
+        try:
+            dbdata = {
+                'key': request.json['key'],
+                'value': json.dumps(request.json['value'])
+            }
+            _config = schema.load(dbdata)
 
-        db.session.add(_config)
-        db.session.commit()
+            type = request.json['key']
 
-        return {"msg": "config created", type: schema.dump(_config)}, 201
+            # Check config key exists
+            exist_user = ConfigTable.query.filter_by(key=_config.key).first()
+            if exist_user:
+                return {"msg": "config[key] already exists", type: schema.dump(_config)}, 400
+
+            db.session.add(_config)
+            db.session.commit()
+
+            return {"msg": "config created", type: schema.dump(_config)}, 201
+        except Exception as e:
+            return {"msg": "Exception", 'e': e}, 400

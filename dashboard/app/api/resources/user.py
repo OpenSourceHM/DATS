@@ -12,7 +12,7 @@ class UserResource(Resource):
     ---
     get:
       tags:
-        - api
+        - User
       parameters:
         - in: path
           name: user_id
@@ -30,7 +30,7 @@ class UserResource(Resource):
           description: user does not exists
     put:
       tags:
-        - api
+        - User
       parameters:
         - in: path
           name: user_id
@@ -56,7 +56,7 @@ class UserResource(Resource):
           description: user does not exists
     delete:
       tags:
-        - api
+        - User
       parameters:
         - in: path
           name: user_id
@@ -106,7 +106,7 @@ class UserList(Resource):
     ---
     get:
       tags:
-        - api
+        - User
       responses:
         200:
           content:
@@ -122,7 +122,7 @@ class UserList(Resource):
                           $ref: '#/components/schemas/UserSchema'
     post:
       tags:
-        - api
+        - User
       requestBody:
         content:
           application/json:

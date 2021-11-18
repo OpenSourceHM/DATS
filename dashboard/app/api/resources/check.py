@@ -12,7 +12,7 @@ class Check(Resource):
     get:
       description: Status check API
       tags:
-        - api
+        - Check
       parameters:
         - name: type
           in: path

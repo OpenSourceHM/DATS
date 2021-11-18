@@ -25,6 +25,7 @@ from flask import has_request_context
 from flask import copy_current_request_context
 from flask import current_app, request, jsonify
 from app.extensions import babel
+from .version import did
 """
 Flask CORS issue
 """
@@ -94,14 +95,25 @@ def register_consul(app):
     }
     consul_url = 'http://'+consul['ip']+':'+consul['port']+consul['api']
     app.logger.info('Register to consul service:'+consul_url)
-    data = {
-        'id': 'test', # show in consul ui
+    tempdata = {
+        'id': did,  # show in consul ui
         'name': 'DATS',
         'address': '192.168.20.121',
         'port': 5000,
         'tags': ['dev'],
-        'meta': 'this DATS info',
-        'checks': [{'http': 'http://192.168.20.121:5000/api/v1/check/consul', 'interval': '5s'}],
+        'meta': {
+            'id': did,
+            'name': 'DATS-aaa'
+        },
+        'checks': [
+            {
+                'http': 'http://192.168.20.121:5000/api/v1/check/consul',
+                'interval': '1s'
+            }
+        ]
     }
-    result = requests.put(url=consul_url, data=json.dumps(data))
-    app.logger.info(result)
+    app.logger.critical(json.dumps(tempdata, ensure_ascii=True))
+    result = requests.put(url=consul_url, data=json.dumps(
+        tempdata, ensure_ascii=True))
+    if result.status_code != 200:
+        app.logger.info(result.text)
