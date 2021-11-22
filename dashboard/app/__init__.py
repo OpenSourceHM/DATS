@@ -5,7 +5,6 @@ Copyright (c) 2021 - present cong.li@huamaitel.com
 
 
 from flask import Flask, url_for, request
-from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from importlib import import_module
 from logging import basicConfig, DEBUG, getLogger, StreamHandler
@@ -16,25 +15,12 @@ from app.extensions import db
 from app.extensions import jwt
 from app.extensions import migrate
 from app.extensions import babel
+from app.extensions import login_manager
 from app.plugin import cors_init_app
-from app.plugin import register_consul
-login_manager = LoginManager()
 
-
-def user_init(app, database):
-    from app.admin.base.models.user import User, Permissions, Role
-
-    exist = User.query.filter_by(username='admin').all()
-    admin = User.query.filter_by(username='admin').first()
-
-    if len(exist) == 0 or admin == None:
-        user = User(username="admin", email="lovelacelee@gmail.com",
-                    password="admin", active=True, role_id=Permissions.ADMINISTRATOR)
-        database.session.add(user)
-        database.session.commit()
-        app.logger.info("created user admin")
-    Role.init_role()
-
+from app.runtime_init import user_init
+from app.runtime_init import config_init
+from app.runtime_init import register_consul
 
 def configure_apispec(app):
     """Configure APISpec for swagger support"""
@@ -80,6 +66,7 @@ def configure_database(app):
         db.create_all()
         try:
             user_init(app, db)
+            config_init(app, db)
         except Exception as e:
             app.logger.critical(e)
 

@@ -1,10 +1,10 @@
-
 '''
  ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
  │Esc│   │ F1│ F2│ F3│ F4│ │ F5│ F6│ F7│ F8│ │ F9│F10│F11│F12│ │P/S│S L│P/B│  ┌┐    ┌┐    ┌┐
  └───┘   └───┴───┴───┴───┘ └───┴───┴───┴───┘ └───┴───┴───┴───┘ └───┴───┴───┘  └┘    └┘    └┘
  ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┐ ┌───┬───┬───┐ ┌───┬───┬───┬───┐
- │~ `│! 1│@ 2│# 3│$ 4│% 5│^ 6│& 7│* 8│( 9│) 0│_ -│+ =│ BacSp │ │Ins│Hom│PUp│ │N L│ / │ * │ - │
+ # 3│$ 4│% 5│^ 6│& 7│* 8│( 9│) 0│_ -│+ =│ BacSp │ │Ins│Hom│PUp│ │N L│ / │ * │ - │
+ │~ `│! 1│@ 2│
  ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┤ ├───┼───┼───┤ ├───┼───┼───┼───┤
  │ Tab │ Q │ W │ E │ R │ T │ Y │ U │ I │ O │ P │{ [│} ]│ | \ │ │Del│End│PDn│ │ 7 │ 8 │ 9 │   │
  ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┤ └───┴───┴───┘ ├───┼───┼───┤ + │
@@ -17,36 +17,51 @@
 
 Author          : Connard
 Github          : https://github.com/lovelacelee
-Date            : 2021-11-18 10:37:04
-LastEditTime    : 2021-11-22 13:12:28
+Date            : 2021-11-22 13:55:00
+LastEditTime    : 2021-11-22 14:35:53
 LastEditors     : Lee
-Description     : 
-FilePath        : /DATS/dashboard/app/api/schemas/proxy.py
+Description     :
+FilePath        : /DATS/dashboard/app/api/resources/_freeport.py
 Copyright 2008-2021 Lovelace, All Rights Reserved.
 
 TODO:
 Note:
 '''
+
+import random
+import socket
 from app.admin.base.models.proxy import ProxyTable
-from app.extensions import ma, db
 
 
-class ProxySchema(ma.SQLAlchemyAutoSchema):
+class FreePort(object):
+    """Get a free port from system
 
-    id = ma.Int(dump_only=True)
+    Step 1: Generate a random port number
 
-    class Meta:
-        model = ProxyTable
-        sqla_session = db.session
-        load_instance = True
+    Step 2: Check if it's already exists in database
+    """
 
+    def __init__(self, start, stop):
+        self.port = None
+        self.sock = socket.socket()
 
-class ProxyExtSchema(ma.SQLAlchemyAutoSchema):
+        port = start
+        while True:
+            try:
+                # Check exists
+                exist_proxy = ProxyTable.query.filter_by(
+                    listen_port=port).first()
+                if exist_proxy:
+                    print("{} is already used".format(port))
+                    port = port + 1
+                    continue
+                self.sock.bind(('', port))
+                self.port = port
+                break
+            except Exception:
+                print("{} port +1")
+                port = port + 1
+                continue
+        # Check in database
+        self.sock.close()
 
-    id = ma.Int(dump_only=True)
-
-    class Meta:
-        model = ProxyTable
-        sqla_session = db.session
-        load_instance = True
-        exclude = ("id", "listen_port", )

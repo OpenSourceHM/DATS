@@ -4,11 +4,14 @@ from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 from flask import Response, request, current_app
 from app.plugin import async_api
-from app.api.schemas import ProxySchema
+from app.api.resources._freeport import FreePort
+from app.api.schemas import ProxySchema, ProxyExtSchema
 
 from app.admin.base.models.proxy import ProxyTable
 from app.extensions import db
 from app.api.commons.pagination import paginate
+
+# For web ui
 
 
 class ProxyResource(Resource):
@@ -104,6 +107,120 @@ class ProxyResource(Resource):
 
         return {"msg": "proxy deleted"}
 
+# For DAGMS
+
+
+class ProxyExtResource(Resource):
+    """Single object resource
+
+    ---
+    put:
+      tags:
+        - Proxy
+      parameters:
+        - name: remote_addr
+          in: path
+          schema:
+            type: string
+          examples:
+            192.168.20.121:
+              summary: Proxy remote address
+              value: 192.168.20.121
+        - name: remote_port
+          in: path
+          schema:
+            type: number
+          examples:
+            80: 
+              summary: Proxy remote port
+              value: 80
+      requestBody:
+        content:
+          application/json:
+            schema:
+              ProxyExtSchema
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: proxy updated
+                  proxy: ProxyExtSchema
+        404:
+          description: proxy does not exists
+    delete:
+      tags:
+        - Proxy
+      parameters:
+        - name: remote_addr
+          in: path
+          schema:
+            type: string
+          examples:
+            192.168.20.121:
+              summary: Proxy remote address
+              value: 192.168.20.121
+        - name: remote_port
+          in: path
+          schema:
+            type: number
+          examples:
+            80: 
+              summary: Proxy remote port
+              value: 80
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: proxy deleted
+        404:
+          description: proxy does not exists
+    """
+
+    # method_decorators = [jwt_required()]
+
+    def put(self, remote_addr, remote_port):
+        schema = ProxySchema(partial=True)
+        try:
+            proxy = ProxyTable.query.filter_by(
+                remote_addr=remote_addr, remote_port=remote_port).first()
+            if proxy:
+                proxy = schema.load(request.json, instance=proxy)
+
+                db.session.commit()
+
+                return {"msg": "proxy updated", "proxy": schema.dump(proxy)}
+        except Exception as e:
+            return {"msg": "Exception", 'e': e}, 400
+
+    def delete(self, remote_addr, remote_port):
+        try:
+            proxy = ProxyTable.query.filter_by(
+                remote_addr=remote_addr, remote_port=remote_port).first()
+
+            if proxy:
+
+                current_app.logger.info(proxy)
+                db.session.delete(proxy)
+                db.session.commit()
+
+                return {"msg": "proxy deleted"}
+            else:
+                return {"msg": "proxy not exists"}, 200
+        except Exception as e:
+            return {"msg": "Exception", 'e': e}, 400
+
+# For both
+
 
 class ProxyList(Resource):
     """Creation and get_all
@@ -188,12 +305,18 @@ class ProxyList(Resource):
         schema = ProxySchema()
         proxy = schema.load(request.json)
 
-        # Check listen_port exists
+        # Check exists
         exist_proxy = ProxyTable.query.filter_by(
-            listen_port=proxy.listen_port).first()
-        if exist_proxy:
-            return {"msg": "listen_port already exists", "proxy": schema.dump(proxy)}, 400
+            remote_addr=proxy.remote_addr, remote_port=proxy.remote_port).first()
 
+        if exist_proxy:
+            return {"msg": "proxy relationship already exists", "proxy": schema.dump(exist_proxy)}, 200
+        exist_listen_port = ProxyTable.query.filter_by(
+            listen_port=proxy.listen_port).first()
+        if proxy.listen_port > 0 and exist_listen_port:
+            return {"msg": "listen_port already exists", "proxy": schema.dump(exist_listen_port)}, 400
+        FP = FreePort(80, 8000)
+        proxy.listen_port = FP.port
         db.session.add(proxy)
         db.session.commit()
 
@@ -206,7 +329,7 @@ class ProxyList(Resource):
                 remote_addr=request.json['remote_addr'], remote_port=request.json['remote_port']).first()
 
             if proxy:
-                    
+
                 current_app.logger.info(proxy)
                 db.session.delete(proxy)
                 db.session.commit()

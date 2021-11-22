@@ -11,6 +11,9 @@ from flask_migrate import Migrate
 from flask_babel import Babel
 
 from app.api.commons.apispec import APISpecExt
+from flask_login import LoginManager
+
+login_manager = LoginManager()
 
 db = SQLAlchemy()
 jwt = JWTManager()

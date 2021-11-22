@@ -1,7 +1,32 @@
 # -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2021 - present cong.li@huamaitel.com
-"""
+'''
+ ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
+ │Esc│   │ F1│ F2│ F3│ F4│ │ F5│ F6│ F7│ F8│ │ F9│F10│F11│F12│ │P/S│S L│P/B│  ┌┐    ┌┐    ┌┐
+ └───┘   └───┴───┴───┴───┘ └───┴───┴───┴───┘ └───┴───┴───┴───┘ └───┴───┴───┘  └┘    └┘    └┘
+ ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┐ ┌───┬───┬───┐ ┌───┬───┬───┬───┐
+ │~ `│! 1│@ 2│# 3│$ 4│% 5│^ 6│& 7│* 8│( 9│) 0│_ -│+ =│ BacSp │ │Ins│Hom│PUp│ │N L│ / │ * │ - │
+ ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┤ ├───┼───┼───┤ ├───┼───┼───┼───┤
+ │ Tab │ Q │ W │ E │ R │ T │ Y │ U │ I │ O │ P │{ [│} ]│ | \ │ │Del│End│PDn│ │ 7 │ 8 │ 9 │   │
+ ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┤ └───┴───┴───┘ ├───┼───┼───┤ + │
+ │ Caps │ A │ S │ D │ F │ G │ H │ J │ K │ L │: ;│" '│ Enter  │               │ 4 │ 5 │ 6 │   │
+ ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────────┤     ┌───┐     ├───┼───┼───┼───┤
+ │ Shift  │ Z │ X │ C │ V │ B │ N │ M │< ,│> .│? /│  Shift   │     │ ↑ │     │ 1 │ 2 │ 3 │   │
+ ├─────┬──┴─┬─┴──┬┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬────┬────┤ ┌───┼───┼───┐ ├───┴───┼───┤ E││
+ │ Ctrl│    │Alt │         Space         │ Alt│    │    │Ctrl│ │ ← │ ↓ │ → │ │   0   │ . │←─┘│
+ └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
+
+Author          : Connard
+Github          : https://github.com/lovelacelee
+Date            : 2021-11-03 13:54:34
+LastEditTime    : 2021-11-22 10:46:19
+LastEditors     : Lee
+Description     : 
+FilePath        : /DATS/dashboard/config.py
+Copyright 2008-2021 Lovelace, All Rights Reserved.
+
+TODO:
+Note:
+'''
 
 import os
 from decouple import config
@@ -25,6 +50,15 @@ class Config(object):
     LANGUAGES = ['zh_CN', 'en_US', 'ja_JP',
                  'it_IT', 'fr_FR', 'es_ES', 'de_DE', 'ar_AE']
 
+    dotenv_path = os.path.join(basedir, '.flaskenv')
+
+    if os.path.exists(dotenv_path):
+        load_dotenv(dotenv_path)
+        HOST = os.environ.get('FLASK_RUN_HOST')
+        PORT = os.environ.get('FLASK_RUN_PORT')
+    else:
+        HOST = "0.0.0.0"
+        PORT = 5000
 
 class ProductionConfig(Config):
     DEBUG = False
@@ -44,14 +78,8 @@ class ProductionConfig(Config):
         config('DB_NAME', default='appseed-flask')
     )
 
-
 class DebugConfig(Config):
     DEBUG = True
-
-    dotenv_path = os.path.join(Config.basedir, '.flaskenv')
-
-    if os.path.exists(dotenv_path):
-        load_dotenv(dotenv_path)
 
 
 # Load all possible configurations

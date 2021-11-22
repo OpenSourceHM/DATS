@@ -1,4 +1,33 @@
 # -*- encoding: utf-8 -*-
+'''
+ ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
+ │Esc│   │ F1│ F2│ F3│ F4│ │ F5│ F6│ F7│ F8│ │ F9│F10│F11│F12│ │P/S│S L│P/B│  ┌┐    ┌┐    ┌┐
+ └───┘   └───┴───┴───┴───┘ └───┴───┴───┴───┘ └───┴───┴───┴───┘ └───┴───┴───┘  └┘    └┘    └┘
+ ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┐ ┌───┬───┬───┐ ┌───┬───┬───┬───┐
+ │~ `│! 1│@ 2│# 3│$ 4│% 5│^ 6│& 7│* 8│( 9│) 0│_ -│+ =│ BacSp │ │Ins│Hom│PUp│ │N L│ / │ * │ - │
+ ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┤ ├───┼───┼───┤ ├───┼───┼───┼───┤
+ │ Tab │ Q │ W │ E │ R │ T │ Y │ U │ I │ O │ P │{ [│} ]│ | \ │ │Del│End│PDn│ │ 7 │ 8 │ 9 │   │
+ ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┤ └───┴───┴───┘ ├───┼───┼───┤ + │
+ │ Caps │ A │ S │ D │ F │ G │ H │ J │ K │ L │: ;│" '│ Enter  │               │ 4 │ 5 │ 6 │   │
+ ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────────┤     ┌───┐     ├───┼───┼───┼───┤
+ │ Shift  │ Z │ X │ C │ V │ B │ N │ M │< ,│> .│? /│  Shift   │     │ ↑ │     │ 1 │ 2 │ 3 │   │
+ ├─────┬──┴─┬─┴──┬┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬────┬────┤ ┌───┼───┼───┐ ├───┴───┼───┤ E││
+ │ Ctrl│    │Alt │         Space         │ Alt│    │    │Ctrl│ │ ← │ ↓ │ → │ │   0   │ . │←─┘│
+ └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
+
+Author          : Connard
+Github          : https://github.com/lovelacelee
+Date            : 2021-11-03 13:54:42
+LastEditTime    : 2021-11-22 13:30:38
+LastEditors     : Lee
+Description     : 
+FilePath        : /DATS/dashboard/app/api/routes.py
+Copyright 2008-2021 Lovelace, All Rights Reserved.
+
+TODO:
+Note:
+'''
+
 """
 Copyright (c) 2021 - present cong.li@huamaitel.com
 """
@@ -16,9 +45,9 @@ from app.api.resources import Check
 from app.api.resources import ConfigResource
 from app.api.resources import ConfigList
 
-from app.api.resources import ProxyResource
+from app.api.resources import ProxyResource, ProxyExtResource
 from app.api.resources import ProxyList
-from app.api.schemas import ProxySchema
+from app.api.schemas import ProxySchema, ProxyExtSchema
 
 from app.api import blueprint
 api = Api(blueprint)
@@ -58,6 +87,11 @@ def register_views():
     api.add_resource(ProxyList, "/proxy", endpoint="proxy")
     apispec.spec.path(view=ProxyResource, app=current_app)
     apispec.spec.path(view=ProxyList, app=current_app)
+
+    apispec.spec.components.schema("ProxyExtSchema", schema=ProxyExtSchema)
+    api.add_resource(ProxyExtResource, "/proxy/<string:remote_addr>/<int:remote_port>",
+                     endpoint="proxy_by_detail")
+    apispec.spec.path(view=ProxyExtResource, app=current_app)
 
 
 @blueprint.errorhandler(ValidationError)
