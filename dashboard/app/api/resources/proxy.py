@@ -315,7 +315,7 @@ class ProxyList(Resource):
             listen_port=proxy.listen_port).first()
         if proxy.listen_port > 0 and exist_listen_port:
             return {"msg": "listen_port already exists", "proxy": schema.dump(exist_listen_port)}, 400
-        FP = FreePort(80, 8000)
+        FP = FreePort(10000, 30000)
         proxy.listen_port = FP.port
         db.session.add(proxy)
         db.session.commit()

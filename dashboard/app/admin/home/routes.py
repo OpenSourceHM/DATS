@@ -9,9 +9,13 @@ from flask_login import login_required, current_user
 from app import login_manager
 from jinja2 import TemplateNotFound
 import traceback
-
+import json
 from app.api.schemas import UserSchema
+from app.api.schemas import ConfigSchema
+from app.api.schemas import ProxySchema
 from app.admin.base.models.user import User, Role, Permissions
+from app.admin.base.models.config import ConfigTable
+from app.admin.base.models.proxy import ProxyTable
 from app.extensions import db
 from app.api.commons.pagination import paginate
 from app.permission_required import permission_required
@@ -40,8 +44,6 @@ def users_manage():
         # Detect the current page
         segment = get_segment(request)
 
-        print(current_user)
-
         # Serve the file (if exists) from app/templates/FILE.html
         return render_template(template, segment=segment, data=result)
 
@@ -57,21 +59,15 @@ def users_manage():
 @login_required
 def system_settings():
     try:
-        # TODO: query system settings
-        result = {
-            'name': 'Test',
-            'address': 'Test adres',
-            'sn': '12346546464',
+        
+        # schema = ConfigSchema()
+        query = ConfigTable.query.filter_by(key='system').first()
 
-            'latitude': '2323.232323',
-            'longitude': '2323423.234234234',
-        }
+        result = json.loads(query.value)
         template = 'system.html'
 
         # Detect the current page
         segment = get_segment(request)
-
-        print(current_user)
 
         # Serve the file (if exists) from app/templates/FILE.html
         return render_template(template, segment=segment, data=result)
@@ -88,60 +84,15 @@ def system_settings():
 @login_required
 def network_settings():
     try:
-        # TODO: query network settings
-        result = {
-            'port': {
-                'web': 80,
-                'filebrowser': 8080,
-                'nginx': 8081,
-                'haproxy': 8082
-            },
-            'mode': 2,
-            'bond': {
+        
+        # schema = ConfigSchema()
+        query = ConfigTable.query.filter_by(key='network').first()
 
-                'ifname': "bond9",
-                'dhcp': 1,
-                'mtu': 1500,
-                'mac': "AA:AA:AA:AA:AA:AA",
-                'ip': "192.168.20.12",
-                'gw': "192.168.20.1",
-                'netmask': "255.255.255.0",
-            },
-            'routes': [
-                {"target": "192.168.20.1", "mask": "244.255.255.0", "next": "192.168.3.1", "dev": 'et0'}, 
-                {"target": "192.168.20.1", "mask": "244.255.255.0", "next": "192.168.3.1", "dev": 'et0'}, 
-                {"target": "192.168.20.1", "mask": "244.255.255.0", "next": "192.168.3.1", "dev": 'et0'}, 
-            ],
-            'device': [
-                {
-                    'ifname': "eth0",
-                    'dhcp': 1,
-                    'mtu': 1500,
-                    'ip': "192.168.20.12",
-                    'gw': "192.168.20.1",
-                    'netmask': "255.255.255.0",
-                    'mac': "AA:AA:AA:AA:AA:AA",
-                },
-                {
-
-                    'ifname': "eth1",
-                    'dhcp': 1,
-                    'mtu': 1500,
-                    'ip': "192.168.20.12",
-                    'gw': "192.168.20.1",
-                    'netmask': "255.255.255.0",
-                    'mac': "AA:AA:AA:AA:AA:AA",
-                }
-            ],
-            'mdns': '192.168.0.100', 
-            'sdns': '61.139.2.69',
-        }
+        result = json.loads(query.value)
         template = 'network.html'
 
         # Detect the current page
         segment = get_segment(request)
-
-        print(current_user)
 
         # Serve the file (if exists) from app/templates/FILE.html
         return render_template(template, segment=segment, data=result)

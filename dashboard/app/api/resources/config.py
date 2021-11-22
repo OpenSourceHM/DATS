@@ -3,6 +3,7 @@ import json
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 from flask import Response, request, current_app
+from flask_login import current_user
 from app.plugin import async_api
 from app.api.schemas import ConfigSchema
 from app.api.schemas import ConfigPostSchema
@@ -84,6 +85,9 @@ class ConfigResource(Resource):
         schema = ConfigSchema(partial=True)
         cfg = ConfigTable.query.filter_by(key=type).first_or_404()
         try:
+            if current_user.role_id is not 2:
+                current_app.logger.info(cfg.to_dict()['sn'])
+                # request.json['value']['sn'] = cfg.sn
             dbdata = {
                 'value': json.dumps(request.json['value'])
             }

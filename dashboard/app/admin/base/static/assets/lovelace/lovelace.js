@@ -46,6 +46,21 @@ class API {
     });
   }
 
+  put(url, json, callback_success, callback_error) {
+    this.headers = this.authHeader();
+    $.ajax({
+      type: "PUT",
+      url: this.domain + url,
+      dataType: 'json',
+      contentType: 'application/json;charset=UTF-8',
+      headers: this.headers,
+      data: json, // json should be stringified, use JSON.stringify()
+      success: callback_success,
+      error: callback_error
+    });
+  }
+
+
   fromPost(url, formdata, callback_success, callback_error) {
     this.headers = this.authHeader();
     $.ajax({
@@ -103,7 +118,7 @@ function userModify(userid, formid) {
   $.each($('#' + formid).serializeArray(), function (index, item) {
     formData[item.name] = item.value;
   });
-  delete(formData['repassword']);
+  delete (formData['repassword']);
   formData['active'] = formData['active'] === "on" ? true : false;
   console.log(formData)
 
@@ -121,3 +136,11 @@ $('.modal').on('hidden.bs.modal', function () {
   $('#formUserModify').find('input[type=text], input[type=password], input[type=number], input[type=email], textarea').val('');
 })
 
+function getFormData(id) {
+  let data = {};
+  let value = $('#' + id).serializeArray();
+  $.each(value, function (index, item) {
+    data[item.name] = item.value;
+  });
+  return data;
+}

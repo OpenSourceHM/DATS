@@ -96,7 +96,7 @@
             <ul class="pagination justify-content-center">
 
               <li class="page-item"><a class="page-link"
-                  href="/admin/ui-user-manage?page=1&per_page={{10}}">{{_('First')}}</a></li>
+                  href="/admin/users?page=1&per_page={{10}}">{{_('First')}}</a></li>
               <li class="page-item ">
                 <a class="page-link" aria-label="Previous" href="{{data.prev}}">
                   <span aria-hidden="true">&laquo;</span>
@@ -107,11 +107,11 @@
               <!-- current page -->
               {% if p == data.page-1 %}
               <li class="page-item active"><a class="page-link"
-                  href="/admin/ui-user-manage?page={{p+1}}&per_page={{10}}">{{p+1}}</a></li>
+                  href="/admin/users?page={{p+1}}&per_page={{10}}">{{p+1}}</a></li>
               <!-- Not current page -->
               {% else %}
               <li class="page-item"><a class="page-link"
-                  href="/admin/ui-user-manage?page={{p+1}}&per_page={{10}}">{{p+1}}</a></li>
+                  href="/admin/users?page={{p+1}}&per_page={{10}}">{{p+1}}</a></li>
               {%endif %}
 
               {% endfor %}
@@ -122,7 +122,7 @@
                 </a>
               </li>
               <li class="page-item"><a class="page-link"
-                  href="/admin/ui-user-manage?page={{data.pages}}&per_page={{10}}">{{_('Last')}}</a></li>
+                  href="/admin/users?page={{data.pages}}&per_page={{10}}">{{_('Last')}}</a></li>
             </ul>
           </nav>
         </div>
