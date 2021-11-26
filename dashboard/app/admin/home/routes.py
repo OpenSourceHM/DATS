@@ -109,13 +109,14 @@ def network_settings():
 @login_required
 def app_tcp():
     try:
-        result = []
+        
+        schema = ProxySchema(many=True)
+        query = ProxyTable.query
+        result = paginate(query, schema)
         template = 'app-tcp.html'
 
         # Detect the current page
         segment = get_segment(request)
-
-        print(current_user)
 
         # Serve the file (if exists) from app/templates/FILE.html
         return render_template(template, segment=segment, data=result)

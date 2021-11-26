@@ -52,16 +52,13 @@ class FreePort(object):
                 exist_proxy = ProxyTable.query.filter_by(
                     listen_port=port).first()
                 if exist_proxy:
-                    print("{} is already used".format(port))
                     port = port + 1
                     continue
                 self.sock.bind(('', port))
                 self.port = port
                 break
             except Exception:
-                print("{} port +1")
                 port = port + 1
                 continue
-        # Check in database
         self.sock.close()
 
