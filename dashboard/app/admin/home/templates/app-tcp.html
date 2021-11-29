@@ -16,6 +16,12 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
+          <div>
+            <span class="tim-note">{{ _('Total Pages')}}: {{data.pages}}</span>&nbsp;
+            <span class="tim-note">{{ _('Total')}}: {{data.total}}</span>
+            <btn class="btn btn-sm btn-info shadow-2 float-right" data-toggle="modal" data-target="#addProxyModal">
+              {{_('Add')}}</btn>
+          </div>
           <table class="table">
             <thead class=" text-primary">
               <th>
@@ -54,10 +60,10 @@
                 </td>
                 <td>
 
-                  <btn class="btn btn-sm btn-info shadow-2" data-toggle="modal" data-target="#modifyModal"
+                  <btn class="btn btn-sm btn-info shadow-2" data-toggle="modal" data-target="#modifyProxyModal"
                     data-proxyid="{{proxy.id}}" data-proxyname="{{proxy.proxyname}}">
                     {{_('modify')}}</btn>
-                  <btn class="btn btn-sm btn-danger shadow-2" data-toggle="modal" data-target="#deleteModal"
+                  <btn class="btn btn-sm btn-danger shadow-2" data-toggle="modal" data-target="#deleteProxyModal"
                     data-proxy="{{proxy}}">
                     {{_('delete')}}</btn>
 
@@ -108,7 +114,7 @@
 
 
 <!-- Modal open by btn -->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addProxyModal" aria-hidden="true">
+<div class="modal fade" id="addProxyModal" tabindex="-1" role="dialog" aria-labelledby="addProxyModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-md" role="document">
     <div class="modal-content">
       <!-- padding 3rem -->
@@ -149,7 +155,7 @@
 
 
 <!-- Modify Modal open by btn -->
-<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="modifyProxyModal"
+<div class="modal fade" id="modifyProxyModal" tabindex="-1" role="dialog" aria-labelledby="modifyProxyModal"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-md" role="document">
     <div class="modal-content">

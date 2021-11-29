@@ -131,11 +131,36 @@ function userModify(userid, formid) {
   });
 
 }
+
+function userAdd(formid) {
+  let formData = {};
+  $.each($('#' + formid).serializeArray(), function (index, item) {
+    formData[item.name] = item.value;
+  });
+  
+  formData['active'] = formData['active'] === "on" ? true : false;
+  console.log(formData)
+
+  let json = JSON.stringify(formData);
+  api_v1.request('/users', 'POST', api_v1.authHeader(), json, function (result, status, xhr) {
+    md.showNotification('top', 'right', 3, $('#msg_success').text());
+  }, function (xhr, status, error) {
+    console.log(error);
+    md.showNotification('top', 'right', 2, $('#msg_failed').text());
+  });
+
+}
 // TODO: Clean bootstrap hidden modal form data
 $('.modal').on('hidden.bs.modal', function () {
   $('#formUserModify').find('input[type=text], input[type=password], input[type=number], input[type=email], textarea').val('');
 })
 
+/**
+ * Get form object for specified id
+ * @id: Form id
+ * @return: Form object
+ * 
+ */
 function getFormData(id) {
   let data = {};
   let value = $('#' + id).serializeArray();
