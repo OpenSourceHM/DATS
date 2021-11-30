@@ -81,7 +81,7 @@
                     data-userid="{{user.id}}" data-username="{{user.username}}">
                     {{_('modify')}}</btn>
                   <btn class="btn btn-sm btn-danger shadow-2" data-toggle="modal" data-target="#deleteModal"
-                    data-user="{{user}}">
+                    data-userid="{{user.id}}" data-username="{{user.username}}" data-email="{{user.email}}">
                     {{_('delete')}}</btn>
                   {%endif %}
 
@@ -131,7 +131,7 @@
 </div>
 
 
-<!-- Modal open by btn -->
+<!-- Add modal-->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addUserModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-md" role="document">
     <div class="modal-content">
@@ -145,25 +145,36 @@
           <div class="card-body">
             <form role="form" id="formAddUser" method="post" action="" style="margin-top: 30px;">
 
-              <div class="input-group mb-3">
-                <input class="form-control" placeholder="{{_('Username')}}" name="username" required="" type="text"
-                  value="">
+              <div class="input-group mb-4">
+                <div class="col-md-4">
+                  <label for="username" class="form-control">{{_('Username')}}</label>
+                </div>
+                <input class="form-control" placeholder="{{_('Please enter')}}{{_('Username')}}" name="username"
+                  required="" type="text" value="">
+              </div>
+              <div class="input-group mb-4">
+                <div class="col-md-4">
+                  <label for="email" class="form-control">{{_('Email')}}</label>
+                </div>
+                <input class="input form-control" placeholder="{{_('Please enter')}}{{_('Email')}}" name="email"
+                  required="" type="email" value="">
               </div>
 
               <div class="input-group mb-4">
-                <label for="active">{{_('ActiveStatus')}}</label>&nbsp;&nbsp;
-                <input type="checkbox" id="active_status" name="active">
-              </div>
-
-              <div class="input-group mb-3">
-                <input class="input form-control" placeholder="{{_('Email')}}" name="email" required="" type="email"
-                  value="">
+                <div class="col-md-4">
+                  <label for="password" class="form-control">{{_('Password')}}</label>
+                </div>
+                <input class="form-control" placeholder="{{_('Please enter')}}{{_('Password')}}" name="password"
+                  required="" type="password" value="">
               </div>
 
               <div class="input-group mb-4">
-                <input class="form-control" placeholder="{{_('Password')}}" name="password" required="" type="password"
-                  value="">
+                <div class="col-md-4">
+                  <label for="active" class="form-control">{{_('ActiveStatus')}}</label>
+                </div>
+                <input type="checkbox" id="add_active_status" name="active">
               </div>
+
 
               <button type="button" id="add_submit" class="btn btn-info shadow-2 mb-4 float-right" data-dismiss="modal"
                 aria-hidden="true">{{_('Confirm')}}</button>
@@ -178,7 +189,7 @@
 </div>
 
 
-<!-- Modify Modal open by btn -->
+<!-- Modify Modal -->
 <div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="modifyUserModal"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-md" role="document">
@@ -194,23 +205,34 @@
 
           <div class="card-body">
             <form role="form" id="formUserModify" method="post" style="margin-top: 30px;">
-              <div class="input-group mb-3">
-                <input class="form-control" placeholder="{{_('Username')}}" name="username" id="username" type="text"
-                  value="user.username">
+              <div class="input-group mb-4">
+                <div class="col-md-4 label-primary">
+                  <label for="username" class="form-control">{{_('Username')}}</label>
+                </div>
+                <input class="form-control" placeholder="{{_('Please enter')}}{{_('Username')}}" name="username"
+                  id="username" type="text" value="user.username">
+              </div>
+              <div class="input-group mb-4">
+                <div class="col-md-4">
+                  <label for="email" class="form-control">{{_('Email')}}</label>
+                </div>
+                <input class="input form-control" placeholder="{{_('Please enter')}}{{_('Email')}}" name="email"
+                  id="email" required="" type="email" value="">
               </div>
 
               <div class="input-group mb-4">
-                <label for="active">{{_('ActiveStatus')}}</label>&nbsp;&nbsp;
-                <input type="checkbox" id="active_status" name="active">
-              </div>
-              <div class="input-group mb-4">
-                <input class="input form-control" placeholder="{{_('Email')}}" name="email" id="email" required=""
-                  type="email" value="">
+                <div class="col-md-4">
+                  <label for="password" class="form-control">{{_('Password')}}</label>
+                </div>
+                <input class="form-control" placeholder="{{_('Please enter')}}{{_('Password')}}" name="password"
+                  id="password" required="" type="password" value="">
               </div>
 
               <div class="input-group mb-4">
-                <input class="form-control" placeholder="{{_('Password')}}" name="password" id="password" required=""
-                  type="password" value="">
+                <div class="col-md-4">
+                  <label for="active" class="form-control">{{_('ActiveStatus')}}</label>
+                </div>
+                <input type="checkbox" id="modify_active_status" name="active">
               </div>
               <button type="button" id="modify_submit" class="btn btn-info shadow-2 mb-4 float-right"
                 data-dismiss="modal" aria-hidden="true">{{_('Confirm')}}</button>
@@ -226,7 +248,7 @@
 </div>
 
 
-<!-- Delete Modal open by btn -->
+<!-- Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModal"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-md" role="document">
@@ -242,11 +264,18 @@
 
           <div class="card-body">
             <form role="form" id="formUserDelete" method="post" style="margin-top: 30px;">
-              <div class="input-group mb-3">
-                <input class="form-control" placeholder="{{_('Username')}}" name="username" id="username" type="text"
-                  value="user.username">
+
+              <div class="input-group mb-4">
+                <label for="username">{{_('Are you sure you want to delete')}}</label>
               </div>
-              
+              <div class="input-group mb-4">
+                <span class="badge badge-sm badge-default">
+                  <span class="badge badge-sm badge-success" id="delete_userid"></span>-
+                  <span class="badge badge-sm badge-info" id="delete_username"></span>-
+                  <span class="badge badge-sm badge-info" id="delete_email"></span>
+                </span>
+              </div>
+
               <button type="button" id="delete_submit" class="btn btn-info shadow-2 mb-4 float-right"
                 data-dismiss="modal" aria-hidden="true">{{_('Confirm')}}</button>
               <button type="button" class="btn btn-warning shadow-2 mb-4 float-right"
@@ -280,9 +309,9 @@
     api_v1.get('/users/' + userid, function (result, status, xhr) {
       modal.find('#email').val(result.user.email);
       if (result.user.active) {
-        modal.find('#active_status').prop("checked", true);
+        modal.find('#modify_active_status').prop("checked", true);
       } else {
-        modal.find('#active_status').prop("checked", false);
+        modal.find('#modify_active_status').prop("checked", false);
       }
     }, function (xhr, status, error) {
       md.showNotification('top', 'right', 2, $('#msg_failed').text());
@@ -294,12 +323,7 @@
   });
 
   $('#addModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget);
-    var email = button.data('email');
-    var username = button.data('username');
-    var password = button.data('password');
     var modal = $(this);
-
     // Submit button
     modal.find('#add_submit')[0].onclick = function () {
       userAdd('formAddUser');
@@ -308,12 +332,18 @@
 
   $('#deleteModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
-
+    var userid = button.data('userid');
+    var username = button.data('username');
+    var email = button.data('email')
     var modal = $(this);
-
+    // display infomation
+    modal.find('#delete_userid').text(userid);
+    modal.find('#delete_username').text(username);
+    modal.find('#delete_email').text(email);
     // Submit button
-    modal.find('#add_submit')[0].onclick = function () {
-      userDelete('formUserDelete');
+    modal.find('#delete_submit')[0].onclick = function () {
+
+      userDelete(userid);
     }
   });
 </script>
