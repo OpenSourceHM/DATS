@@ -59,11 +59,13 @@ def users_manage():
 @login_required
 def system_settings():
     try:
-        
+
         # schema = ConfigSchema()
         query = ConfigTable.query.filter_by(key='system').first()
+        consul = ConfigTable.query.filter_by(key='consul').first()
 
         result = json.loads(query.value)
+        result['consul'] = json.loads(consul.value)
         template = 'system.html'
 
         # Detect the current page
@@ -84,11 +86,27 @@ def system_settings():
 @login_required
 def network_settings():
     try:
-        
-        # schema = ConfigSchema()
-        query = ConfigTable.query.filter_by(key='network').first()
 
-        result = json.loads(query.value)
+        # schema = ConfigSchema()
+        network = ConfigTable.query.filter_by(key='network').first()
+        result = json.loads(network.value)
+
+        listen_port = ConfigTable.query.filter_by(key='listen_port').first()
+        result['listen_port'] = json.loads(listen_port.value)
+
+        ndev_bond = ConfigTable.query.filter_by(key='ndev_bond').first()
+        result['ndev_bond'] = json.loads(ndev_bond.value)
+
+        ndev_count = result['ndev_count']
+        result['devices'] = []
+        for i in range(ndev_count):
+            devkey = "ndev_"+str(i)
+            ndev = ConfigTable.query.filter_by(key=devkey).first()
+            result['devices'].append({
+                'key': devkey,
+                'value': json.loads(ndev.value)
+            })
+
         template = 'network.html'
 
         # Detect the current page
@@ -109,7 +127,7 @@ def network_settings():
 @login_required
 def app_tcp():
     try:
-        
+
         schema = ProxySchema(many=True)
         query = ProxyTable.query
         result = paginate(query, schema)

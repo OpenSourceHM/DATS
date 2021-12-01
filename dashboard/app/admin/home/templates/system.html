@@ -9,10 +9,11 @@
 
 <div class="container-fluid">
   <div class="row">
+    <!-- Device infomation -->
     <div class="col-md-12">
       <div class="card">
         <div class="card-header card-header-info">
-          <h4 class="card-title">{{_('System Settings')}}</h4>
+          <h4 class="card-title">{{_('Device infomation')}}</h4>
           <p class="card-category">{{_('Includes device SN, installation location, etc.')}}
         </div>
         <div class="card-body">
@@ -21,15 +22,13 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="bmd-label-floating">{{_('Device')}}{{_('ID')}}</label>
-                  {% if current_user.role_id==2 %}  
-                  <input type="text" class="form-control" value="{{data.sn}}" name="sn" >
-                  {% else %} 
+                  {% if current_user.role_id==2 %}
+                  <input type="text" class="form-control" value="{{data.sn}}" name="sn">
+                  {% else %}
                   <input type="text" class="form-control" value="{{data.sn}}" name="sn" disabled>
                   {% endif %}
                 </div>
               </div>
-            </div>
-            <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="bmd-label-floating">{{_('Device')}}{{_('Name')}}</label>
@@ -75,13 +74,55 @@
         </div>
       </div>
     </div>
+    <!-- Consul Register -->
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-info">
+          <h4 class="card-title">{{_('Consul Register')}}</h4>
+        </div>
+        <div class="card-body">
+
+          <form id="formDAGMSRegister" method="post">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{_('IP')}}</label>
+                  <input type="text" class="form-control" value="{{data.consul.ip}}" name="ip">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{_('Port')}}</label>
+                  <input type="number" min=1 max=65534 class="form-control" value="{{data.consul.port}}" name="port">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{_('API')}}</label>
+                  <input type="text" class="form-control" value="{{data.consul.api}}" name="api">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-danger" id="validate_msg"> </p>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <button type="button" onclick="submitConsul()" id="confirmButton"
+              class="btn btn-primary pull-right">{{_('Confirm')}}</button>
+          </form>
+        </div>
+      </div>
+    </div>
     <div class="col-md-6">
       <div class="card">
         <div class="card-header card-header-warning">
           <h4 class="card-title">{{_('System Upgrade')}}</h4>
         </div>
         <div class="card-body">
-
+          {{_('To be updated')}}
         </div>
       </div>
     </div>
@@ -91,7 +132,7 @@
           <h4 class="card-title">{{_('Data Management')}}</h4>
         </div>
         <div class="card-body">
-
+          {{_('To be updated')}}
         </div>
       </div>
     </div>
@@ -113,8 +154,19 @@
       console.log(result)
     }, function (xhr, status, error) {
       console.log(error);
-    })
-  }
+    });
+  };
+  function submitConsul() {
+    formdata = getFormData('formDAGMSRegister');
+    console.log(formdata);
+    json = JSON.stringify({ "value": formdata });
+    api_v1.put('/config/consul', json, function (result, status, xhr) {
+
+      console.log(result)
+    }, function (xhr, status, error) {
+      console.log(error);
+    });
+  };
 </script>
 
 

@@ -85,7 +85,7 @@ class ConfigResource(Resource):
         schema = ConfigSchema(partial=True)
         cfg = ConfigTable.query.filter_by(key=type).first_or_404()
         try:
-            if current_user.role_id is not 2:
+            if current_user.role_id != 2:
                 current_app.logger.info(cfg.to_dict()['sn'])
                 # request.json['value']['sn'] = cfg.sn
             dbdata = {

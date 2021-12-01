@@ -146,32 +146,21 @@
             <form role="form" id="formAddUser" method="post" action="" style="margin-top: 30px;">
 
               <div class="input-group mb-4">
-                <div class="col-md-4">
-                  <label for="username" class="form-control">{{_('Username')}}</label>
-                </div>
-                <input class="form-control" placeholder="{{_('Please enter')}}{{_('Username')}}" name="username"
-                  required="" type="text" value="">
+                <label for="username" class="bmd-label-floating">{{_('Username')}}</label>
+                <input class="form-control" name="username" required="" type="text" value="">
               </div>
               <div class="input-group mb-4">
-                <div class="col-md-4">
-                  <label for="email" class="form-control">{{_('Email')}}</label>
-                </div>
-                <input class="input form-control" placeholder="{{_('Please enter')}}{{_('Email')}}" name="email"
-                  required="" type="email" value="">
+                <label for="email" class="bmd-label-floating">{{_('Email')}}</label>
+                <input class="input form-control" name="email" required="" type="email" value="">
               </div>
 
               <div class="input-group mb-4">
-                <div class="col-md-4">
-                  <label for="password" class="form-control">{{_('Password')}}</label>
-                </div>
-                <input class="form-control" placeholder="{{_('Please enter')}}{{_('Password')}}" name="password"
-                  required="" type="password" value="">
+                <label for="password" class="bmd-label-floating">{{_('Password')}}</label>
+                <input class="form-control" name="password" required="" type="password" value="">
               </div>
 
               <div class="input-group mb-4">
-                <div class="col-md-4">
-                  <label for="active" class="form-control">{{_('ActiveStatus')}}</label>
-                </div>
+                <label for="active" class="bmd-label-floating">{{_('ActiveStatus')}}</label>&nbsp;&nbsp;
                 <input type="checkbox" id="add_active_status" name="active">
               </div>
 
@@ -206,32 +195,21 @@
           <div class="card-body">
             <form role="form" id="formUserModify" method="post" style="margin-top: 30px;">
               <div class="input-group mb-4">
-                <div class="col-md-4 label-primary">
-                  <label for="username" class="form-control">{{_('Username')}}</label>
-                </div>
-                <input class="form-control" placeholder="{{_('Please enter')}}{{_('Username')}}" name="username"
-                  id="username" type="text" value="user.username">
+                <label for="username" class="bmd-label-floating">{{_('Username')}}</label>
+                <input class="form-control" name="username" id="username" type="text" value="user.username">
               </div>
               <div class="input-group mb-4">
-                <div class="col-md-4">
-                  <label for="email" class="form-control">{{_('Email')}}</label>
-                </div>
-                <input class="input form-control" placeholder="{{_('Please enter')}}{{_('Email')}}" name="email"
-                  id="email" required="" type="email" value="">
+                <label for="email" class="bmd-label-floating">{{_('Email')}}</label>
+                <input class="input form-control" name="email" id="email" required="" type="email" value="user.email">
               </div>
 
               <div class="input-group mb-4">
-                <div class="col-md-4">
-                  <label for="password" class="form-control">{{_('Password')}}</label>
-                </div>
-                <input class="form-control" placeholder="{{_('Please enter')}}{{_('Password')}}" name="password"
-                  id="password" required="" type="password" value="">
+                <label for="password" class="bmd-label-floating">{{_('Password')}}</label>
+                <input class="form-control" name="password" id="password" required="" type="password" value="">
               </div>
 
               <div class="input-group mb-4">
-                <div class="col-md-4">
-                  <label for="active" class="form-control">{{_('ActiveStatus')}}</label>
-                </div>
+                <label for="active" class="bmd-label-floating">{{_('ActiveStatus')}}</label>&nbsp;&nbsp;
                 <input type="checkbox" id="modify_active_status" name="active">
               </div>
               <button type="button" id="modify_submit" class="btn btn-info shadow-2 mb-4 float-right"

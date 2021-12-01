@@ -8,6 +8,7 @@ from app.admin.base.models.config import ConfigTable
 
 from .version import ver_application, ver_api
 
+
 def user_init(app, database):
 
     exist = User.query.filter_by(username='admin').all()
@@ -30,72 +31,88 @@ def config_init(app, database):
         'latitude': '104.078133',
         'longitude': '30.54587'
     }
-    network = {
-            'port': {
-                'web': 80,
-                'filebrowser': 8080,
-                'nginx': 8081,
-                'haproxy': 8082
-            },
-            'mode': 2,
-            'bond': {
-
-                'ifname': "bond9",
-                'dhcp': 1,
-                'mtu': 1500,
-                'mac': "AA:AA:AA:AA:AA:AA",
-                'ip': "192.168.20.12",
-                'gw': "192.168.20.1",
-                'netmask': "255.255.255.0",
-            },
-            'routes': [
-                {"target": "192.168.20.1", "mask": "244.255.255.0", "next": "192.168.3.1", "dev": 'et0'}, 
-                {"target": "192.168.20.1", "mask": "244.255.255.0", "next": "192.168.3.1", "dev": 'et0'}, 
-                {"target": "192.168.20.1", "mask": "244.255.255.0", "next": "192.168.3.1", "dev": 'et0'}, 
-            ],
-            'device': [
-                {
-                    'ifname': "eth0",
-                    'dhcp': 1,
-                    'mtu': 1500,
-                    'ip': "192.168.20.12",
-                    'gw': "192.168.20.1",
-                    'netmask': "255.255.255.0",
-                    'mac': "AA:AA:AA:AA:AA:AA",
-                },
-                {
-
-                    'ifname': "eth1",
-                    'dhcp': 1,
-                    'mtu': 1500,
-                    'ip': "192.168.20.12",
-                    'gw': "192.168.20.1",
-                    'netmask': "255.255.255.0",
-                    'mac': "AA:AA:AA:AA:AA:AA",
-                }
-            ],
-            'mdns': '192.168.0.100', 
-            'sdns': '61.139.2.69',
-        }
-
     item_sys = ConfigTable.query.filter_by(key='system').first()
     if item_sys == None:
         item_sys = ConfigTable(key='system', value=json.dumps(system))
         database.session.add(item_sys)
         database.session.commit()
+    # listen_port
+    listen_port = {
+        'web': 80,
+        'filebrowser': 8080,
+        'nginx': 8081,
+        'haproxy': 8082
+    }
+    item_listen_port = ConfigTable.query.filter_by(key='listen_port').first()
+    if item_listen_port == None:
+        item_listen_port = ConfigTable(
+            key='listen_port', value=json.dumps(listen_port))
+        database.session.add(item_listen_port)
+        database.session.commit()
+    # mode and dns
+    network = {
+        'mode': 2,
+        'ndev_count': 2,
+        'mdns': '192.168.0.100',
+        'sdns': '61.139.2.69',
+    }
 
     item_net = ConfigTable.query.filter_by(key='network').first()
     if item_net == None:
         item_net = ConfigTable(key='network', value=json.dumps(network))
         database.session.add(item_net)
         database.session.commit()
+    # network device bond
+    ndev_bond = {
+        'ifname': "bond9",
+        'dhcp': 1,
+        'mtu': 1500,
+        'mac': "AA:AA:AA:AA:AA:AA",
+        'ip': "192.168.20.12",
+        'gw': "192.168.20.1",
+        'netmask': "255.255.255.0",
+    }
+    item_ndev_bond = ConfigTable.query.filter_by(key='ndev_bond').first()
+    if item_ndev_bond == None:
+        item_ndev_bond = ConfigTable(
+            key='ndev_bond', value=json.dumps(ndev_bond))
+        database.session.add(item_ndev_bond)
+        database.session.commit()
+    # Network device
+    for iname in range(network['ndev_count']):
+        iname_key = "ndev_"+str(iname)
+        item_ndev = ConfigTable.query.filter_by(key=iname_key).first()
 
+        if item_ndev == None:
+            item_ndev = ConfigTable(
+                key=iname_key, value=json.dumps({
+                    'ifname': "eth"+str(iname),
+                    'dhcp': 1,
+                    'mtu': 1500,
+                    'ip': "192.168.20.135",
+                    'gw': "192.168.20.1",
+                    'netmask': "255.255.255.0",
+                    'mac': "AA:AA:AA:AA:AA:AA",
+                }))
+            database.session.add(item_ndev)
+            database.session.commit()
+
+    consul = {
+        'ip': '192.168.0.59',
+        'port': 8500,
+        'api': '/v1/agent/service/register',
+    }
+    item_consul = ConfigTable.query.filter_by(key='consul').first()
+    if item_consul == None:
+        item_consul = ConfigTable(key='consul', value=json.dumps(consul))
+        database.session.add(item_consul)
+        database.session.commit()
 
     return item_sys
 
 
 def register_consul(app):
-    
+
     # TODO: Call consul API
     consul = {
         'ip': "192.168.20.121",
@@ -130,5 +147,5 @@ def register_consul(app):
             tempdata, ensure_ascii=True))
         if result.status_code != 200:
             app.logger.info(result.text)
-    except :
+    except:
         pass
