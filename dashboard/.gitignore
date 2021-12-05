@@ -30,3 +30,6 @@ package-lock.json
 *.spec
 dist
 build
+
+Pipfile
+Pipfile.bak
