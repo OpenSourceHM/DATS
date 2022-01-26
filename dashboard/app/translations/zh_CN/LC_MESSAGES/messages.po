@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-09 11:20+0800\n"
+"POT-Creation-Date: 2022-01-26 16:40+0800\n"
 "PO-Revision-Date: 2021-10-27 09:40+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -18,25 +18,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: app/admin/base/routes.py:51
+#: app/admin/base/routes.py:52
 msgid "Wrong user or password"
 msgstr "用户名或者密码错误，请检查重试。"
 
-#: app/admin/base/routes.py:73
+#: app/admin/base/routes.py:74
 msgid "Username already registered"
 msgstr "用户名已经被占用"
 
-#: app/admin/base/routes.py:81
+#: app/admin/base/routes.py:82
 msgid "Email already registered"
 msgstr "邮箱已经被占用"
 
-#: app/admin/base/routes.py:91
+#: app/admin/base/routes.py:92
 msgid "User created please <a href=\"/login\">login</a>"
 msgstr "用户创建成功，请 <a href=\"/login\">登录</a>"
 
 #: app/admin/base/templates/accounts/login.html:3
 #: app/admin/base/templates/accounts/login.html:15
-#: app/admin/base/templates/accounts/login.html:53
+#: app/admin/base/templates/accounts/login.html:56
 msgid "Login"
 msgstr "登录"
 
@@ -47,18 +47,22 @@ msgstr "请输入正确的用户信息"
 
 #: app/admin/base/templates/accounts/login.html:35
 #: app/admin/base/templates/accounts/register.html:38
-#: app/admin/home/templates/ui-user-manage.html:41
-#: app/admin/home/templates/ui-user-manage.html:69
+#: app/admin/home/templates/profile.html:30
+#: app/admin/home/templates/users.html:32
+#: app/admin/home/templates/users.html:149
+#: app/admin/home/templates/users.html:198
 msgid "Username"
 msgstr "用户名"
 
-#: app/admin/base/templates/accounts/login.html:39
+#: app/admin/base/templates/accounts/login.html:40
 #: app/admin/base/templates/accounts/register.html:46
-#: app/admin/home/templates/ui-user-manage.html:49
+#: app/admin/home/templates/profile.html:45
+#: app/admin/home/templates/users.html:158
+#: app/admin/home/templates/users.html:207
 msgid "Password"
 msgstr "密码"
 
-#: app/admin/base/templates/accounts/login.html:46
+#: app/admin/base/templates/accounts/login.html:48
 msgid "Save Details"
 msgstr "记住我"
 
@@ -71,13 +75,28 @@ msgid "Create Account"
 msgstr "创建用户"
 
 #: app/admin/base/templates/accounts/register.html:42
-#: app/admin/home/templates/ui-user-manage.html:45
-#: app/admin/home/templates/ui-user-manage.html:72
+#: app/admin/home/templates/profile.html:36
+#: app/admin/home/templates/users.html:35
+#: app/admin/home/templates/users.html:153
+#: app/admin/home/templates/users.html:202
 msgid "Email"
 msgstr "邮箱地址"
 
 #: app/admin/base/templates/accounts/register.html:49
-#: app/admin/home/templates/ui-user-manage.html:51
+#: app/admin/home/templates/app-tcp.html:156
+#: app/admin/home/templates/app-tcp.html:209
+#: app/admin/home/templates/app-tcp.html:251
+#: app/admin/home/templates/network.html:61
+#: app/admin/home/templates/network.html:129
+#: app/admin/home/templates/network.html:197
+#: app/admin/home/templates/network.html:265
+#: app/admin/home/templates/network.html:288
+#: app/admin/home/templates/profile.html:75
+#: app/admin/home/templates/system.html:72
+#: app/admin/home/templates/system.html:114
+#: app/admin/home/templates/users.html:169
+#: app/admin/home/templates/users.html:216
+#: app/admin/home/templates/users.html:258
 msgid "Confirm"
 msgstr "确定"
 
@@ -110,79 +129,361 @@ msgid "Tel"
 msgstr "总机：028-86030888 传真：028-86030888"
 
 #: app/admin/base/templates/includes/footer.html:31
+#: app/admin/home/templates/system.html:40
 msgid "Address"
 msgstr "地址：成都高新区天华二路219号天府软件园C区10栋"
 
-#: app/admin/base/templates/includes/navigation.html:6
+#: app/admin/base/templates/includes/navigation.html:33
 msgid "Header Title"
 msgstr "优秀的视频物联网解决方案供应商"
 
-#: app/admin/base/templates/includes/navigation.html:22
+#: app/admin/base/templates/includes/navigation.html:54
 #: app/admin/base/templates/includes/sidebar.html:16
 msgid "dashboard"
 msgstr "看板"
 
-#: app/admin/base/templates/includes/navigation.html:31
+#: app/admin/base/templates/includes/navigation.html:64
 msgid "Account"
 msgstr "账户"
 
-#: app/admin/base/templates/includes/navigation.html:35
+#: app/admin/base/templates/includes/navigation.html:68
+#: app/admin/home/templates/profile.html:3
 msgid "Profile"
 msgstr "详情"
 
-#: app/admin/base/templates/includes/navigation.html:37
-msgid "Log out"
+#: app/admin/base/templates/includes/navigation.html:70
+#: app/admin/base/templates/includes/sidebar.html:70
+msgid "Logout"
 msgstr "退出"
 
-#: app/admin/base/templates/includes/sidebar.html:22
-#: app/admin/home/templates/ui-user-manage.html:3
-#: app/admin/home/templates/ui-user-manage.html:14
+#: app/admin/base/templates/includes/sidebar.html:24
+#: app/admin/home/templates/users.html:3 app/admin/home/templates/users.html:14
 msgid "User Management"
 msgstr "用户管理"
 
-#: app/admin/base/templates/includes/sidebar.html:28
+#: app/admin/base/templates/includes/sidebar.html:31
 msgid "User Profile"
 msgstr "用户详情"
 
-#: app/admin/base/templates/includes/sidebar.html:35
+#: app/admin/base/templates/includes/sidebar.html:38
+#: app/admin/home/templates/system.html:3
 msgid "System Settings"
 msgstr "系统设置"
 
-#: app/admin/base/templates/includes/sidebar.html:41
+#: app/admin/base/templates/includes/sidebar.html:44
+#: app/admin/home/templates/network.html:3
 msgid "Network Settings"
 msgstr "网络设置"
 
-#: app/admin/base/templates/includes/sidebar.html:47
+#: app/admin/base/templates/includes/sidebar.html:50
 msgid "TCP Proxy Management"
 msgstr "TCP应用"
 
-#: app/admin/base/templates/includes/sidebar.html:53
+#: app/admin/base/templates/includes/sidebar.html:56
 msgid "HTTP/S Proxy Management"
 msgstr "HTTP应用"
 
-#: app/admin/base/templates/includes/sidebar.html:66
+#: app/admin/base/templates/includes/sidebar.html:63
 msgid "User Manual"
 msgstr "用户手册"
 
-#: app/admin/base/templates/includes/sidebar.html:81
+#: app/admin/base/templates/includes/sidebar.html:78
 msgid "link"
 msgstr "链接"
 
-#: app/admin/base/templates/includes/sidebar.html:87
+#: app/admin/base/templates/includes/sidebar.html:84
 msgid "Manual Download URL"
 msgstr "/manual/download"
 
-#: app/admin/base/templates/includes/sidebar.html:89
+#: app/admin/base/templates/includes/sidebar.html:86
 msgid "Manual Download"
 msgstr "使用手册下载"
 
-#: app/admin/base/templates/includes/sidebar.html:94
+#: app/admin/base/templates/includes/sidebar.html:91
 msgid "Product Information URL"
 msgstr "/manual/products"
 
-#: app/admin/base/templates/includes/sidebar.html:96
+#: app/admin/base/templates/includes/sidebar.html:93
 msgid "Product Information"
 msgstr "产品信息"
+
+#: app/admin/base/templates/includes/sidebar.html:97
+msgid "API URL"
+msgstr "/api"
+
+#: app/admin/base/templates/includes/sidebar.html:99
+#: app/admin/home/templates/system.html:101
+msgid "API"
+msgstr "接口文档"
+
+#: app/admin/base/templates/layouts/base.html:38
+msgid "Operaion successfully done"
+msgstr "操作成功"
+
+#: app/admin/base/templates/layouts/base.html:39
+msgid "Operaion failed"
+msgstr "操作失败"
+
+#: app/admin/base/templates/layouts/base.html:40
+msgid "Twice input password not the same"
+msgstr "两次输入的密码不一致"
+
+#: app/admin/home/templates/app-tcp.html:3
+msgid "TCP proxy applications"
+msgstr "TCP应用代理"
+
+#: app/admin/home/templates/app-tcp.html:14
+msgid "Proxy Table"
+msgstr "代理配置表"
+
+#: app/admin/home/templates/app-tcp.html:15
+msgid "Listen port always be unique in DATS runtime period"
+msgstr "监听端口在DATS运行时环境中必须唯一"
+
+#: app/admin/home/templates/app-tcp.html:20
+#: app/admin/home/templates/users.html:20
+msgid "Total Pages"
+msgstr "总页数"
+
+#: app/admin/home/templates/app-tcp.html:21
+#: app/admin/home/templates/users.html:21
+msgid "Total"
+msgstr "共计"
+
+#: app/admin/home/templates/app-tcp.html:23
+#: app/admin/home/templates/app-tcp.html:127
+#: app/admin/home/templates/users.html:23
+#: app/admin/home/templates/users.html:142
+msgid "Add"
+msgstr "新增"
+
+#: app/admin/home/templates/app-tcp.html:28
+#: app/admin/home/templates/profile.html:22
+#: app/admin/home/templates/system.html:24
+#: app/admin/home/templates/users.html:29
+msgid "ID"
+msgstr "编码"
+
+#: app/admin/home/templates/app-tcp.html:31
+#: app/admin/home/templates/system.html:34
+msgid "Name"
+msgstr "名称"
+
+#: app/admin/home/templates/app-tcp.html:34
+msgid "ListenPort"
+msgstr "监听端口"
+
+#: app/admin/home/templates/app-tcp.html:37
+#: app/admin/home/templates/app-tcp.html:143
+#: app/admin/home/templates/app-tcp.html:145
+#: app/admin/home/templates/app-tcp.html:195
+#: app/admin/home/templates/app-tcp.html:197
+msgid "RemoteIP"
+msgstr "对端IP地址"
+
+#: app/admin/home/templates/app-tcp.html:40
+#: app/admin/home/templates/app-tcp.html:151
+#: app/admin/home/templates/app-tcp.html:153
+#: app/admin/home/templates/app-tcp.html:203
+#: app/admin/home/templates/app-tcp.html:205
+msgid "RemotePort"
+msgstr "对端端口"
+
+#: app/admin/home/templates/app-tcp.html:66
+#: app/admin/home/templates/app-tcp.html:178
+#: app/admin/home/templates/users.html:82
+#: app/admin/home/templates/users.html:190
+msgid "modify"
+msgstr "修改"
+
+#: app/admin/home/templates/app-tcp.html:70
+#: app/admin/home/templates/app-tcp.html:230
+#: app/admin/home/templates/users.html:85
+#: app/admin/home/templates/users.html:238
+msgid "delete"
+msgstr "删除"
+
+#: app/admin/home/templates/app-tcp.html:81
+#: app/admin/home/templates/users.html:97
+msgid "First"
+msgstr "第一页"
+
+#: app/admin/home/templates/app-tcp.html:86
+#: app/admin/home/templates/users.html:102
+msgid "Previous"
+msgstr "前一页"
+
+#: app/admin/home/templates/app-tcp.html:104
+#: app/admin/home/templates/users.html:120
+msgid "Next"
+msgstr "后一页"
+
+#: app/admin/home/templates/app-tcp.html:108
+#: app/admin/home/templates/users.html:124
+msgid "Last"
+msgstr "最后页"
+
+#: app/admin/home/templates/app-tcp.html:127
+#: app/admin/home/templates/app-tcp.html:178
+#: app/admin/home/templates/app-tcp.html:230
+msgid "Proxy"
+msgstr "代理"
+
+#: app/admin/home/templates/app-tcp.html:128
+msgid "Enter your proxyname, email and password to register"
+msgstr "请输入用户名，邮箱和密码进行注册"
+
+#: app/admin/home/templates/app-tcp.html:135
+#: app/admin/home/templates/app-tcp.html:137
+#: app/admin/home/templates/app-tcp.html:187
+#: app/admin/home/templates/app-tcp.html:189
+msgid "Proxyname"
+msgstr "代理名称"
+
+#: app/admin/home/templates/app-tcp.html:137
+#: app/admin/home/templates/app-tcp.html:145
+#: app/admin/home/templates/app-tcp.html:153
+#: app/admin/home/templates/app-tcp.html:189
+#: app/admin/home/templates/app-tcp.html:197
+#: app/admin/home/templates/app-tcp.html:205
+msgid "Please enter"
+msgstr "请输入"
+
+#: app/admin/home/templates/app-tcp.html:158
+#: app/admin/home/templates/app-tcp.html:211
+#: app/admin/home/templates/app-tcp.html:253
+#: app/admin/home/templates/users.html:171
+#: app/admin/home/templates/users.html:218
+#: app/admin/home/templates/users.html:260
+msgid "Cancel"
+msgstr "取消"
+
+#: app/admin/home/templates/app-tcp.html:179
+msgid "Complete proxy profile"
+msgstr "完整代理信息"
+
+#: app/admin/home/templates/app-tcp.html:231
+#: app/admin/home/templates/users.html:239
+msgid "Confirm to delete the user"
+msgstr "确认删除该用户"
+
+#: app/admin/home/templates/app-tcp.html:239
+#: app/admin/home/templates/users.html:247
+msgid "Are you sure you want to delete"
+msgstr "您确定要删除"
+
+#: app/admin/home/templates/network.html:16
+#: app/admin/home/templates/system.html:95
+msgid "Port"
+msgstr "端口"
+
+#: app/admin/home/templates/network.html:29
+msgid "HTTP"
+msgstr "HTTP"
+
+#: app/admin/home/templates/network.html:35
+msgid "Filebrowser"
+msgstr "文件管理器"
+
+#: app/admin/home/templates/network.html:42
+msgid "NGINX"
+msgstr ""
+
+#: app/admin/home/templates/network.html:49
+msgid "HAPROXY"
+msgstr "HAProxy"
+
+#: app/admin/home/templates/network.html:72
+msgid "Network Device"
+msgstr "网络设备"
+
+#: app/admin/home/templates/network.html:83
+msgid "Network Mode"
+msgstr "网络设置"
+
+#: app/admin/home/templates/network.html:84
+msgid "Normal Network Mode"
+msgstr ""
+
+#: app/admin/home/templates/network.html:85
+msgid "Load Balancing Network Mode"
+msgstr ""
+
+#: app/admin/home/templates/network.html:87
+msgid "Redundant Network Mode"
+msgstr ""
+
+#: app/admin/home/templates/network.html:96
+msgid "DNS"
+msgstr ""
+
+#: app/admin/home/templates/network.html:108
+msgid "MDNS"
+msgstr "主DNS"
+
+#: app/admin/home/templates/network.html:114
+msgid "SDNS"
+msgstr "副DNS"
+
+#: app/admin/home/templates/network.html:141
+msgid "Bond Settings"
+msgstr "网卡绑定"
+
+#: app/admin/home/templates/network.html:159
+#: app/admin/home/templates/network.html:162
+#: app/admin/home/templates/network.html:227
+#: app/admin/home/templates/network.html:229
+msgid "DHCP Mode"
+msgstr ""
+
+#: app/admin/home/templates/network.html:160
+#: app/admin/home/templates/network.html:228
+msgid "Static IP"
+msgstr "静态IP"
+
+#: app/admin/home/templates/network.html:167
+#: app/admin/home/templates/network.html:234
+msgid "MTU"
+msgstr ""
+
+#: app/admin/home/templates/network.html:171
+#: app/admin/home/templates/network.html:238
+#: app/admin/home/templates/system.html:89
+msgid "IP"
+msgstr "IP地址"
+
+#: app/admin/home/templates/network.html:175
+#: app/admin/home/templates/network.html:242
+msgid "Gateway"
+msgstr "网关"
+
+#: app/admin/home/templates/network.html:179
+#: app/admin/home/templates/network.html:246
+msgid "Netmask"
+msgstr "子网掩码"
+
+#: app/admin/home/templates/network.html:183
+#: app/admin/home/templates/network.html:250
+msgid "Mac"
+msgstr "MAC地址"
+
+#: app/admin/home/templates/network.html:208
+msgid "Network Device Settings"
+msgstr "网卡设置"
+
+#: app/admin/home/templates/network.html:276
+msgid "Route Settings"
+msgstr "路由设置"
+
+#: app/admin/home/templates/network.html:277
+msgid "Route table of DATS"
+msgstr "DATS路由表"
+
+#: app/admin/home/templates/network.html:281
+#: app/admin/home/templates/system.html:125
+#: app/admin/home/templates/system.html:135
+msgid "To be updated"
+msgstr "待更新"
 
 #: app/admin/home/templates/page-403.html:3
 #: app/admin/home/templates/page-403.html:14
@@ -217,77 +518,105 @@ msgstr "500错误"
 msgid "Internal Server Error"
 msgstr "内部错误"
 
-#: app/admin/home/templates/page-blank.html:3
-#: app/admin/home/templates/page-blank.html:14
-msgid "Page Blank"
-msgstr ""
-
-#: app/admin/home/templates/ui-user-manage.html:15
-msgid "DATS user table"
-msgstr "DATS用户列表"
-
-#: app/admin/home/templates/ui-user-manage.html:20
-msgid "Total Pages"
-msgstr "总页数"
-
-#: app/admin/home/templates/ui-user-manage.html:21
-msgid "Total"
-msgstr "共计"
-
-#: app/admin/home/templates/ui-user-manage.html:23
-#: app/admin/home/templates/ui-user-manage.html:34
-msgid "Add"
-msgstr "新增"
-
-#: app/admin/home/templates/ui-user-manage.html:34
+#: app/admin/home/templates/profile.html:3
+#: app/admin/home/templates/profile.html:14
+#: app/admin/home/templates/profile.html:22
+#: app/admin/home/templates/users.html:68
+#: app/admin/home/templates/users.html:72
+#: app/admin/home/templates/users.html:142
+#: app/admin/home/templates/users.html:190
+#: app/admin/home/templates/users.html:238
 msgid "User"
 msgstr "用户"
 
-#: app/admin/home/templates/ui-user-manage.html:35
-msgid "Enter your username, email and password to register"
-msgstr "请输入用户名，邮箱和密码进行注册"
+#: app/admin/home/templates/profile.html:14
+msgid "Edit"
+msgstr "编辑"
 
-#: app/admin/home/templates/ui-user-manage.html:66
-msgid "ID"
-msgstr "编码"
+#: app/admin/home/templates/profile.html:15
+msgid "Complete your profile"
+msgstr "完善您的信息"
 
-#: app/admin/home/templates/ui-user-manage.html:75
+#: app/admin/home/templates/profile.html:51
+msgid "RepeatPassword"
+msgstr "重复输入密码"
+
+#: app/admin/home/templates/profile.html:67
+#: app/admin/home/templates/users.html:38
+#: app/admin/home/templates/users.html:163
+#: app/admin/home/templates/users.html:212
 msgid "ActiveStatus"
 msgstr "激活状态"
 
-#: app/admin/home/templates/ui-user-manage.html:78
+#: app/admin/home/templates/profile.html:95
+msgid ""
+"DATS has only one super admin account, which always has access to all "
+"permissions to the system."
+msgstr "DATS仅有一个超级管理员账户，该账户总是拥有DATS的完全操作权限。"
+
+#: app/admin/home/templates/system.html:16
+msgid "Device infomation"
+msgstr "设备信息"
+
+#: app/admin/home/templates/system.html:17
+msgid "Includes device SN, installation location, etc."
+msgstr "包括设备序列号，安装目录信息等。"
+
+#: app/admin/home/templates/system.html:24
+#: app/admin/home/templates/system.html:34
+#: app/admin/home/templates/system.html:40
+msgid "Device"
+msgstr "设备"
+
+#: app/admin/home/templates/system.html:49
+msgid "Latitude"
+msgstr "纬度"
+
+#: app/admin/home/templates/system.html:56
+msgid "Longitude"
+msgstr "经度"
+
+#: app/admin/home/templates/system.html:81
+msgid "Consul Register"
+msgstr "Consul服务注册"
+
+#: app/admin/home/templates/system.html:122
+msgid "System Upgrade"
+msgstr "系统升级"
+
+#: app/admin/home/templates/system.html:132
+msgid "Data Management"
+msgstr "数据管理"
+
+#: app/admin/home/templates/users.html:15
+msgid "DATS user table"
+msgstr "DATS用户列表"
+
+#: app/admin/home/templates/users.html:41
+msgid "UserRole"
+msgstr "用户角色"
+
+#: app/admin/home/templates/users.html:44
 msgid "Operation"
 msgstr "操作"
 
-#: app/admin/home/templates/ui-user-manage.html:95
+#: app/admin/home/templates/users.html:61
 msgid "Yes"
 msgstr "是"
 
-#: app/admin/home/templates/ui-user-manage.html:97
+#: app/admin/home/templates/users.html:63
 msgid "No"
 msgstr "否"
 
-#: app/admin/home/templates/ui-user-manage.html:101
-msgid "modify"
-msgstr "修改"
+#: app/admin/home/templates/users.html:70
+msgid "Administrator"
+msgstr "超级管理员"
 
-#: app/admin/home/templates/ui-user-manage.html:102
-msgid "delete"
-msgstr "删除"
+#: app/admin/home/templates/users.html:143
+msgid "Enter your username, email and password to register"
+msgstr "请输入用户名，邮箱和密码进行注册"
 
-#: app/admin/home/templates/ui-user-manage.html:113
-msgid "First"
-msgstr "第一页"
-
-#: app/admin/home/templates/ui-user-manage.html:117
-msgid "Previous"
-msgstr "前一页"
-
-#: app/admin/home/templates/ui-user-manage.html:135
-msgid "Next"
-msgstr "后一页"
-
-#: app/admin/home/templates/ui-user-manage.html:139
-msgid "Last"
-msgstr "最后页"
+#: app/admin/home/templates/users.html:191
+msgid "Complete user profile"
+msgstr "完善用户详情"
 
