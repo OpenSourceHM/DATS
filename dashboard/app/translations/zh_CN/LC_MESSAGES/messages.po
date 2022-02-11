@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-26 16:40+0800\n"
+"POT-Creation-Date: 2022-02-11 18:11+0800\n"
 "PO-Revision-Date: 2021-10-27 09:40+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -86,11 +86,8 @@ msgstr "邮箱地址"
 #: app/admin/home/templates/app-tcp.html:156
 #: app/admin/home/templates/app-tcp.html:209
 #: app/admin/home/templates/app-tcp.html:251
-#: app/admin/home/templates/network.html:61
-#: app/admin/home/templates/network.html:129
-#: app/admin/home/templates/network.html:197
-#: app/admin/home/templates/network.html:265
-#: app/admin/home/templates/network.html:288
+#: app/admin/home/templates/network.html:60
+#: app/admin/home/templates/network.html:161
 #: app/admin/home/templates/profile.html:75
 #: app/admin/home/templates/system.html:72
 #: app/admin/home/templates/system.html:114
@@ -389,101 +386,61 @@ msgstr "文件管理器"
 msgid "NGINX"
 msgstr ""
 
-#: app/admin/home/templates/network.html:49
+#: app/admin/home/templates/network.html:48
 msgid "HAPROXY"
 msgstr "HAProxy"
 
-#: app/admin/home/templates/network.html:72
+#: app/admin/home/templates/network.html:71
+#: app/admin/home/templates/network.html:184
 msgid "Network Device"
 msgstr "网络设备"
 
-#: app/admin/home/templates/network.html:83
-msgid "Network Mode"
-msgstr "网络设置"
-
-#: app/admin/home/templates/network.html:84
-msgid "Normal Network Mode"
-msgstr ""
-
-#: app/admin/home/templates/network.html:85
-msgid "Load Balancing Network Mode"
-msgstr ""
-
-#: app/admin/home/templates/network.html:87
-msgid "Redundant Network Mode"
-msgstr ""
-
-#: app/admin/home/templates/network.html:96
-msgid "DNS"
-msgstr ""
-
-#: app/admin/home/templates/network.html:108
-msgid "MDNS"
-msgstr "主DNS"
-
-#: app/admin/home/templates/network.html:114
-msgid "SDNS"
-msgstr "副DNS"
-
-#: app/admin/home/templates/network.html:141
-msgid "Bond Settings"
-msgstr "网卡绑定"
-
-#: app/admin/home/templates/network.html:159
-#: app/admin/home/templates/network.html:162
-#: app/admin/home/templates/network.html:227
-#: app/admin/home/templates/network.html:229
+#: app/admin/home/templates/network.html:99
 msgid "DHCP Mode"
-msgstr ""
+msgstr "动态获取"
 
-#: app/admin/home/templates/network.html:160
-#: app/admin/home/templates/network.html:228
-msgid "Static IP"
-msgstr "静态IP"
-
-#: app/admin/home/templates/network.html:167
-#: app/admin/home/templates/network.html:234
-msgid "MTU"
-msgstr ""
-
-#: app/admin/home/templates/network.html:171
-#: app/admin/home/templates/network.html:238
+#: app/admin/home/templates/network.html:104
 #: app/admin/home/templates/system.html:89
 msgid "IP"
 msgstr "IP地址"
 
-#: app/admin/home/templates/network.html:175
-#: app/admin/home/templates/network.html:242
+#: app/admin/home/templates/network.html:108
+#: app/admin/home/templates/network.html:181
+#: app/admin/home/templates/network.html:187
 msgid "Gateway"
 msgstr "网关"
 
-#: app/admin/home/templates/network.html:179
-#: app/admin/home/templates/network.html:246
+#: app/admin/home/templates/network.html:112
 msgid "Netmask"
 msgstr "子网掩码"
 
-#: app/admin/home/templates/network.html:183
-#: app/admin/home/templates/network.html:250
+#: app/admin/home/templates/network.html:116
 msgid "Mac"
 msgstr "MAC地址"
 
-#: app/admin/home/templates/network.html:208
-msgid "Network Device Settings"
-msgstr "网卡设置"
+#: app/admin/home/templates/network.html:129
+msgid "DNS"
+msgstr ""
 
-#: app/admin/home/templates/network.html:276
+#: app/admin/home/templates/network.html:141
+msgid "MDNS"
+msgstr "主DNS"
+
+#: app/admin/home/templates/network.html:147
+msgid "SDNS"
+msgstr "副DNS"
+
+#: app/admin/home/templates/network.html:173
 msgid "Route Settings"
 msgstr "路由设置"
 
-#: app/admin/home/templates/network.html:277
+#: app/admin/home/templates/network.html:174
 msgid "Route table of DATS"
 msgstr "DATS路由表"
 
-#: app/admin/home/templates/network.html:281
-#: app/admin/home/templates/system.html:125
-#: app/admin/home/templates/system.html:135
-msgid "To be updated"
-msgstr "待更新"
+#: app/admin/home/templates/network.html:187
+msgid "Default"
+msgstr "默认"
 
 #: app/admin/home/templates/page-403.html:3
 #: app/admin/home/templates/page-403.html:14
@@ -583,6 +540,11 @@ msgstr "Consul服务注册"
 #: app/admin/home/templates/system.html:122
 msgid "System Upgrade"
 msgstr "系统升级"
+
+#: app/admin/home/templates/system.html:125
+#: app/admin/home/templates/system.html:135
+msgid "To be updated"
+msgstr "待更新"
 
 #: app/admin/home/templates/system.html:132
 msgid "Data Management"

@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 """
-Copyright (c) 2021 - present cong.li@huamaitel.com
+Main Entry
 """
 
 from flask_migrate import Migrate

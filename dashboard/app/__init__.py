@@ -21,6 +21,7 @@ from app.plugin import cors_init_app
 from app.runtime_init import user_init
 from app.runtime_init import config_init
 from app.runtime_init import register_consul
+from app.runtime_init import server_init
 
 def configure_apispec(app):
     """Configure APISpec for swagger support"""
@@ -86,5 +87,5 @@ def create_app(config):
     configure_database(app)
     configure_apispec(app)
 
-    register_consul(app)
+    server_init(app)
     return app

@@ -147,13 +147,11 @@
 <script>
   function submitSystem() {
     formdata = getFormData('formSystemInfo');
-    console.log(formdata);
     json = JSON.stringify({ "value": formdata });
     api_v1.put('/config/system', json, function (result, status, xhr) {
-
-      console.log(result)
+      md.showNotification('top', 'right', 3, $('#msg_success').text());
     }, function (xhr, status, error) {
-      console.log(error);
+      md.showNotification('top', 'right', 2, $('#msg_failed').text());
     });
   };
   function submitConsul() {
@@ -161,10 +159,9 @@
     console.log(formdata);
     json = JSON.stringify({ "value": formdata });
     api_v1.put('/config/consul', json, function (result, status, xhr) {
-
-      console.log(result)
+      md.showNotification('top', 'right', 3, $('#msg_success').text());
     }, function (xhr, status, error) {
-      console.log(error);
+      md.showNotification('top', 'right', 2, $('#msg_failed').text());
     });
   };
 </script>

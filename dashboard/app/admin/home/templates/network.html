@@ -27,27 +27,26 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <label class="bmd-label-floating">{{_('HTTP')}}</label>
-                  <input type="number" class="form-control" name="http_port" value="{{data.listen_port.web}}" required>
+                  <input type="number" class="form-control" name="web" value="{{data.listen_port.web}}" required>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label class="bmd-label-floating">{{_('Filebrowser')}}</label>
-                  <input type="number" class="form-control" name="fb_port" value="{{data.listen_port.filebrowser}}"
+                  <input type="number" class="form-control" name="filebrowser" value="{{data.listen_port.filebrowser}}"
                     required>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label class="bmd-label-floating">{{_('NGINX')}}</label>
-                  <input type="number" class="form-control" name="nginx_port" value="{{data.listen_port.nginx}}"
-                    required>
+                  <input type="number" class="form-control" name="nginx" value="{{data.listen_port.nginx}}" required>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label class="bmd-label-floating">{{_('HAPROXY')}}</label>
-                  <input type="number" class="form-control" name="haproxy_port" value="{{data.listen_port.haproxy}}"
+                  <input type="number" class="form-control" name="haproxy" value="{{data.listen_port.haproxy}}"
                     required>
                 </div>
               </div>
@@ -57,7 +56,7 @@
                 <p class="text-danger" id="validate_msg_device"> </p>
               </div>
             </div>
-            <button type="button" onclick="submitListenPort()" id="confirmButton"
+            <button type="button" onclick="submitListenPort()"
               class="btn btn-primary pull-right">{{_('Confirm')}}</button>
           </form>
         </div>
@@ -77,17 +76,51 @@
           </a>
         </div>
 
-        <form id="formNetwork" method="post">
-          <div class="card-body">
-            <div class="input-group mb-4">
-              <select class="form-select form-control" aria-label="{{_('Network Mode')}}" id="network-mode">
-                <option {% if data.mode %}selected {% endif%} value="0">{{_('Normal Network Mode')}}</option>
-                <option {% if data.mode %}selected {% endif%} value="1">{{_('Load Balancing Network Mode')}}
-                </option>
-                <option {% if data.mode %}selected {% endif%} value="2">{{_('Redundant Network Mode')}}</option>
-              </select>
-            </div>
+        <div class="card-body">
+          <form id="formNetwork" method="post">
 
+            <div class="row">
+
+              {% for dev in data.devices %}
+              <div class="col-md-6">
+                <div class="card card-props">
+                  <div class="card-header card-header-default">
+                    <h4 class="card-title text-success float-right"> {{dev.value.ifname}}</h4>
+                  </div>
+                  <div class="card-avatar">
+                    <a href="#">
+                      <img class="img" src="/admin/static/assets/img/faces/network_device.png" />
+                    </a>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">
+                        {{_('DHCP Mode')}}
+                      </label>
+                      <input type="number" class="form-control" name="dhcp" value="{{dev.value.dhcp}}" min="0" max="1" required>
+                    </div>
+                    <div class="form-group">
+                      <label class="bmd-label-floating">{{_('IP')}}</label>
+                      <input type="text" class="form-control" name="addr" value="{{dev.value.addr}}" required>
+                    </div>
+                    <div class="form-group">
+                      <label class="bmd-label-floating">{{_('Gateway')}}</label>
+                      <input type="text" class="form-control" name="gateway" value="{{dev.value.gateway}}" required>
+                    </div>
+                    <div class="form-group">
+                      <label class="bmd-label-floating">{{_('Netmask')}}</label>
+                      <input type="text" class="form-control" name="netmask" value="{{dev.value.netmask}}" required>
+                    </div>
+                    <div class="form-group">
+                      <label class="bmd-label-floating">{{_('Mac')}}</label>
+                      <input type="text" class="form-control" name="mac" value="{{dev.value.mac}}" disabled required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
             <div class="row">
               <!-- DNS -->
               <div class="col-md-12" id="div-dns-container">
@@ -125,148 +158,12 @@
                 <p class="text-danger" id="validate_msg_device"> </p>
               </div>
             </div>
-            <button type="button" onclick="submitNetwork()" id="confirmButton"
-              class="btn btn-primary pull-right">{{_('Confirm')}}</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-  </div>
-  <!-- Bond device -->
-  <div class="row bond-network-device">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header card-header-info">
-          <h4 class="card-title">{{_('Bond Settings')}}</h4>
-        </div>
-        <div class="card-body">
-          <div class="row">
-
-            <div class="col-md-12 ">
-              <div class="card card-props">
-                <div class="card-header card-header-default">
-                  <h4 class="card-title text-success float-right"> {{data.ndev_bond.ifname}}</h4>
-                </div>
-                <div class="card-avatar">
-                  <a href="#">
-                    <img class="img" src="/admin/static/assets/img/faces/network_device.png" />
-                  </a>
-                </div>
-
-                <div class="card-body">
-                  <div class="input-group mb-4">
-                    <select class="form-select form-control" aria-label="{{_('DHCP Mode')}}">
-                      <option {% if not data.ndev_bond.dhcp %}selected {% endif%} value="0">{{_('Static IP')}}
-                      </option>
-                      <option {% if data.ndev_bond.dhcp %}selected {% endif%} value="1">{{_('DHCP Mode')}}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label class="bmd-label-floating">{{_('MTU')}}</label>
-                    <input type="number" class="form-control" name="mtu" value="{{data.ndev_bond.mtu}}" required />
-                  </div>
-                  <div class="form-group">
-                    <label class="bmd-label-floating">{{_('IP')}}</label>
-                    <input type="text" class="form-control" name="ip" value="{{data.ndev_bond.ip}}" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="bmd-label-floating">{{_('Gateway')}}</label>
-                    <input type="text" class="form-control" name="gw" value="{{data.ndev_bond.ip}}" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="bmd-label-floating">{{_('Netmask')}}</label>
-                    <input type="text" class="form-control" name="netmask" value="{{data.ndev_bond.netmask}}" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="bmd-label-floating">{{_('Mac')}}</label>
-                    <input type="text" class="form-control" name="mac" value="{{data.ndev_bond.mac}}" disabled required>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-12">
-              <p class="text-danger" id="validate_msg_route"> </p>
-            </div>
-          </div>
-          <button type="button" onclick="submitNdevBond()" id="confirmButton"
-            class="btn btn-primary pull-right">{{_('Confirm')}}</button>
-
+            <button type="button" onclick="submitNetwork()" class="btn btn-primary pull-right">{{_('Confirm')}}</button>
+          </form>
         </div>
       </div>
     </div>
-  </div>
-  <!-- Ndev -->
-  <div class="row normal-network-device">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header card-header-info">
-          <h4 class="card-title">{{_('Network Device Settings')}}</h4>
-        </div>
-        <div class="card-body">
-          <div class="row">
 
-            {% for dev in data.devices %}
-            <div class="col-md-3 ">
-              <div class="card card-props">
-                <div class="card-header card-header-default">
-                  <h4 class="card-title text-success float-right"> {{dev.value.ifname}}</h4>
-                </div>
-                <div class="card-avatar">
-                  <a href="#">
-                    <img class="img" src="/admin/static/assets/img/faces/network_device.png" />
-                  </a>
-                </div>
-
-                <div class="card-body">
-                  <div class="input-group mb-4">
-                    <select class="form-select form-control" aria-label="{{_('DHCP Mode')}}">
-                      <option {% if not dev.value.dhcp %}selected {% endif%} value="0">{{_('Static IP')}}</option>
-                      <option {% if dev.value.dhcp %}selected {% endif%} value="1">{{_('DHCP Mode')}}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label class="bmd-label-floating">{{_('MTU')}}</label>
-                    <input type="number" class="form-control" name="mtu" value="{{dev.value.mtu}}" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="bmd-label-floating">{{_('IP')}}</label>
-                    <input type="text" class="form-control" name="ip" value="{{dev.value.ip}}" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="bmd-label-floating">{{_('Gateway')}}</label>
-                    <input type="text" class="form-control" name="gw" value="{{dev.value.ip}}" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="bmd-label-floating">{{_('Netmask')}}</label>
-                    <input type="text" class="form-control" name="netmask" value="{{dev.value.netmask}}" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="bmd-label-floating">{{_('Mac')}}</label>
-                    <input type="text" class="form-control" name="mac" value="{{dev.value.mac}}" disabled required>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-
-          <div class="row">
-            <div class="col-md-12">
-              <p class="text-danger" id="validate_msg_route"> </p>
-            </div>
-          </div>
-          <button type="button" onclick="" id="confirmButton"
-            class="btn btn-primary pull-right">{{_('Confirm')}}</button>
-
-        </div>
-      </div>
-    </div>
   </div>
   <!-- Route table -->
   <div class="row">
@@ -277,16 +174,35 @@
           <p class="card-category">{{_('Route table of DATS')}}</p>
         </div>
         <div class="card-body">
-          <div class="clearfix"></div>
-          {{_('To be updated')}}
-          <div class="row">
-            <div class="col-md-12">
-              <p class="text-danger" id="validate_msg_route"> </p>
-            </div>
-          </div>
-          <button type="button" onclick="" id="confirmButton"
-            class="btn btn-primary pull-right">{{_('Confirm')}}</button>
-
+          
+          <table class="table">
+            <thead class=" text-info">
+              <th>
+                {{_('Gateway')}}
+              </th>
+              <th>
+                {{ _('Network Device')}}
+              </th>
+              <th>
+                {{_('Default')}}{{_('Gateway')}}
+              </th>
+            </thead>
+            <tbody>
+              {% for route in data.routes %}
+              <tr>
+                <td>
+                  {{route[0]}}
+                </td>
+                <td>
+                  {{route[3]}}
+                </td>
+                <td>
+                  {{route[2]}}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -299,39 +215,49 @@
 {% block javascripts %}
 
 <script>
-  function modeChange() {
-    if ($('#network-mode').val() == 0) {
-      $('.bond-network-device').hide();
-      $('.normal-network-device').show();
-      $('.normal-network-device').prop('class', 'row normal-network-device');
-    } else {
-      $('.bond-network-device').show();
-      $('.bond-network-device').prop('class', 'row bond-network-device');
-      $('.normal-network-device').hide();
-    }
-  }
   $(document).ready(function () {
-    modeChange();
-    // Javascript method's body can be found in assets/lovelace/lovelace.js
-    $('#network-mode').change(function () {
-      modeChange();
-    });
   });
 
   function submitNetwork() {
-    formdata = getFormData('formNetwork');
-    console.log(formdata);
+    let devices = [];
+    let dev = {};
+    let data = {};
+    let value = $('#formNetwork').serializeArray();
+    let devid = 0;
+    $.each(value, function (index, item) {
+      if(item.name == "mdns" || item.name =="sdns") {
+        data[item.name] = item.value;
+      } else {
+        if(dev[item.name]) {
+          devices.push(dev);
+          dev = {};
+          devid += 1;
+        }
+        dev[item.name] = item.value;
+        dev['id'] = devid;
+      }
+    });
+    devices.push(dev);
+    data['devices'] = devices;
+
+    json = JSON.stringify({ "value": data });
+    console.log(json);
+    api_v1.put('/config/network', json, function (result, status, xhr) {
+      console.log(result)
+    }, function (xhr, status, error) {
+      console.log(error);
+    });
+  }
+
+  function submitListenPort() {
+    formdata = getFormData('formListenPort');
     json = JSON.stringify({ "value": formdata });
-    // api_v1.put('/config/network', json, function (result, status, xhr) {
-    //   console.log(result)
-    // }, function (xhr, status, error) {
-    //   console.log(error);
-    // });
-  }
-
-  function submitNdevBond() {
-
-  }
+    api_v1.put('/config/listen_port', json, function (result, status, xhr) {
+      md.showNotification('top', 'right', 3, $('#msg_success').text());
+    }, function (xhr, status, error) {
+      md.showNotification('top', 'right', 2, $('#msg_failed').text());
+    });
+  };
 </script>
 
 {% endblock javascripts %}

@@ -10,6 +10,8 @@ from app import login_manager
 from jinja2 import TemplateNotFound
 import traceback
 import json
+from app.plugin import netifaces
+from app.plugin import netdev
 from app.api.schemas import UserSchema
 from app.api.schemas import ConfigSchema
 from app.api.schemas import ProxySchema
@@ -90,23 +92,32 @@ def network_settings():
         # schema = ConfigSchema()
         network = ConfigTable.query.filter_by(key='network').first()
         result = json.loads(network.value)
-
+        try:
+            devices = result['devices']
+        except:
+            pass
         listen_port = ConfigTable.query.filter_by(key='listen_port').first()
         result['listen_port'] = json.loads(listen_port.value)
+        nd = netdev()
+        nd.init()
 
-        ndev_bond = ConfigTable.query.filter_by(key='ndev_bond').first()
-        result['ndev_bond'] = json.loads(ndev_bond.value)
-
-        ndev_count = result['ndev_count']
         result['devices'] = []
-        for i in range(ndev_count):
-            devkey = "ndev_"+str(i)
-            ndev = ConfigTable.query.filter_by(key=devkey).first()
+        for i in range(nd.count):
+            devinfo = nd.devinfo[i]
+            try:
+                devinfo['dhcp'] = devices[i]['dhcp']
+                devinfo['addr'] = devices[i]['addr']
+                devinfo['gateway'] = devices[i]['gateway']
+                devinfo['netmask'] = devices[i]['netmask']
+            except Exception as e:
+                pass
             result['devices'].append({
-                'key': devkey,
-                'value': json.loads(ndev.value)
+                'id': i,
+                'value': devinfo
             })
-
+        
+        result['routes'] = nd.gw
+        print(result)
         template = 'network.html'
 
         # Detect the current page

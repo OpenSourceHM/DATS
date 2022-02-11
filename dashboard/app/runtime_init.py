@@ -2,12 +2,14 @@
 import uuid
 import json
 import requests
+import threading
+import time
 from flask import request
 from app.admin.base.models.user import User, Permissions, Role
 from app.admin.base.models.config import ConfigTable
 
 from .version import ver_application, ver_api
-
+from .plugin import netdev
 
 def user_init(app, database):
 
@@ -51,8 +53,6 @@ def config_init(app, database):
         database.session.commit()
     # mode and dns
     network = {
-        'mode': 2,
-        'ndev_count': 2,
         'mdns': '192.168.0.100',
         'sdns': '61.139.2.69',
     }
@@ -62,24 +62,10 @@ def config_init(app, database):
         item_net = ConfigTable(key='network', value=json.dumps(network))
         database.session.add(item_net)
         database.session.commit()
-    # network device bond
-    ndev_bond = {
-        'ifname': "bond9",
-        'dhcp': 1,
-        'mtu': 1500,
-        'mac': "AA:AA:AA:AA:AA:AA",
-        'ip': "192.168.20.12",
-        'gw': "192.168.20.1",
-        'netmask': "255.255.255.0",
-    }
-    item_ndev_bond = ConfigTable.query.filter_by(key='ndev_bond').first()
-    if item_ndev_bond == None:
-        item_ndev_bond = ConfigTable(
-            key='ndev_bond', value=json.dumps(ndev_bond))
-        database.session.add(item_ndev_bond)
-        database.session.commit()
+
     # Network device
-    for iname in range(network['ndev_count']):
+    nd = netdev()
+    for iname in range(nd.count):
         iname_key = "ndev_"+str(iname)
         item_ndev = ConfigTable.query.filter_by(key=iname_key).first()
 
@@ -96,7 +82,7 @@ def config_init(app, database):
                 }))
             database.session.add(item_ndev)
             database.session.commit()
-
+    # Consul
     consul = {
         'ip': '192.168.0.59',
         'port': 8500,
@@ -142,10 +128,20 @@ def register_consul(app):
         ]
     }
     try:
-        app.logger.critical(json.dumps(tempdata, ensure_ascii=True))
+        app.logger.info(json.dumps(tempdata, ensure_ascii=True))
         result = requests.put(url=consul_url, data=json.dumps(
             tempdata, ensure_ascii=True))
         if result.status_code != 200:
-            app.logger.info(result.text)
-    except:
-        pass
+            app.logger.error(result.text)
+    except Exception as e:
+        app.logger.critical(e)
+
+def server_monitor(app):
+    while True:
+        time.sleep(10)
+        register_consul(app)
+
+def server_init(app):
+    return
+    t = threading.Thread(target=server_monitor, args=(app,), name="server_monitor")
+    t.start()

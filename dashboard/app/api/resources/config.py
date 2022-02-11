@@ -9,7 +9,7 @@ from app.api.schemas import ConfigSchema
 from app.api.schemas import ConfigPostSchema
 from app.admin.base.models.config import ConfigTable
 from app.extensions import db
-
+import traceback
 
 class ConfigResource(Resource):
     """Config resource
@@ -85,9 +85,8 @@ class ConfigResource(Resource):
         schema = ConfigSchema(partial=True)
         cfg = ConfigTable.query.filter_by(key=type).first_or_404()
         try:
-            if current_user.role_id != 2:
-                current_app.logger.info(cfg.to_dict()['sn'])
-                # request.json['value']['sn'] = cfg.sn
+            # if current_user.role_id != 2:
+            #     current_app.logger.info(cfg.to_dict())
             dbdata = {
                 'value': json.dumps(request.json['value'])
             }
@@ -96,6 +95,7 @@ class ConfigResource(Resource):
 
             return {"msg": "config updated", type: schema.dump(cfg)}
         except Exception as e:
+            traceback.print_exc(e)
             return {"msg": "Exception", 'e': e}, 400
 
 

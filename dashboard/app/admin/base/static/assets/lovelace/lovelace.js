@@ -40,11 +40,11 @@ function getFormData(id) {
   let data = {};
   let value = $('#' + id).serializeArray();
   $.each(value, function (index, item) {
+    //TODO: Not support multiple names
     data[item.name] = item.value;
   });
   return data;
 }
-
 
 // API implementations
 class API {
