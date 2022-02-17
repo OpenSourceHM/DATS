@@ -23,4 +23,3 @@ apispec-webframeworks
 flask_babel
 python-dotenv
 netifaces
-psutil

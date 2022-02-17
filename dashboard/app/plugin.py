@@ -28,7 +28,7 @@ import netifaces
 import platform
 import uuid
 import socket
-import psutil
+import winreg
 import traceback
 
 def cors_init_app(app):
@@ -90,40 +90,46 @@ class netdev:
     def init(self):
         self.gw = self.gateway()
         self._devices = netifaces.interfaces()
+        #print(netifaces.address_families)
         for i in self._devices:
             devinfo = None
             try:
                 devinfo = self.ifaddr(i)[netifaces.AF_INET][0]
+                macinfo = self.ifaddr(i)[netifaces.AF_LINK][0]
+                devinfo['ifname'] = None
+                if devinfo is not None:
+                    if platform.system() == "Windows":
+                        devinfo['ifname'] = self.get_key(i)
+                    else:
+                        devinfo['ifname'] = i
+                    devinfo['mac'] = macinfo['addr']
+                    devinfo['gateway'] = self.gateway_ip(i, devinfo['ifname'])
             except Exception as e:
+                #traceback.print_exc(e)
                 pass
             finally:
                 if devinfo is not None and devinfo['addr'] != '127.0.0.1':
-                    adapter = self.mac_from_ip(devinfo['addr'])
-                    devinfo['ifname'] = adapter[0]
-                    devinfo['mac'] = adapter[1]
-                    devinfo['gateway'] = self.gateway_ip(i, adapter[0])
                     self.devinfo.append(devinfo)
         self.count = len(self.devinfo)
 
-    def mac_from_ip(self, ipv4, ipv6 = None):
-        dic = psutil.net_if_addrs()
-        for adapter in dic:
-            snicList = dic[adapter]
-            ifname = adapter
-            mac = None
-            _ipv4 = None
-            _ipv6 = None
-            for snic in snicList:
-                if snic.family.name in {'AF_LINK', 'AF_PACKET'}:
-                    mac = snic.address
-                elif snic.family.name == 'AF_INET':
-                    _ipv4 = snic.address
-                elif snic.family.name == 'AF_INET6':
-                    _ipv6 = snic.address
-            if _ipv4 == ipv4:
-                return ifname, mac
-
-        return None
+    def get_key(self, id):
+        key_name = None
+        try:
+            nic_key = r'SYSTEM\ControlSet001\Control\Class\{4d36e972-e325-11ce-bfc1-08002be10318}'
+            reg_key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE , nic_key)
+            index = 0
+            while True:
+                sub_key = winreg.EnumKey(reg_key, index)
+                sub_key = winreg.OpenKey(reg_key, sub_key)
+                nic_name, _ = winreg.QueryValueEx(sub_key, 'DriverDesc')
+                nic_id, _ = winreg.QueryValueEx(sub_key, 'NetCfgInstanceId')
+                index = index + 1
+                if nic_id == id:
+                    key_name = nic_name
+                    break
+        except Exception as e:
+            pass
+        return key_name
 
     def gateway_ip(self, ifname, nic):
         for i in self.gw:
@@ -155,4 +161,7 @@ class netdev:
 
     def ifaddr(self, i):
         return netifaces.ifaddresses(i)
+
+    def mac(self, i):
+        return netifaces.ifaddresses(i)[netifaces.AF_LINK][0]
         

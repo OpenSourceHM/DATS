@@ -117,7 +117,7 @@ def network_settings():
             })
         
         result['routes'] = nd.gw
-        print(result)
+        #print(result)
         template = 'network.html'
 
         # Detect the current page

@@ -82,3 +82,8 @@
   height: calc(100vh - 70px);
   margin-top: 70px;
 }
+
+.label_left {
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
