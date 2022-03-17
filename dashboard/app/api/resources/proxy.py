@@ -303,24 +303,35 @@ class ProxyList(Resource):
 
     def post(self):
         schema = ProxySchema()
-        proxy = schema.load(request.json)
+        print(request.json)
 
-        # Check exists
-        exist_proxy = ProxyTable.query.filter_by(
-            remote_addr=proxy.remote_addr, remote_port=proxy.remote_port).first()
+        if 'listen_port' in request.json:
+          # Check exists
+          exist_proxy = ProxyTable.query.filter_by(
+              remote_addr=proxy.remote_addr, remote_port=proxy.remote_port).first()
 
-        if exist_proxy:
-            return {"msg": "proxy relationship already exists", "proxy": schema.dump(exist_proxy)}, 200
-        exist_listen_port = ProxyTable.query.filter_by(
-            listen_port=proxy.listen_port).first()
-        if proxy.listen_port > 0 and exist_listen_port:
-            return {"msg": "listen_port already exists", "proxy": schema.dump(exist_listen_port)}, 400
-        FP = FreePort(10000, 30000)
-        proxy.listen_port = FP.port
-        db.session.add(proxy)
-        db.session.commit()
+          if exist_proxy:
+              return {"msg": "proxy relationship already exists", "proxy": schema.dump(exist_proxy)}, 200
+          exist_listen_port = ProxyTable.query.filter_by(
+              listen_port=proxy.listen_port).first()
+          if proxy.listen_port > 0 and exist_listen_port:
+              return {"msg": "listen_port already exists", "proxy": schema.dump(exist_listen_port)}, 400
+          FP = FreePort(10000, 30000)
+          if proxy.listen_port == 0:
+            proxy.listen_port = FP.port
+          db.session.add(proxy)
+          db.session.commit()
 
-        return {"msg": "proxy created", "proxy": schema.dump(proxy)}, 201
+          return {"msg": "proxy created", "proxy": schema.dump(proxy)}, 201
+        else:
+          FP = FreePort(10000, 30000)
+          request.json['listen_port'] = FP.port
+          proxy = schema.load(request.json)
+
+          db.session.add(proxy)
+          db.session.commit()
+
+          return {"msg": "proxy created", "proxy": schema.dump(proxy)}, 201
 
     def delete(self):
 

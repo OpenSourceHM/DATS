@@ -85,7 +85,7 @@
               <div class="col-md-6">
                 <div class="card card-props">
                   <div class="card-header card-header-default">
-                    <h4 class="card-title text-success float-right"> {{dev.value.ifname[0:20]}}</h4>
+                    <h6 class="card-title text-success float-right"> {{dev.value.ifname}}</h6>
                   </div>
                   <div class="card-avatar">
                     <a href="#">
@@ -246,9 +246,11 @@
     json = JSON.stringify({ "value": data });
     console.log(json);
     api_v1.put('/config/network', json, function (result, status, xhr) {
+      md.showNotification('top', 'right', 3, $('#msg_success').text());
       console.log(result)
     }, function (xhr, status, error) {
       console.log(error);
+      md.showNotification('top', 'right', 2, $('#msg_failed').text());
     });
   }
 

@@ -117,7 +117,7 @@ def network_settings():
             })
         
         result['routes'] = nd.gw
-        #print(result)
+        # print(result)
         template = 'network.html'
 
         # Detect the current page
@@ -146,7 +146,7 @@ def app_tcp():
 
         # Detect the current page
         segment = get_segment(request)
-
+        print(result)
         # Serve the file (if exists) from app/templates/FILE.html
         return render_template(template, segment=segment, data=result)
 

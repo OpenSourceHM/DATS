@@ -18,10 +18,10 @@
 Author          : Connard
 Github          : https://github.com/lovelacelee
 Date            : 2021-11-18 10:37:04
-LastEditTime    : 2021-11-22 13:12:28
-LastEditors     : Lee
+LastEditTime    2022-03-17 17:38:00
+LastEditors     Lee
 Description     : 
-FilePath        : /DATS/dashboard/app/api/schemas/proxy.py
+FilePath        /app/api/schemas/proxy.py
 Copyright 2008-2021 Lovelace, All Rights Reserved.
 
 TODO:

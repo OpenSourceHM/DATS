@@ -192,3 +192,30 @@ function userDelete(userid) {
         md.showNotification('top', 'right', 2, $('#msg_failed').text());
     });
 }
+
+function proxyAdd(formid) {
+    let formData = {};
+    $.each($('#' + formid).serializeArray(), function (index, item) {
+        formData[item.name] = item.value;
+    });
+
+    let json = JSON.stringify(formData);
+    api_v1.request('/proxy', 'POST', api_v1.authHeader(), json, function (result, status, xhr) {
+        reloadPage(1);
+        md.showNotification('top', 'right', 3, $('#msg_success').text());
+    }, function (xhr, status, error) {
+        console.log(error);
+        md.showNotification('top', 'right', 2, $('#msg_failed').text());
+    });
+
+}
+
+function proxyDelete(proxyid) {
+    api_v1.request('/proxy/' + proxyid, 'DELETE', api_v1.authHeader(), null, function (result, status, xhr) {
+        reloadPage(1);
+        md.showNotification('top', 'right', 3, $('#msg_success').text());
+    }, function (xhr, status, error) {
+        console.log(error);
+        md.showNotification('top', 'right', 2, $('#msg_failed').text());
+    });
+}

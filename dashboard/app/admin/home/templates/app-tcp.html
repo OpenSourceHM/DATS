@@ -61,12 +61,16 @@
                 <td>
 
                   <btn class="btn btn-sm btn-info shadow-2" data-toggle="modal" data-target="#modifyProxyModal"
-                    data-proxyid="{{proxy.id}}" data-proxyname="{{proxy.proxy_name}}"
-                    data-proxyname="{{proxy.listen_port}}">
+                    data-proxy_id="{{proxy.id}}" data-proxy_name="{{proxy.proxy_name}}"
+                    data-proxy_listen_port="{{proxy.listen_port}}"
+                    data-proxy_remote_addr="{{proxy.remote_addr}}"
+                    data-proxy_remote_port="{{proxy.remote_port}}">
                     {{_('modify')}}</btn>
                   <btn class="btn btn-sm btn-danger shadow-2" data-toggle="modal" data-target="#deleteProxyModal"
-                    data-proxy="{{proxy.id}}" data-proxyname="{{proxy.proxy_name}}"
-                    data-proxyname="{{proxy.listen_port}}">
+                    data-proxy_id="{{proxy.id}}" data-proxy_name="{{proxy.proxy_name}}"
+                    data-proxy_listen_port="{{proxy.listen_port}}"
+                    data-proxy_remote_addr="{{proxy.remote_addr}}"
+                    data-proxy_remote_port="{{proxy.remote_port}}">
                     {{_('delete')}}</btn>
 
                 </td>
@@ -104,8 +108,13 @@
                   <span class="sr-only">{{_('Next')}}</span>
                 </a>
               </li>
+              {% if data.pages == 0 %}
+              <li class="page-item"><a class="page-link"
+                  href="/admin/app-tcp?page=1&per_page={{10}}">{{_('Last')}}</a></li>
+              {% else %}
               <li class="page-item"><a class="page-link"
                   href="/admin/app-tcp?page={{data.pages}}&per_page={{10}}">{{_('Last')}}</a></li>
+              {% endif %}
             </ul>
           </nav>
         </div>
@@ -153,7 +162,7 @@
                 <input class="form-control" placeholder="{{_('Please enter')}}{{_('RemotePort')}}" name="remote_port"
                   required="" type="number" min=1 max=65535 value="">
               </div>
-              <button type="submit" class="btn btn-info shadow-2 mb-4 float-right">{{_('Confirm')}}</button>
+              <button type="submit" id="add_submit" data-dismiss="modal" class="btn btn-info shadow-2 mb-4 float-right">{{_('Confirm')}}</button>
               <button type="button" class="btn btn-warning shadow-2 mb-4 float-right"
                 data-dismiss="modal">{{_('Cancel')}}</button>
 
@@ -181,7 +190,7 @@
 
 
           <div class="card-body">
-            <form role="form" id="formModifyProxy" method="post" style="margin-top: 30px;">
+            <form role="form" id="formModifyProxy" method="post"  action="" style="margin-top: 30px;">
               <div class="input-group mb-4">
                 <div class="col-md-4">
                   <label for="proxy_name" class="form-control">{{_('Proxyname')}}</label>
@@ -219,7 +228,7 @@
 </div>
 
 <!-- Delete Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteProxyModal"
+<div class="modal fade" id="deleteProxyModal" tabindex="-1" role="dialog" aria-labelledby="deleteProxyModal"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-md" role="document">
     <div class="modal-content">
@@ -233,7 +242,7 @@
 
 
           <div class="card-body">
-            <form role="form" id="formDeleteProxy" method="post" style="margin-top: 30px;">
+            <form role="form" id="formDeleteProxy" method="post" action="" style="margin-top: 30px;">
 
               <div class="input-group mb-4">
                 <label for="username">{{_('Are you sure you want to delete')}}</label>
@@ -241,6 +250,7 @@
               <div class="input-group mb-4">
                 <span class="badge badge-sm badge-default">
                   <span class="badge badge-sm badge-success" id="delete_proxyid"></span>-
+                  <span class="badge badge-sm badge-info" id="delete_proxy_name"></span>-
                   <span class="badge badge-sm badge-info" id="delete_listen_port"></span>-
                   <span class="badge badge-sm badge-info" id="delete_remote_addr"></span>-
                   <span class="badge badge-sm badge-info" id="delete_remote_port"></span>
@@ -271,7 +281,7 @@
     md.initFormExtendedDatetimepickers();
   });
   // When modal is displayed
-  $('#modifyModal').on('show.bs.modal', function (event) {
+  $('#modifyProxyModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var userid = button.data('userid');
     var username = button.data('username');
@@ -294,28 +304,28 @@
     }
   });
 
-  $('#addModal').on('show.bs.modal', function (event) {
+  $('#addProxyModal').on('show.bs.modal', function (event) {
     var modal = $(this);
     // Submit button
     modal.find('#add_submit')[0].onclick = function () {
-      userAdd('formAddUser');
+      proxyAdd('formAddProxy');
     }
   });
 
-  $('#deleteModal').on('show.bs.modal', function (event) {
+  $('#deleteProxyModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
-    var userid = button.data('userid');
-    var username = button.data('username');
-    var email = button.data('email')
+
     var modal = $(this);
     // display infomation
-    modal.find('#delete_userid').text(userid);
-    modal.find('#delete_username').text(username);
-    modal.find('#delete_email').text(email);
+    modal.find('#delete_proxyid').text(button.data('proxy_id'));
+    modal.find('#delete_proxy_name').text(button.data('proxy_name'));
+    modal.find('#delete_listen_port').text(button.data('proxy_listen_port'));
+    modal.find('#delete_remote_addr').text(button.data('proxy_remote_addr'));
+    modal.find('#delete_remote_port').text(button.data('proxy_remote_port'));
     // Submit button
     modal.find('#delete_submit')[0].onclick = function () {
-      console.log("delete " + userid);
-      userDelete(userid);
+      console.log("delete " + button.data('proxy_id'));
+      proxyDelete(button.data('proxy_id'));
     }
   });
 </script>
