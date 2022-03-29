@@ -1,109 +1,78 @@
+<!--
+ * @           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE                 : 
+ * @                     Version 2, December 2004                          : 
+ * @                                  -                                    : 
+ * @Copyright (C) 2008 Connard Lee <lovelacelee@gmail.com>                 : 
+ * @Everyone is permitted to copy and distribute verbatim or modified      : 
+ * @copies of this license document, and changing it is allowed as long    : 
+ * @as the name is changed.                                                : 
+ * @                                                                       : 
+ * @DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE                            : 
+ * @TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION        : 
+ * @                                 ---                                   : 
+ * @0. You just DO WHAT THE FUCK YOU WANT TO.                              : 
+ * @1. Just be happy every day.                                            : 
+ * @                                -----                                  : 
+ * @Author          : Connard
+ * @Github          : https://github.com/lovelacelee
+ * @Date            : 2021-11-03 13:54:42
+ * @LastEditTime    : 2022-03-29 15:01:39
+ * @LastEditors     : Lee
+ * @Description     : 
+ * @FilePath        : /app/admin/home/templates/manual.html
+ * Copyright 2022 Lovelace, All Rights Reserved.
+ * 
+ * 
+-->
 {% extends "layouts/base.html" %}
 
-{% block title %} UI Typography {% endblock %} 
+{% block title %} {{_('User Manual')}} {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-        <div class="card">
-            <div class="card-header card-header-primary">
-              <h4 class="card-title">Material Dashboard Heading</h4>
-              <p class="card-category">Created using Roboto Font Family</p>
-            </div>
-            <div class="card-body">
-              <div id="typography">
-                <div class="card-title">
-                  <h2>Typography</h2>
-                </div>
-                <div class="row">
-                  <div class="tim-typo">
-                    <h1>
-                      <span class="tim-note">Header 1</span>The Life of Material Dashboard </h1>
-                  </div>
-                  <div class="tim-typo">
-                    <h2>
-                      <span class="tim-note">Header 2</span>The Life of Material Dashboard</h2>
-                  </div>
-                  <div class="tim-typo">
-                    <h3>
-                      <span class="tim-note">Header 3</span>The Life of Material Dashboard</h3>
-                  </div>
-                  <div class="tim-typo">
-                    <h4>
-                      <span class="tim-note">Header 4</span>The Life of Material Dashboard</h4>
-                  </div>
-                  <div class="tim-typo">
-                    <h5>
-                      <span class="tim-note">Header 5</span>The Life of Material Dashboard</h5>
-                  </div>
-                  <div class="tim-typo">
-                    <h6>
-                      <span class="tim-note">Header 6</span>The Life of Material Dashboard</h6>
-                  </div>
-                  <div class="tim-typo">
-                    <p>
-                      <span class="tim-note">Paragraph</span>
-                      I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at.</p>
-                  </div>
-                  <div class="tim-typo">
-                    <span class="tim-note">Quote</span>
-                    <blockquote class="blockquote">
-                      <p>
-                        I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at.
-                      </p>
-                      <small>
-                        Kanye West, Musician
-                      </small>
-                    </blockquote>
-                  </div>
-                  <div class="tim-typo">
-                    <span class="tim-note">Muted Text</span>
-                    <p class="text-muted">
-                      I will be the leader of a company that ends up being worth billions of dollars, because I got the answers...
-                    </p>
-                  </div>
-                  <div class="tim-typo">
-                    <span class="tim-note">Primary Text</span>
-                    <p class="text-primary">
-                      I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-                  </div>
-                  <div class="tim-typo">
-                    <span class="tim-note">Info Text</span>
-                    <p class="text-info">
-                      I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-                  </div>
-                  <div class="tim-typo">
-                    <span class="tim-note">Success Text</span>
-                    <p class="text-success">
-                      I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-                  </div>
-                  <div class="tim-typo">
-                    <span class="tim-note">Warning Text</span>
-                    <p class="text-warning">
-                      I will be the leader of a company that ends up being worth billions of dollars, because I got the answers...
-                    </p>
-                  </div>
-                  <div class="tim-typo">
-                    <span class="tim-note">Danger Text</span>
-                    <p class="text-danger">
-                      I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-                  </div>
-                  <div class="tim-typo">
-                    <h2>
-                      <span class="tim-note">Small Tag</span>
-                      Header with small subtitle
-                      <br>
-                      <small>Use "small" tag for the headers</small>
-                    </h2>
-                  </div>
-                </div>
-              </div>
-            </div>
+<div class="card">
+  <div class="card-header card-header-primary">
+    <h4 class="card-title">DATS{{_('User Manual')}}</h4>
+    <p class="card-category">{{_('Download')}}</p>
+  </div>
+  <div class="card-body">
+    <div id="typography">
+      <div class="row">
+        <div class="tim-typo-manual">
+          <div class="md_render">
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+
+<script>
+
+  var xmlhttp;
+  if (window.XMLHttpRequest) {
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    xmlhttp = new ActiveXObject('Microsoft.XMLHttp');
+  }
+
+  xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      // document.getElementById('content').innerHTML = marked(xmlhttp.responseText);
+      $('.md_render').html(marked.parse(xmlhttp.responseText));
+    }
+  }
+
+  xmlhttp.open('GET', "/admin/static/manual.md", true);
+  xmlhttp.send();
+
+</script>
+{% endblock javascripts %}

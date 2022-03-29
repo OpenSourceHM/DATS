@@ -221,22 +221,23 @@ function proxyDelete(proxyid) {
     });
 }
 
-function proxyModify(userid, formid) {
+function proxyModify(proxy_id, formid) {
     let formData = {};
-    // $.each($('#' + formid).serializeArray(), function (index, item) {
-    //     formData[item.name] = item.value;
-    // });
+    $.each($('#' + formid).serializeArray(), function (index, item) {
+        formData[item.name] = item.value;
+    });
     // delete (formData['repassword']);
     // formData['active'] = formData['active'] === "on" ? true : false;
-    // console.log(formData)
+    console.log(formData);
 
-    // let json = JSON.stringify(formData);
-    // api_v1.request('/proxy/' + userid, 'PUT', api_v1.authHeader(), json, function (result, status, xhr) {
-    //     reloadPage(1);
-    //     md.showNotification('top', 'right', 3, $('#msg_success').text());
-    // }, function (xhr, status, error) {
-    //     console.log(error);
-    //     md.showNotification('top', 'right', 2, $('#msg_failed').text());
-    // });
+    let json = JSON.stringify(formData);
+    console.log(json);
+    api_v1.request('/proxy/' + proxy_id, 'PUT', api_v1.authHeader(), json, function (result, status, xhr) {
+        reloadPage(1);
+        md.showNotification('top', 'right', 3, $('#msg_success').text());
+    }, function (xhr, status, error) {
+        console.log(error);
+        md.showNotification('top', 'right', 2, $('#msg_failed').text());
+    });
 
 }

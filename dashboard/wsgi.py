@@ -40,7 +40,7 @@ if DEBUG:
     app.logger.info('Environment = ' + get_config_mode)
     app.logger.info('DBMS        = ' + app_config.SQLALCHEMY_DATABASE_URI)
     app.logger.info('HOST        = ' + app_config.HOST)
-    app.logger.info('PORT        = ' + app_config.PORT)
+    app.logger.info('PORT        = ' + str(app_config.PORT))
 
 if __name__ == "__main__":
     app.run(host=app_config.HOST, port=app_config.PORT)

@@ -62,14 +62,12 @@
 
                   <btn class="btn btn-sm btn-info shadow-2" data-toggle="modal" data-target="#modifyProxyModal"
                     data-proxy_id="{{proxy.id}}" data-proxy_name="{{proxy.proxy_name}}"
-                    data-proxy_listen_port="{{proxy.listen_port}}"
-                    data-proxy_remote_addr="{{proxy.remote_addr}}"
+                    data-proxy_listen_port="{{proxy.listen_port}}" data-proxy_remote_addr="{{proxy.remote_addr}}"
                     data-proxy_remote_port="{{proxy.remote_port}}">
                     {{_('modify')}}</btn>
                   <btn class="btn btn-sm btn-danger shadow-2" data-toggle="modal" data-target="#deleteProxyModal"
                     data-proxy_id="{{proxy.id}}" data-proxy_name="{{proxy.proxy_name}}"
-                    data-proxy_listen_port="{{proxy.listen_port}}"
-                    data-proxy_remote_addr="{{proxy.remote_addr}}"
+                    data-proxy_listen_port="{{proxy.listen_port}}" data-proxy_remote_addr="{{proxy.remote_addr}}"
                     data-proxy_remote_port="{{proxy.remote_port}}">
                     {{_('delete')}}</btn>
 
@@ -109,8 +107,8 @@
                 </a>
               </li>
               {% if data.pages == 0 %}
-              <li class="page-item"><a class="page-link"
-                  href="/admin/app-tcp?page=1&per_page={{10}}">{{_('Last')}}</a></li>
+              <li class="page-item"><a class="page-link" href="/admin/app-tcp?page=1&per_page={{10}}">{{_('Last')}}</a>
+              </li>
               {% else %}
               <li class="page-item"><a class="page-link"
                   href="/admin/app-tcp?page={{data.pages}}&per_page={{10}}">{{_('Last')}}</a></li>
@@ -162,7 +160,8 @@
                 <input class="form-control" placeholder="{{_('Please enter')}}{{_('RemotePort')}}" name="remote_port"
                   required="" type="number" min=1 max=65535 value="">
               </div>
-              <button type="submit" id="add_submit" data-dismiss="modal" class="btn btn-info shadow-2 mb-4 float-right">{{_('Confirm')}}</button>
+              <button type="submit" id="add_submit" data-dismiss="modal"
+                class="btn btn-info shadow-2 mb-4 float-right">{{_('Confirm')}}</button>
               <button type="button" class="btn btn-warning shadow-2 mb-4 float-right"
                 data-dismiss="modal">{{_('Cancel')}}</button>
 
@@ -190,31 +189,31 @@
 
 
           <div class="card-body">
-            <form role="form" id="formModifyProxy" method="post"  action="" style="margin-top: 30px;">
+            <form role="form" id="formModifyProxy" method="post" action="" style="margin-top: 30px;">
               <div class="input-group mb-4">
                 <div class="col-md-4">
-                  <label for="proxy_name" class="form-control">{{_('Proxyname')}}</label>
+                  <label for="proxy_name" class="label_left">{{_('Proxyname')}}</label>
                 </div>
                 <input class="form-control" placeholder="{{_('Please enter')}}{{_('Proxyname')}}" name="proxy_name"
-                  required="" type="text" value="">
+                  id="proxy_name" required="" type="text" value="">
               </div>
 
               <div class="input-group mb-4">
                 <div class="col-md-4">
-                  <label for="remote_addr" class="form-control">{{_('RemoteIP')}}</label>
+                  <label for="remote_addr" class="label_left">{{_('RemoteIP')}}</label>
                 </div>
                 <input class="input form-control" placeholder="{{_('Please enter')}}{{_('RemoteIP')}}"
-                  name="remote_addr" required="" type="text" value="">
+                  name="remote_addr" id="remote_addr" required="" type="text" value="">
               </div>
 
               <div class="input-group mb-4">
                 <div class="col-md-4">
-                  <label for="remote_port" class="form-control">{{_('RemotePort')}}</label>
+                  <label for="remote_port" class="label_left">{{_('RemotePort')}}</label>
                 </div>
                 <input class="form-control" placeholder="{{_('Please enter')}}{{_('RemotePort')}}" name="remote_port"
-                  required="" type="number" min=1 max=65535 value="">
+                  id="remote_port" required="" type="number" min=1 max=65535 value="">
               </div>
-              <button type="button" id="submit_button" class="btn btn-info shadow-2 mb-4 float-right"
+              <button type="button" id="modify_submit" class="btn btn-info shadow-2 mb-4 float-right"
                 data-dismiss="modal" aria-hidden="true">{{_('Confirm')}}</button>
               <button type="button" class="btn btn-warning shadow-2 mb-4 float-right"
                 data-dismiss="modal">{{_('Cancel')}}</button>
@@ -275,7 +274,7 @@
 {% block javascripts %}
 
 <script>
-  
+
   $(document).ready(function () {
     //init DateTimePickers
     md.initFormExtendedDatetimepickers();
@@ -283,24 +282,20 @@
   // When modal is displayed
   $('#modifyProxyModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
-    var userid = button.data('userid');
-    var username = button.data('username');
+
+    var proxy_id = button.data('proxy_id');
+    var proxy_name = button.data('proxy_name');
+    var proxy_listen_port = button.data('proxy_listen_port');
+    var proxy_remote_addr = button.data('proxy_remote_addr');
+    var proxy_remote_port = button.data('proxy_remote_port');
     var modal = $(this);
-    modal.find('#username').val(username);
-    // change active status
-    api_v1.get('/users/' + userid, function (result, status, xhr) {
-      modal.find('#email').val(result.user.email);
-      if (result.user.active) {
-        modal.find('#modify_active_status').prop("checked", true);
-      } else {
-        modal.find('#modify_active_status').prop("checked", false);
-      }
-    }, function (xhr, status, error) {
-      md.showNotification('top', 'right', 2, $('#msg_failed').text());
-    })
+    modal.find('#proxy_name').val(proxy_name);
+    modal.find('#remote_addr').val(proxy_remote_addr);
+    modal.find('#remote_port').val(proxy_remote_port);
+    console.log("Modify proxy id: " + proxy_id);
     // submit button
     modal.find('#modify_submit')[0].onclick = function () {
-      userModify(userid, 'formUserModify');
+      proxyModify(proxy_id, 'formModifyProxy');
     }
   });
 

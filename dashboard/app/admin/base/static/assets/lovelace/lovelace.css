@@ -28,6 +28,13 @@
   width: 100%;
 }
 
+.tim-typo-manual {
+  padding-left: 1%;
+  margin-bottom: 40px;
+  position: relative;
+  width: 100%;
+}
+
 .tim-typo .tim-note {
   bottom: 5px;
   color: #c0c1c2;

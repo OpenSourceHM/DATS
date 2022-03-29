@@ -10,6 +10,8 @@ from app import login_manager
 from jinja2 import TemplateNotFound
 import traceback
 import json
+import os
+import psutil
 from app.plugin import netifaces
 from app.plugin import netdev
 from app.api.schemas import UserSchema
@@ -26,9 +28,62 @@ from flask_babel import _
 from flask_babel import lazy_gettext as _l
 
 
+def get_disk_info():
+
+    content = []
+    for disk in psutil.disk_partitions():
+
+        if 'cdrom' in disk.opts or disk.fstype == '':
+            continue
+        disk_name_arr = disk.device.split(':')
+        disk_name = disk_name_arr[0]
+        disk_info = psutil.disk_usage(disk.device)
+
+        free_disk_size = disk_info.free//1024//1024//1024
+        info = {
+            'name': disk_name,
+            'percent': str(disk_info.percent),
+            'free': str(free_disk_size)+' GB'
+        }
+
+        # info = "%s盘使用率：%s%%， 剩余空间：%iG" % (disk_name, str(disk_info.percent), free_disk_size)
+
+        content.append(info)
+    print(content)
+    return content
+
+
+def get_cpu_info():
+    cpu_percent = psutil.cpu_percent(interval=1)
+    cpu_info = "%i%%" % cpu_percent
+    print(cpu_info)
+    return cpu_info
+
+
+def get_memory_info():
+    virtual_memory = psutil.virtual_memory()
+    used_memory = virtual_memory.used/1024/1024/1024
+    free_memory = virtual_memory.free/1024/1024/1024
+    memory_percent = virtual_memory.percent
+    # memory_info = "内存使用：%0.2fG，使用率%0.1f%%，剩余内存：%0.2fG" % (
+    #     used_memory, memory_percent, free_memory)
+    memory_info = {
+        'used': str("%.2f" % used_memory) + ' GB',
+        'free': str("%.2f" % free_memory) + ' GB',
+        'percent': memory_percent
+    }
+    print(memory_info)
+    return memory_info
+
+
 @blueprint.route('/index')
 @login_required
 def index():
+
+    get_disk_info()
+    get_cpu_info()
+    get_memory_info()
+    
     return render_template('index.html', segment='index')
 
 
@@ -115,7 +170,7 @@ def network_settings():
                 'id': i,
                 'value': devinfo
             })
-        
+
         result['routes'] = nd.gw
         # print(result)
         template = 'network.html'
