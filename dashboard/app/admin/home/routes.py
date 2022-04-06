@@ -45,18 +45,13 @@ def get_disk_info():
             'percent': str(disk_info.percent),
             'free': str(free_disk_size)+' GB'
         }
-
-        # info = "%s盘使用率：%s%%， 剩余空间：%iG" % (disk_name, str(disk_info.percent), free_disk_size)
-
         content.append(info)
-    print(content)
     return content
 
 
 def get_cpu_info():
     cpu_percent = psutil.cpu_percent(interval=1)
     cpu_info = "%i%%" % cpu_percent
-    print(cpu_info)
     return cpu_info
 
 
@@ -65,26 +60,26 @@ def get_memory_info():
     used_memory = virtual_memory.used/1024/1024/1024
     free_memory = virtual_memory.free/1024/1024/1024
     memory_percent = virtual_memory.percent
-    # memory_info = "内存使用：%0.2fG，使用率%0.1f%%，剩余内存：%0.2fG" % (
-    #     used_memory, memory_percent, free_memory)
+    
     memory_info = {
         'used': str("%.2f" % used_memory) + ' GB',
         'free': str("%.2f" % free_memory) + ' GB',
+        'total': str("%.2f" % (free_memory+used_memory)) + ' GB',
         'percent': memory_percent
     }
-    print(memory_info)
     return memory_info
 
 
 @blueprint.route('/index')
 @login_required
 def index():
-
-    get_disk_info()
-    get_cpu_info()
-    get_memory_info()
-    
-    return render_template('index.html', segment='index')
+    info = {
+        'disk': get_disk_info(),
+        'cpu': get_cpu_info(),
+        'mem': get_memory_info()
+    }
+    print(info)
+    return render_template('index.html', segment='index', data=info)
 
 
 @blueprint.route('/users')
